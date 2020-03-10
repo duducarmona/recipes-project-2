@@ -42,43 +42,53 @@ Homepage: - …
 ​
 ## ROUTES:
 ​
-[Untitled](https://www.notion.so)
+[Untitled](https://www.notion.so) PENDING
 ​
 ## Models
 ​
+```Javascript
 User model
 ​
     {
-    	username: String
+      userId: ObjectId,
+    	username: String (required, unique),
     	password: String
     }
 ​
-Event model
+Ingredient model
 ​
     { 
-    	owner: ObjectId<User>
-    	name: String
-    	description: String
-    	date: Date
-    	location: String
-    	+
-    
+    	ingredientId: ObjectId,
+      name: String (required, unique)
     }
 ​
+Recipe model
+
+    { 
+      recipeId: ObjectId,
+      userId: ObjectId<User>,
+      name: String (required, unique),
+      image: String,
+      ingredients: Array of Object {
+        ingredientId: ingredientID<User>,
+        quantity: Number,
+        unit: text,
+      }
+    }
+```
+
 ## Links
 ​
 ### Trello
 ​
-Link to Trello
+[Trello board](https://trello.com/b/5ZZUmgcL/recipe-app)
 ​
 ### Git
 ​
-The url to your repository and to your deployed project
+[GitHub repository](https://github.com/duducarmona/recipes-project-2)
 ​
-[Repository Link](http://github.com/)
-​
-[Deploy Link](http://heroku.com/)
+[Deploy Link](http://heroku.com/) PENDING
 ​
 ### Slides
 ​
-[Slides Link](http://slides.com/)
+[Slides Link](http://slides.com/) PENDING
