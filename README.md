@@ -14,19 +14,21 @@ Describe your project in one/two lines.
 ​
 **Homepage** - As a user I want to be able to access the homepage so that I see what the app is about and login and signup
 ​
-**Sign up** - As a user I want to sign up on the webpage so that I can see all the events that I could attend
+**Sign up** - As a user I want to sign up on the webpage so that I can see the recipes and interact with them
 ​
 **Login** - As a user I want to be able to log in on the webpage so that I can get back to my account
 ​
 **Logout** - As a user I want to be able to log out from the webpage so that I can make sure no one will access my account
 ​
-**Events list** - As a user I want to see all the events available so that I can choose which ones I want to attend
+**Recipes list** - As a user I want to see all the recipes available so that I can choose which ones I want to cook
 ​
-**Events create** - As a user I want to create an event so that I can invite others to attend
+**Recipes create** - As a user I want to create a recipe
 ​
-**Events detail** - As a user I want to see the event details and attendee list of one event so that I can decide if I want to attend
+**Recipes detail** - As a user I want to see the recipe details
 ​
-**Attend event** - As a user I want to be able to attend to event so that the organizers can count me in
+**Recipes delete** - As a user I want to delete a recipe
+
+**Recipes edit** - As a user I want to edit a recipe
 ​
 ## Backlog
 ​
