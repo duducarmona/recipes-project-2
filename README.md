@@ -47,6 +47,15 @@ Homepage: - PENDING
 ## ROUTES:
 ​
 [Untitled](https://www.notion.so) PENDING
+
+[Login](https://www.notion.so) PENDING
+
+[Recipes list](https://www.notion.so) PENDING
+
+[Create/Update recipe](https://www.notion.so) PENDING
+
+[Detail recipe](https://www.notion.so) PENDING
+
 ​
 ## Models
 ​
