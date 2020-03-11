@@ -1,10 +1,10 @@
 # README Modulo2
 ​
-# Project Name
+# ReciApp
 ​
 ## Description
 ​
-Describe your project in one/two lines.
+Our project is a recipes app to do everything with recipes. You can create your own recipes, find new ones, check if the ingredients are healthy or they are suitable for vegans, vegetarians, coeliacs, diabetics..., know what to cook every day with the random recipe functionality and much more.
 ​
 ## User Stories
 ​
@@ -34,11 +34,15 @@ Describe your project in one/two lines.
 ​
 List of other features outside of the MVPs scope
 ​
-User profile: - see my profile - upload my profile picture - see other users profile - list of events created by the user - list events the user is attending
+Survival: - check what you can cook with a few ingredients from your fridge
+
+Weekly menu: - the user can make a menu for every day of the week with different recipes
+
+Types of food: - the user can look for all the types of foods (Asian, Mexican, traditional, Moroccan ...)
 ​
-Geo Location: - add geolocation to events when creating - show event in a map in event detail page - show all events in a map in the event list page
+Geo Location: - add geolocation to help the user to find the cheapest and more specific ingredients
 ​
-Homepage: - …
+Homepage: - PENDING
 ​
 ## ROUTES:
 ​
