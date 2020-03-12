@@ -71,7 +71,13 @@
 
 [Recipe detail](https://www.notion.so) PENDING
 
+Method  | Endpoint  | Description  |
+|---|---|---|
+| GET  | /  |  HomePage |
+| GET  | /login  | Login page  |
+|  POST | /login  | Send user info and logged in  |
 ​
+
 ## Models
 ​
 ```Javascript
