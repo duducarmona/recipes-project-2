@@ -16,6 +16,7 @@ dotenv.config();
 mongoose
   .connect(process.env.MONGO_PATH, {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
   .then((x) => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`);
