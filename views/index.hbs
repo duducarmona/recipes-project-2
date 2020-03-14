@@ -1,18 +1,19 @@
 <main id="home">
 
+  <img src="/public/images/chef-large.png" />
   <h1>{{title}}</h1>
   <p>recipes to make it all better</p>
 
-  <form action="/login" method="post">
+  <form action="/" method="post">
     <label for="email">Email:</label><br>
     <input type="text" name="email"><br>
 
     <label for="password">Password:</label><br>
-    <input type="text" name="password"><br>
+    <input type="password" name="password"><br>
 
     <button class="button" type="submit">Sign In</button>
   </form>
 
   <p><a href="/forgot">Forgot password?</a></p>
-  <p>Don't have an account? <a href="/sign-up">Sign up here</a></p>
+  <p>Don't have an account? <a href="/signup">Sign up here</a></p>
 </main>

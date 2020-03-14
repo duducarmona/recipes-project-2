@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/public/stylesheets/style.css" />
   </head>
   <body>
     {{#if loggedin}}
     <nav>
+      <img name="chef-small" src="/public/images/chef-small.png" />
+      <h1>{{title}}</h1>
       <ul>
         <li>My Recipes</li>
         <li>Add Recipe</li>
