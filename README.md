@@ -117,6 +117,10 @@ Recipe model
         ingredientId: ingredientID<User>,
         quantity: Number,
         unit: text,
+      steps: Array of Object {
+        stepId: ObjectId,
+        order: Number,
+        description: text,
       }
     }
 ```
