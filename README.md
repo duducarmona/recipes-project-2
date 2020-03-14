@@ -63,28 +63,20 @@
 ​
 ## ROUTES:
 
-[Login](https://www.notion.so) PENDING
-
-[Recipe list](https://www.notion.so) PENDING
-
-[Create/Update recipe](https://www.notion.so) PENDING
-
-[Recipe detail](https://www.notion.so) PENDING
-
-Method  | Endpoint  | Description  |
-|---|---|---|
-| GET | / | HomePage / Login |
-| GET | /auth/signup | Signup page |
-| POST | /auth/signup | Send user information, register and redirects to Recipes list |
-| POST | /auth/login | Send user info, logged in and redirects to Recipes list |
-| GET | /logout | Logs out the user and redirects to login |​
-| GET | /recipes | My recipes list page |
-| GET | /recipes/add | Show the form to add a recipe |​
-| POST | /recipes | Create a recipe and redirects to Recipes list |​
-| POST | /recipes/:id/delete | Delete a recipe and redirects to Recipes list |
-| GET | /recipes/:id/update | Get the info to update a recipe |
-| POST | /recipes/:id | Update a recipe and redirects to Recipes list |​
-| GET | /recipes/:id | A recipe detail |
+Method | Endpoint | Description | End View |
+|---|---|---|---|
+| GET | / | HomePage / Login | / |
+| GET | /auth/signup | Signup page | /auth/signup |
+| POST | /auth/signup | Send user information, register and redirects to Recipes list | /recipes |
+| POST | /auth/login | Send user info, logged in and redirects to Recipes list | /recipes |
+| GET | /logout | Logs out the user and redirects to login |​ / |
+| GET | /recipes | My recipes list page | /recipes |
+| GET | /recipes/add | Show the form to add a recipe |​ /recipes/add |
+| POST | /recipes | Create a recipe and redirects to Recipes list |​ /recipes |
+| POST | /recipes/:id/delete | Delete a recipe and redirects to Recipes list | /recipes |
+| GET | /recipes/:id/update | Get the info to update a recipe | /recipes/:id/update |
+| POST | /recipes/:id | Update a recipe and redirects to Recipe detail |​ /recipes/:id |
+| GET | /recipes/:id | A recipe detail | /recipes/:id |
 
 
 
