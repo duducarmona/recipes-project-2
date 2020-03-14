@@ -7,6 +7,7 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+    {{#if loggedin}}
     <nav>
       <ul>
         <li>My Recipes</li>
@@ -14,6 +15,7 @@
         <li>Find Recipes</li>
       </ul>
     </nav>
+    {{/if}}
     {{{body}}}
   </body>
 </html>

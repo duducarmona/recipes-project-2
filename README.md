@@ -115,6 +115,7 @@ Recipe model
       image: String,
       ingredients: Array of Object {
         ingredientId: ingredientID<User>,
+        name: text,
         quantity: Number,
         unit: text,
       steps: Array of Object {
