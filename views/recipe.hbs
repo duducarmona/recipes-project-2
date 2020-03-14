@@ -1,0 +1,26 @@
+<main id="recipe">
+  <div class="recipe-card">
+    <div class="recipe-image-container">
+      <img class="recipe-image" src="{{recipe.image}}" />
+    </div>
+    <div>
+      <a class="button" id="back-button" href="/recipes">Go back</a>
+      <h2>{{recipe.name}}</h2>
+      <span><strong>Ingredients</strong></span>
+        <div class="ingredient-list">
+          {{#each recipe.ingredients}}
+          {{this.name}}
+          {{this.quantity}}
+          {{this.unit}}
+          {{/each}}
+        </div>
+      <span><strong>Preparation steps</strong></span>
+      <div class="preparation-steps">
+        {{#each recipe.steps}}
+        {{this.order}}
+        {{this.instructions}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</main>
