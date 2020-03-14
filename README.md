@@ -73,10 +73,20 @@
 
 Method  | Endpoint  | Description  |
 |---|---|---|
-| GET  | /  |  HomePage |
-| GET  | /login  | Login page  |
-|  POST | /login  | Send user info and logged in  |
-​
+| GET | / | HomePage / Login |
+| GET | /auth/signup | Signup page |
+| POST | /auth/signup | Send user information, register and redirects to Recipes list |
+| POST | /auth/login | Send user info, logged in and redirects to Recipes list |
+| GET | /logout | Logs out the user and redirects to login |​
+| GET | /recipes | My recipes list page |
+| GET | /recipes/add | Show the form to add a recipe |​
+| POST | /recipes | Create a recipe and redirects to Recipes list |​
+| POST | /recipes/:id/delete | Delete a recipe and redirects to Recipes list |
+| GET | /recipes/:id/update | Get the info to update a recipe |
+| POST | /recipes/:id | Update a recipe and redirects to Recipes list |​
+| GET | /recipes/:id | A recipe detail |
+
+
 
 ## Models
 ​
