@@ -1,6 +1,6 @@
 <main id="home">
 
-  <img src="/public/images/chef-large.png" />
+  <img id="chef-large" src="/images/chef-large.png" />
   <h1>{{title}}</h1>
   <p>recipes to make it all better</p>
 
@@ -13,6 +13,10 @@
 
     <button class="button" type="submit">Sign In</button>
   </form>
+
+  {{#if error}}
+  <div class="error-message">{{error}}</div>
+  {{/if}}
 
   <p><a href="/forgot">Forgot password?</a></p>
   <p>Don't have an account? <a href="/register">Register here</a></p>

@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+#chef-large {
+  width: 250px;
+}
