@@ -1,19 +1,22 @@
-<main id="home">
+<main id="register">
 
   <img src="/public/images/chef-large.png" />
   <h1>{{title}}</h1>
   <p>recipes to make it all better</p>
 
-  <form action="/" method="post">
+  <form action="/register" method="post">
     <label for="username">Username:</label><br>
     <input type="text" name="username" placeholder="Your username" required><br>
 
     <label for="password">Password:</label><br>
     <input type="password" name="password" placeholder="**********" required><br>
 
-    <button class="button" type="submit">Sign In</button>
+    <button class="button" type="submit">Create account</button>
   </form>
 
-  <p><a href="/forgot">Forgot password?</a></p>
-  <p>Don't have an account? <a href="/register">Register here</a></p>
+  {{#if error}}
+  <div class="error-message">{{error}}</div>
+  {{/if}}
+  
+  <p>Already have an account? <a href="/">Sign in</a></p>
 </main>
