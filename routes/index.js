@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const express = require('express');
 
 const router = express.Router();
@@ -79,13 +80,19 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-router.use((req, res, next) => {
-  if (req.session.currentUser) {
-    next();
-  } else {
-    res.redirect('/');
-  }
+router.get('/forgot', (req, res, next) => {
+  res.render('forgot', {
+    layout: 'layout-no-nav',
+    title: 'Better Chef',
+  });
 });
-// above middleware prevents unauthorized users from accesing routes below
+
+// router.use((req, res, next) => {
+//   if (req.session.currentUser) {
+//     next();
+//   } else {
+//     next(createError(401));
+//   }
+// });
 
 module.exports = router;
