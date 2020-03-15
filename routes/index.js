@@ -14,6 +14,29 @@ router.get('/', (req, res, next) => {
   });
 });
 
+router.post('/', (req, res, next) => {
+  const { username, password } = req.body;
+  console.log(username, password);
+
+  User.findOne({ username })
+    .then((user) => {
+      if (!user) {
+        res.render('login', {
+          error: `Username ${username} not found.`,
+        });
+      }
+      if (bcrypt.compareSync(password, user.password)) {
+        req.session.currentUser = user;
+        res.redirect('/main');
+      } else {
+        res.render('login', { error: 'Incorrect password' });
+      }
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
+
 router.get('/register', (req, res, next) => {
   res.render('register', {
     title: 'Better Chef',
@@ -26,16 +49,16 @@ router.post('/register', (req, res, next) => {
 
   User.findOne({ username })
     .then((user) => {
-      console.log('Response is ', JSON.stringify(user));
       if (user) {
-        res.render('index', { error: `Username ${user.username} already exists.` });
+        res.render('index', {
+          error: `Username ${user.username} already exists.`,
+        });
       } else {
         const salt = bcrypt.genSaltSync(bcryptSalt);
-        const hashPass = bcrypt.hashSync(password, salt);
-        console.log('Creating user', username);
+        const hashedPassword = bcrypt.hashSync(password, salt);
         User.create({
           username,
-          password: hashPass,
+          hashedPassword,
         })
           .then(() => {
             res.redirect('/recipes');
