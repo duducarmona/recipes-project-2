@@ -21,15 +21,17 @@ router.post('/', (req, res, next) => {
   User.findOne({ username })
     .then((user) => {
       if (!user) {
-        res.render('login', {
+        res.render('index', {
           error: `Username ${username} not found.`,
         });
       }
-      if (bcrypt.compareSync(password, user.password)) {
+      if (bcrypt.compareSync(password, user.hashedPassword)) {
         req.session.currentUser = user;
-        res.redirect('/main');
+        res.redirect('/recipes');
       } else {
-        res.render('login', { error: 'Incorrect password' });
+        res.render('index', {
+          error: 'Incorrect password',
+        });
       }
     })
     .catch((error) => {
@@ -50,7 +52,7 @@ router.post('/register', (req, res, next) => {
   User.findOne({ username })
     .then((user) => {
       if (user) {
-        res.render('index', {
+        res.render('register', {
           error: `Username ${user.username} already exists.`,
         });
       } else {

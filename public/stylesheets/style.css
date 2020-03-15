@@ -11,6 +11,10 @@ a {
   width: 250px;
 }
 
+#error-message {
+  font-style: italic;
+}
+
 .button {
     width: auto;
     padding: 5px 10px;
