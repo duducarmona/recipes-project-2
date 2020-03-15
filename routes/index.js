@@ -9,19 +9,20 @@ const bcryptSalt = 10;
 
 router.get('/', (req, res, next) => {
   res.render('index', {
+    layout: 'layout-no-nav',
     title: 'Better Chef',
-    loggedin: false,
   });
 });
 
 router.post('/', (req, res, next) => {
   const { username, password } = req.body;
-  console.log(username, password);
 
   User.findOne({ username })
     .then((user) => {
       if (!user) {
         res.render('index', {
+          layout: 'layout-no-nav',
+          title: 'Better Chef',
           error: `Username ${username} not found.`,
         });
       }
@@ -30,6 +31,8 @@ router.post('/', (req, res, next) => {
         res.redirect('/recipes');
       } else {
         res.render('index', {
+          layout: 'layout-no-nav',
+          title: 'Better Chef',
           error: 'Incorrect password',
         });
       }
@@ -41,8 +44,8 @@ router.post('/', (req, res, next) => {
 
 router.get('/register', (req, res, next) => {
   res.render('register', {
+    layout: 'layout-no-nav',
     title: 'Better Chef',
-    loggedin: false,
   });
 });
 
@@ -53,6 +56,8 @@ router.post('/register', (req, res, next) => {
     .then((user) => {
       if (user) {
         res.render('register', {
+          layout: 'layout-no-nav',
+          title: 'Better Chef',
           error: `Username ${user.username} already exists.`,
         });
       } else {
@@ -63,6 +68,7 @@ router.post('/register', (req, res, next) => {
           hashedPassword,
         })
           .then(() => {
+            req.session.currentUser = user;
             res.redirect('/recipes');
           })
           .catch((error) => next(error));
@@ -72,5 +78,14 @@ router.post('/register', (req, res, next) => {
       next(error);
     });
 });
+
+router.use((req, res, next) => {
+  if (req.session.currentUser) {
+    next();
+  } else {
+    res.redirect('/');
+  }
+});
+// above middleware prevents unauthorized users from accesing routes below
 
 module.exports = router;
