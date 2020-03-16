@@ -6,11 +6,12 @@ const User = require('../models/User');
 
 dotenv.config();
 
-console.log("mongo path is ", process.env.MONGO_PATH);
+console.log('mongo path is ', process.env.MONGO_PATH);
 
-let user = new User({
+const user = new User({
+  _id: new mongoose.mongo.ObjectId('56cb91bdc3464f14678934ca'),
   username: 'TestUser',
-  hashedPassword: '123456789',
+  hashedPassword: '1234567890',
 });
 
 // const recipes = [
@@ -25,19 +26,28 @@ let user = new User({
 // ];
 
 
-// mongoose
-//   .connect(process.env.MONGO_PATH, {
-//     useCreateIndex: true,
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then((x) => {
-//     console.log(
-//       `Connected to Mongo! Database name: '${x.connections[0].name}'`,
-//     );
-//   })
-//   .catch((err) => console.error('Error connecting to mongo', err));
+mongoose
+  .connect(process.env.MONGO_PATH, {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((x) => {
+    console.log(
+      `Connected to Mongo! Database name: '${x.connections[0].name}'`,
+    );
+  })
+  .catch((err) => console.error('Error connecting to mongo', err));
 
+User.create(user)
+  .then((response) => {
+    console.log(`Added ${response}`);
+    mongoose.connection.close();
+  })
+  .catch((error) => {
+    console.log('An error happened while adding user: ', error);
+    mongoose.connection.close();
+  });
 
 // Recipe.create(recipes)
 //   .then((added) => {
