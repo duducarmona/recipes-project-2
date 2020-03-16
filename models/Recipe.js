@@ -19,11 +19,11 @@ const recipeSchema = new Schema({
       ref: 'Ingredient',
     },
     amount: Number,
-    unit: Text,
+    unit: String,
   }],
   steps: [{
     number: Number,
-    step: Text,
+    step: String,
   }],
 });
 
