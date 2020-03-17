@@ -1,8 +1,8 @@
-
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const Recipe = require('../models/Recipe');
 const User = require('../models/User');
+const Ingredient = require('../models/Ingredient');
 
 dotenv.config();
 
@@ -14,17 +14,70 @@ const user = new User({
   hashedPassword: '1234567890',
 });
 
-// const recipes = [
-//   {
-//     title: 'Mongolian Beef',
-//     userId: 'Ava DuVernay',
-//     stars: ['Storm Reid', 'Oprah Winfrey', 'Reese Witherspoon'],
-//     image: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjMxNjQ5MTI3MV5BMl5BanBnXkFtZTgwMjQ2MTAyNDM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-//     description: 'Following the discovery of a new form of space travel as well as Meg\'s father\'s disappearance, she, her brother, and her friend must join three magical beings - Mrs. Whatsit, Mrs. Who, and Mrs. Which - to travel across the universe to rescue him from a terrible evil.',
-//     showtimes: ['13:00', '15:30', '18:00', '20:10', '22:40'],
-//   },
-// ];
-
+const recipes = [
+  {
+    title: 'Mongolian Beef',
+    userId: user,
+    image: 'https://dinnerthendessert.com/wp-content/uploads/2017/02/Mongolian-Beef-4.jpg',
+    ingredients: [
+      {
+        spoonacularId: 1,
+        amount: 1,
+        unit: 'pound',
+      },
+    ],
+    steps: [
+      {
+        number: 1,
+        step: 'Slice the flank steak against the grain (the grain is the length of the steak) the long way 1/4 inch think pieces and add it to a ziploc bag with the cornstarch.',
+      },
+      {
+        number: 2,
+        step: 'Press the steak around in the bag making sure each piece is fully coated with cornstarch and leave it to sit.',
+      },
+      {
+        number: 3,
+        step: 'Add the canola oil to a large frying pan and heat on medium high heat.',
+      },
+      {
+        number: 4,
+        step: 'Add the steak, shaking off any excess corn starch, to the pan in a single layer and cook on each side for 1 minute.',
+      },
+      {
+        number: 5,
+        step: 'If you need to cook the steak in batches because your pan isn\'t big enough do that rather than crowding the pan, you want to get a good sear on the steak and if you crowd the pan your steak with steam instead of sear.',
+      },
+      {
+        number: 6,
+        step: 'When the steak is done cooking remove it from the pan.',
+      },
+      {
+        number: 7,
+        step: 'Add the ginger and garlic to the pan and sauté for 10-15 seconds.',
+      },
+      {
+        number: 8,
+        step: 'Add the soy sauce, water and dark brown sugar to the pan and let it come to a boil.',
+      },
+      {
+        number: 9,
+        step: 'Add the steak back in and let the sauce thicken for 20-30 seconds.',
+      },
+      {
+        number: 10,
+        step: 'The cornstarch we used on the steak should thicken the sauce, if you find it isn\'t thickening enough add 1 tablespoon of cornstarch to 1 tablespoon of cold water and stir to dissolve the cornstarch and add it to the pan.',
+      },
+      {
+        number: 11,
+        step: 'Add the green onions, stir to combine everything, and cook for a final 20-30 seconds.',
+      },
+      {
+        number: 12,
+        step: 'Serve immediately.',
+      },
+    ],
+  },
+];
 
 mongoose
   .connect(process.env.MONGO_PATH, {
@@ -42,16 +95,17 @@ mongoose
 User.create(user)
   .then((response) => {
     console.log(`Added ${response}`);
-    mongoose.connection.close();
   })
   .catch((error) => {
     console.log('An error happened while adding user: ', error);
-    mongoose.connection.close();
   });
 
-// Recipe.create(recipes)
-//   .then((added) => {
-//     console.log(`Added ${added.length} recipes`);
-//     mongoose.connection.close();
-//   })
-//   .catch((error) => console.log('An error happened while adding movie: ', error));
+Recipe.create(recipes)
+  .then((response) => {
+    console.log(`Added ${response}`);
+    mongoose.connection.close();
+  })
+  .catch((error) => {
+    console.log('An error happened while adding recipe: ', error);
+    mongoose.connection.close();
+  });

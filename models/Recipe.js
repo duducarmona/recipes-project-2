@@ -22,6 +22,7 @@ const recipeSchema = new Schema({
     unit: String,
   }],
   steps: [{
+    _id: false,
     number: Number,
     step: String,
   }],
