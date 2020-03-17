@@ -87,12 +87,13 @@ router.get('/forgot', (req, res, next) => {
   });
 });
 
-// router.use((req, res, next) => {
-//   if (req.session.currentUser) {
-//     next();
-//   } else {
-//     next(createError(401));
-//   }
-// });
+router.use((req, res, next) => {
+  if (req.session.currentUser) {
+    next();
+  } else {
+    next(createError(401));
+  }
+});
+
 
 module.exports = router;

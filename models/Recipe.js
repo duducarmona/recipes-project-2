@@ -3,27 +3,29 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const recipeSchema = new Schema({
-  name: {
+  title: {
     type: String,
     required: true,
     trim: true,
   },
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
   image: String,
   ingredients: [{
+    _id: false,
     ingredientId: {
       type: Schema.Types.ObjectId,
       ref: 'Ingredient',
     },
     amount: Number,
-    unit: Text,
+    unit: String,
   }],
   steps: [{
+    _id: false,
     number: Number,
-    step: Text,
+    step: String,
   }],
 });
 

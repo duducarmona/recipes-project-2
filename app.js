@@ -16,6 +16,7 @@ dotenv.config();
 
 mongoose
   .connect(process.env.MONGO_PATH, {
+    useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
