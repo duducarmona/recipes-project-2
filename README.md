@@ -107,10 +107,11 @@ Recipe model
       title: String (required, unique),
       image: String,
       ingredients: Array of Object {
-        _id: ingredientID<User>,
+        ingredient: ObjectId<Ingredient>,
         quantity: Number,
         unit: text,
       steps: Array of Object {
+        _id: false,
         number: Number,
         step: text,
       }

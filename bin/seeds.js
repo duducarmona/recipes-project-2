@@ -29,8 +29,16 @@ const recipes = [
     user,
     image: 'https://dinnerthendessert.com/wp-content/uploads/2017/02/Mongolian-Beef-4.jpg',
     ingredients: [
-      flankSteak,
-      cornStarch,
+      {
+        flankSteak,
+        amount: 1,
+        unit: 'pound',
+      },
+      {
+        cornStarch,
+        amount: 0.25,
+        unit: 'cup',
+      },
     ],
     steps: [
       {
