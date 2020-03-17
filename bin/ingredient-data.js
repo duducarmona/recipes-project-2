@@ -1,4 +1,4 @@
-const ingredients = [
+module.exports = [
   { spoonacularId: 1002002, name: '5 spice powder' },
   { spoonacularId: 11482, name: 'acorn squash' },
   { spoonacularId: 6979, name: 'adobo sauce' },

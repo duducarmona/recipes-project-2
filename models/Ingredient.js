@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const ingredientSchema = new Schema({
-  _id: Number,
+  spoonacularId: Number,
   name: {
     type: String,
     required: true,

@@ -3,10 +3,9 @@ const mongoose = require('mongoose');
 const Recipe = require('../models/Recipe');
 const User = require('../models/User');
 const Ingredient = require('../models/Ingredient');
+const ingredients = require('../bin/ingredient-data');
 
 dotenv.config();
-
-console.log('mongo path is ', process.env.MONGO_PATH);
 
 const user = new User({
   _id: new mongoose.mongo.ObjectId('56cb91bdc3464f14678934ca'),
@@ -92,20 +91,30 @@ mongoose
   })
   .catch((err) => console.error('Error connecting to mongo', err));
 
-User.create(user)
+// User.create(user)
+//   .then((response) => {
+//     console.log(`Added ${response}`);
+//   })
+//   .catch((error) => {
+//     console.log('An error happened while adding user: ', error);
+//   });
+
+Ingredient.create(ingredients)
   .then((response) => {
-    console.log(`Added ${response}`);
+    console.log(`Added ${response.length} ingredients`);
+    mongoose.connection.close();
   })
   .catch((error) => {
-    console.log('An error happened while adding user: ', error);
+    console.log('An error happened while adding ingredients: ', error);
+    mongoose.connection.close();
   });
 
-Recipe.create(recipes)
-  .then((response) => {
-    console.log(`Added ${response}`);
-    mongoose.connection.close();
-  })
-  .catch((error) => {
-    console.log('An error happened while adding recipe: ', error);
-    mongoose.connection.close();
-  });
+// Recipe.create(recipes)
+//   .then((response) => {
+//     console.log(`Added ${response}`);
+// mongoose.connection.close();
+//   })
+//   .catch((error) => {
+//     console.log('An error happened while adding recipe: ', error);
+//     mongoose.connection.close();
+//   });
