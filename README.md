@@ -86,34 +86,33 @@ Method | Endpoint | Description | End View |
 User model
 ​
     {
-      userId: ObjectId,
+      _id: ObjectId,
     	username: String (required, unique),
-    	password: String
+    	hashedPassword: String,
     }
 ​
 Ingredient model
 ​
     { 
-    	ingredientId: ObjectId,
-      name: String (required, unique)
+      _id: ObjectId,
+      spoonacularId: Number,
+      name: String (required, unique),
     }
 ​
 Recipe model
 
     { 
-      recipeId: ObjectId,
-      userId: ObjectId<User>,
-      name: String (required, unique),
+      _id: ObjectId,
+      user: ObjectId<User>,
+      title: String (required, unique),
       image: String,
       ingredients: Array of Object {
-        ingredientId: ingredientID<User>,
-        name: text,
+        _id: ingredientID<User>,
         quantity: Number,
         unit: text,
       steps: Array of Object {
-        stepId: ObjectId,
-        order: Number,
-        description: text,
+        number: Number,
+        step: text,
       }
     }
 ```
@@ -128,7 +127,7 @@ Recipe model
 
 [GitHub repository](https://github.com/duducarmona/recipes-project-2)
 
-[Deploy Link](http://heroku.com/) PENDING
+[Deploy Link](https://recipe-app-iron.herokuapp.com/)
 ​
 ### Slides
 ​
