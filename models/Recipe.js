@@ -8,13 +8,13 @@ const recipeSchema = new Schema({
     required: true,
     trim: true,
   },
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
   image: String,
   ingredients: [{
-    ingredientId: {
+    ingredient: {
       type: Schema.Types.ObjectId,
       ref: 'Ingredient',
     },

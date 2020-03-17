@@ -8,22 +8,29 @@ const ingredients = require('../bin/ingredient-data');
 dotenv.config();
 
 const user = new User({
-  _id: new mongoose.mongo.ObjectId('56cb91bdc3464f14678934ca'),
+  _id: mongoose.mongo.ObjectId('56cb91bdc3464f14678934ca'),
   username: 'TestUser',
   hashedPassword: '1234567890',
+});
+
+const flankSteak = new Ingredient({
+  _id: mongoose.mongo.ObjectId('5e70196073dcf2322beb51d0'),
+  name: 'flank steak',
+});
+
+const cornStarch = new Ingredient({
+  _id: new mongoose.mongo.ObjectId('5e70196073dcf2322beb516f'),
+  name: 'cornstarch',
 });
 
 const recipes = [
   {
     title: 'Mongolian Beef',
-    userId: user,
+    user,
     image: 'https://dinnerthendessert.com/wp-content/uploads/2017/02/Mongolian-Beef-4.jpg',
     ingredients: [
-      {
-        spoonacularId: 1,
-        amount: 1,
-        unit: 'pound',
-      },
+      flankSteak,
+      cornStarch,
     ],
     steps: [
       {
@@ -91,30 +98,28 @@ mongoose
   })
   .catch((err) => console.error('Error connecting to mongo', err));
 
-// User.create(user)
-//   .then((response) => {
-//     console.log(`Added ${response}`);
-//   })
-//   .catch((error) => {
-//     console.log('An error happened while adding user: ', error);
-//   });
-
-Ingredient.create(ingredients)
+User.create(user)
   .then((response) => {
-    console.log(`Added ${response.length} ingredients`);
-    mongoose.connection.close();
+    console.log(`Added user ${response}`);
   })
   .catch((error) => {
-    console.log('An error happened while adding ingredients: ', error);
-    mongoose.connection.close();
+    console.log('Error while adding user: ', error);
   });
 
-// Recipe.create(recipes)
-//   .then((response) => {
-//     console.log(`Added ${response}`);
-// mongoose.connection.close();
-//   })
-//   .catch((error) => {
-//     console.log('An error happened while adding recipe: ', error);
-//     mongoose.connection.close();
-//   });
+Ingredient.create(ingredients)
+  .then((addedIngredients) => {
+    console.log(`Added ${addedIngredients.length} ingredients`);
+    Recipe.create(recipes)
+      .then((addedRecipes) => {
+        console.log(`Added recipes ${addedRecipes}`);
+        mongoose.connection.close();
+      })
+      .catch((error) => {
+        console.log('Error while adding recipe: ', error);
+        mongoose.connection.close();
+      });
+  })
+  .catch((error) => {
+    console.log('Error while adding ingredients: ', error);
+    mongoose.connection.close();
+  });
