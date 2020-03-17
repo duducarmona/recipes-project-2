@@ -14,7 +14,8 @@ const recipeSchema = new Schema({
   },
   image: String,
   ingredients: [{
-    ingredient: {
+    _id: false,
+    ingredientId: {
       type: Schema.Types.ObjectId,
       ref: 'Ingredient',
     },
