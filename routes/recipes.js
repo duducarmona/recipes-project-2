@@ -1,28 +1,41 @@
 const express = require('express');
 const Recipe = require('../models/Recipe');
+const Ingredient = require('../models/Ingredient');
 
 const router = express.Router();
 
 // GET /recipes/add
-router.get('/add', (req, res) => {
-  res.render('add');
+router.get('/add', (req, res, next) => {
+  Ingredient.find()
+    .then((ingredients) => {
+      res.render('add', {
+        ingredients,
+      });
+    })
+    .catch(next);
 });
 
 // POST /recipes
 router.post('/', (req, res, next) => {
   const {
-    name,
+    title,
     userId,
     image,
-    ingredients,
+    ingredientId,
+    amount,
+    unit,
     steps,
   } = req.body;
 
   Recipe.create({
-    name,
+    title,
     userId,
     image,
-    ingredients,
+    ingredients: [{
+      ingredientId,
+      amount,
+      unit,
+    }],
     steps,
   })
     .then(() => {

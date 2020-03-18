@@ -3,21 +3,27 @@
   <h1>Add recipe</h1>
 
   <form action="/recipes" method="post">
-    <label for="name">Name:</label><br>
-    <input type="text" name="name"><br>
+    <label for="title">Name:</label><br>
+    <input type="text" name="title"><br>
 
     <label for="image">Image:</label><br>
     <input type="text" name="image"><br>
 
     <div id="ingredient">
-      <label for="ingredient">Ingredient:</label><br>
-      <input type="text" name="ingredient"><br>
+      <label for="ingredientId">Ingredient:</label><br>
+      {{!-- <input type="text" name="ingredient"><br> --}}
+      <select name="ingredientId">
+          <option value="">--Please choose an ingredient--</option>
+          {{#each ingredients}}
+            <option value={{this._id}}>{{this.name}}</option>
+          {{/each}}
+      </select><br>
 
-      <label for="quantity">Quantity:</label><br>
-      <input type="number" name="quantity"><br>
+      <label for="amount">Amount:</label><br>
+      <input type="number" name="amount"><br>
 
       <label for="unit">Unit:</label><br>
-      <input type="text" name="text"><br>
+      <input type="text" name="unit"><br>
 
       <button>Remove ingredient</button>
     </div>

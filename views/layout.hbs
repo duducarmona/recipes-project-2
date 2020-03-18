@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
     <link rel="stylesheet" href="/public/stylesheets/style.css" />
+    <script>
+        $(".my_select_box").chosen({
+          disable_search_threshold: 10,
+          no_results_text: "Oops, nothing found!",
+          width: "95%"
+        });
+    </script>
   </head>
   <body>
     {{#if loggedin}}

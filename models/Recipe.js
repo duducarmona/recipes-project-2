@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const recipeSchema = new Schema({
-  name: {
+  title: {
     type: String,
     required: true,
     trim: true,
@@ -13,17 +13,34 @@ const recipeSchema = new Schema({
     ref: 'User',
   },
   image: String,
+  // ingredients: [{
+  //   ingredientId: {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'Ingredient',
+  //   },
+  //   amount: Number,
+  //   unit: String,
+  // }],
+  // ingredients: [{
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'Ingredient',
+  //   },
+  //   amount: Number,
+  //   unit: String,
+  // }],
   ingredients: [{
+    _id: false,
     ingredientId: {
       type: Schema.Types.ObjectId,
       ref: 'Ingredient',
     },
     amount: Number,
-    unit: Text,
+    unit: String,
   }],
   steps: [{
     number: Number,
-    step: Text,
+    step: String,
   }],
 });
 
