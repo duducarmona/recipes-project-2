@@ -1,8 +1,10 @@
 const express = require('express');
 const Recipe = require('../models/Recipe');
 const Ingredient = require('../models/Ingredient');
+const middleware = require('../helpers/authMiddleware');
 
 const router = express.Router();
+router.use(middleware.checkIfUserLoggedIn);
 
 // GET /recipes/add
 router.get('/add', (req, res, next) => {
