@@ -31,8 +31,9 @@ const recipeSchema = new Schema({
   // }],
   ingredients: [{
     _id: false,
-    ingredientId: {
-      type: Schema.Types.ObjectId,
+    spoonacularId: {
+      // type: Schema.Types.ObjectId,
+      type: Number,
       ref: 'Ingredient',
     },
     amount: Number,

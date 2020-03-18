@@ -21,7 +21,7 @@ router.post('/', (req, res, next) => {
     title,
     userId,
     image,
-    ingredientId,
+    spoonacularId,
     amount,
     unit,
     steps,
@@ -32,14 +32,14 @@ router.post('/', (req, res, next) => {
     userId,
     image,
     ingredients: [{
-      ingredientId,
+      spoonacularId,
       amount,
       unit,
     }],
     steps,
   })
     .then(() => {
-      res.redirect('/resorts');
+      res.redirect('/recipes');
     })
     .catch(next);
 });
