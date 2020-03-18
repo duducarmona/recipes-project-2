@@ -3,16 +3,15 @@
   <h1>Add recipe</h1>
 
   <form action="/recipes" method="post">
-    <label for="title">Name:</label><br>
+    <label for="title">Title:</label><br>
     <input type="text" name="title"><br>
 
     <label for="image">Image:</label><br>
     <input type="text" name="image"><br>
 
     <div id="ingredient">
-      <label for="ingredientId">Ingredient:</label><br>
-      {{!-- <input type="text" name="ingredient"><br> --}}
-      <select name="ingredientId">
+      <label for="spoonacularId">Ingredient:</label><br>
+      <select name="spoonacularId">
           <option value="">--Please choose an ingredient--</option>
           {{#each ingredients}}
             <option value={{this._id}}>{{this.name}}</option>

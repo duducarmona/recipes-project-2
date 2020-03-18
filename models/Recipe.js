@@ -8,7 +8,7 @@ const recipeSchema = new Schema({
     required: true,
     trim: true,
   },
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
@@ -39,6 +39,7 @@ const recipeSchema = new Schema({
     unit: String,
   }],
   steps: [{
+    _id: false,
     number: Number,
     step: String,
   }],

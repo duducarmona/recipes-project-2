@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const ingredientSchema = new Schema({
+  spoonacularId: Number,
   name: {
     type: String,
     required: true,
