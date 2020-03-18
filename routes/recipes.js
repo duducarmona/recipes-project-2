@@ -4,6 +4,18 @@ const Ingredient = require('../models/Ingredient');
 
 const router = express.Router();
 
+/* GET /recipes */
+router.get('/', (req, res, next) => {
+  Recipe.find()
+    .populate('ingredient')
+    .then((recipes) => {
+      res.render('recipes', {
+        recipes,
+      });
+    })
+    .catch(next);
+});
+
 // GET /recipes/add
 router.get('/add', (req, res, next) => {
   Ingredient.find()

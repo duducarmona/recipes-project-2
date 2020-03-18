@@ -7,10 +7,11 @@
     <div class="recipe">
       <img src="{{this.image}}" />
       <div class="recipe-info">
-        <h2>{{recipe.title}}</h2>
+        <h2>{{this.title}}</h2>
         <ul>
-          {{#each recipe.ingredients}}
-          <li>{{this.name}}</li>
+          {{#each this.ingredients}}
+          <p>{{this.name}}</p>
+          <li>{{this.unit}}</li>
           {{/each}}
         </ul>
         <div id="buttons"> 
