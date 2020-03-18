@@ -1,4 +1,3 @@
-const createError = require('http-errors');
 const express = require('express');
 
 const router = express.Router();
@@ -8,7 +7,7 @@ const User = require('../models/User');
 
 const bcryptSalt = 10;
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   res.render('index', {
     layout: 'layout-no-nav',
     title: 'Better Chef',
@@ -43,7 +42,7 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.get('/register', (req, res, next) => {
+router.get('/register', (req, res) => {
   res.render('register', {
     layout: 'layout-no-nav',
     title: 'Better Chef',
@@ -68,8 +67,8 @@ router.post('/register', (req, res, next) => {
           username,
           hashedPassword,
         })
-          .then(() => {
-            req.session.currentUser = user;
+          .then((newUser) => {
+            req.session.currentUser = newUser;
             res.redirect('/recipes');
           })
           .catch((error) => next(error));
@@ -80,20 +79,11 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-router.get('/forgot', (req, res, next) => {
+router.get('/forgot', (req, res) => {
   res.render('forgot', {
     layout: 'layout-no-nav',
     title: 'Better Chef',
   });
 });
-
-router.use((req, res, next) => {
-  if (req.session.currentUser) {
-    next();
-  } else {
-    next(createError(401));
-  }
-});
-
 
 module.exports = router;
