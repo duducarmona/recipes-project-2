@@ -72,4 +72,23 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 });
 
+// GET /recipes/:id
+router.get('/:id/update', (req, res, next) => {
+  const { id } = req.params;
+  Ingredient.find()
+    .then((ingredients) => {
+      Recipe.findById(id)
+        .populate('ingredients.ingredient')
+        .then((recipe) => {
+          console.log(JSON.stringify(recipe.ingredients));
+          res.render('update', {
+            recipe,
+            ingredients,
+          });
+        })
+        .catch(next);
+    })
+    .catch(next);
+});
+
 module.exports = router;
