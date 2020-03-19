@@ -6,6 +6,18 @@ const middleware = require('../helpers/authMiddleware');
 const router = express.Router();
 router.use(middleware.checkIfUserLoggedIn);
 
+// GET /recipes
+router.get('/', (req, res, next) => {
+  Recipe.find()
+    .populate('ingredients.ingredient')
+    .then((recipes) => {
+      res.render('recipes', {
+        recipes,
+      });
+    })
+    .catch(next);
+});
+
 // GET /recipes/add
 router.get('/add', (req, res, next) => {
   Ingredient.find()
@@ -23,7 +35,7 @@ router.post('/', (req, res, next) => {
     title,
     userId,
     image,
-    spoonacularId,
+    ingredient,
     amount,
     unit,
     steps,
@@ -34,7 +46,7 @@ router.post('/', (req, res, next) => {
     userId,
     image,
     ingredients: [{
-      spoonacularId,
+      ingredient,
       amount,
       unit,
     }],
