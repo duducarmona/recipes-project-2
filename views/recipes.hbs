@@ -14,13 +14,13 @@
             {{/each}}
           </ul>
           <div id="buttons"> 
-            <form action="recipe/{{this.id}}" method="get">
+            <form action="recipes/{{this.id}}" method="get">
               <input class="button" type="submit" value="See recipe" />
             </form>
-            <form action="recipe/{{this.id}}/update" method="get">
+            <form action="recipes/{{this.id}}/update" method="get">
               <input class="button" type="submit" value="Update" />
             </form>     
-            <form action="recipe/{{this.id}}/delete" method="post">
+            <form action="recipes/{{this.id}}/delete" method="post">
               <input class="button" type="submit" value="Delete" />
             </form>
           </div>
