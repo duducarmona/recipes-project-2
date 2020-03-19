@@ -14,12 +14,7 @@ const recipeSchema = new Schema({
   },
   image: String,
   ingredients: [{
-    _id: false,
-    spoonacularId: {
-      // type: Schema.Types.ObjectId,
-      type: Number,
-      ref: 'Ingredient',
-    },
+    ingredient: { type: Schema.Types.ObjectId, ref: 'Ingredient' },
     amount: Number,
     unit: String,
   }],
