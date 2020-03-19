@@ -10,11 +10,11 @@
     <input type="text" name="image"><br>
 
     <div id="ingredient">
-      <label for="spoonacularId">Ingredient:</label><br>
-      <select name="spoonacularId">
+      <label for="ingredient">Ingredient:</label><br>
+      <select name="ingredient">
           <option value="">--Please choose an ingredient--</option>
           {{#each ingredients}}
-            <option value={{this.ingredient}}>{{this.name}}</option>
+            <option value={{this._id}}>{{this.name}}</option>
           {{/each}}
       </select><br>
 
