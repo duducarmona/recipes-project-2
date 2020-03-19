@@ -58,4 +58,15 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
+// POST /recipes/:id/delete
+router.post('/:id/delete', (req, res, next) => {
+  const { id } = req.params;
+
+  Recipe.findByIdAndDelete(id)
+    .then(() => {
+      res.redirect('/recipes');
+    })
+    .catch(next);
+});
+
 module.exports = router;
