@@ -65,6 +65,10 @@ router.post('/:id/delete', (req, res, next) => {
   Recipe.findByIdAndDelete(id)
     .then(() => {
       res.redirect('/recipes');
+    })
+    .catch(next);
+});
+
 // GET /recipes/:id
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
