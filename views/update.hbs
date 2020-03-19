@@ -11,15 +11,18 @@
 
     <div id="ingredient">
 
-      {{recipe.ingredients.[0].ingredient}}
+      {{recipe}}
+
+      {{#ifEqual 0 1}}
+      {{/ifEqual}}
 
       <label for="ingredient">Ingredient:</label><br>
       <select name="ingredient">
           <option value="{{recipe.ingredients.[0].ingredient._id}}" selected>--Please choose an ingredient--</option>
           {{#each ingredients}}
-            <option value={{this._id}}>{{this.name}}</option>
-          {{/each}}
           <option value={{recipe.ingredients.[0].ingredient._id}} selected>{{recipe.ingredients.[0].ingredient.name}}</option>
+          <option value={{this._id}}>{{this.name}}</option>
+          {{/each}}
       </select><br>
 
       {{#each recipe.ingredients}}

@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const hbs = require('hbs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -29,9 +30,17 @@ mongoose
     console.error('Error connecting to mongo', err);
   });
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+hbs.registerHelper('ifEqual', (a, b, options) => {
+  if (a === b) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
 
 app.use(logger('dev'));
 app.use(express.json());
