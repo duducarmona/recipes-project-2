@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const hbs = require('hbs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -29,27 +30,44 @@ mongoose
     console.error('Error connecting to mongo', err);
   });
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+hbs.registerHelper('ifEqual', (a, b, options) => {
+  if (a === b) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
+hbs.registerHelper('ifNotEqual', (a, b, options) => {
+  if (a !== b) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
+hbs.registerHelper('json', (object) => JSON.stringify(object));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-app.use(session({
-  secret: 'basic-auth-secret',
-  cookie: { maxAge: 60 * 1000 }, // 60 seconds
-  store: new MongoStore({
-    mongooseConnection: mongoose.connection,
-    resave: true,
-    saveUninitialized: false,
-    ttl: 24 * 60 * 60, // 1 day
-  }),
-}));
-
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60, // 1 day
+  }),
+  secret: 'basic-auth-secret',
+  resave: true,
+  saveUninitialized: false,
+  name: 'ironhack',
+  cookie: { maxAge: 24 * 60 * 60 * 1000 },
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

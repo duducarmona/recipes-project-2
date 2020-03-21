@@ -82,4 +82,52 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 });
 
+// GET /recipes/:id
+router.get('/:id/update', (req, res, next) => {
+  const { id } = req.params;
+  Ingredient.find()
+    .then((ingredients) => {
+      Recipe.findById(id)
+        .populate('ingredients.ingredient')
+        .then((recipe) => {
+          res.render('update', {
+            recipe,
+            ingredients,
+          });
+        })
+        .catch(next);
+    })
+    .catch(next);
+});
+
+// POST /recipes/:id
+router.post('/:id', (req, res, next) => {
+  const { id } = req.params;
+  const {
+    title,
+    userId,
+    image,
+    ingredient,
+    amount,
+    unit,
+    steps,
+  } = req.body;
+
+  Recipe.findByIdAndUpdate(id, {
+    title,
+    userId,
+    image,
+    ingredients: [{
+      ingredient,
+      amount,
+      unit,
+    }],
+    steps,
+  })
+    .then(() => {
+      res.redirect(`/recipes/${id}`);
+    })
+    .catch(next);
+});
+
 module.exports = router;
