@@ -121,6 +121,7 @@ router.post('/:id', (req, res, next) => {
     steps,
   } = req.body;
 
+  const instructions = help.gather(steps);
   Recipe.findByIdAndUpdate(id, {
     title,
     userId,
@@ -130,10 +131,7 @@ router.post('/:id', (req, res, next) => {
       amount,
       unit,
     }],
-    instructions: [{
-      number,
-      step,
-    }],
+    instructions,
   })
     .then(() => {
       res.redirect(`/recipes/${id}`);
