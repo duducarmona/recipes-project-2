@@ -58,13 +58,23 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
+// POST /recipes/:id/delete
+router.post('/:id/delete', (req, res, next) => {
+  const { id } = req.params;
+
+  Recipe.findByIdAndDelete(id)
+    .then(() => {
+      res.redirect('/recipes');
+    })
+    .catch(next);
+});
+
 // GET /recipes/:id
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
   Recipe.findById(id)
     .populate('ingredients.ingredient')
     .then((recipe) => {
-      console.log(JSON.stringify(recipe.ingredients));
       res.render('recipe', {
         recipe,
       });
