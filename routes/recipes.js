@@ -119,6 +119,7 @@ router.post('/:id', (req, res, next) => {
     ingredient,
     amount,
     unit,
+    number,
     step,
   } = req.body;
 
@@ -131,7 +132,10 @@ router.post('/:id', (req, res, next) => {
       amount,
       unit,
     }],
-    step,
+    instructions: [{
+      number,
+      step,
+    }],
   })
     .then(() => {
       res.redirect(`/recipes/${id}`);
