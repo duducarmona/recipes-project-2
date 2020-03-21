@@ -21,11 +21,11 @@
         {{this.unit}}
         {{/each}}
       </div>
-      <span><strong>Preparation steps</strong></span>
-      <div class="preparation-steps">
-        {{#each recipe.steps}}
-        {{this.order}}
-        {{this.instructions}}
+      <span><strong>Instructions</strong></span>
+      <div class="instructions">
+        {{#each recipe.instructions}}
+        {{this.number}}
+        {{this.step}}
         {{/each}}
       </div>
     </div>
