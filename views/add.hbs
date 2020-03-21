@@ -1,9 +1,9 @@
 <script>
     function saveRecipe() {
-      const steps = document.querySelectorAll('.step');
+      {{!-- const steps = document.querySelectorAll('.step');
       steps.forEach((step) => {
         console.log(step.value);
-      })
+      }); --}}
       document.querySelector('form').submit();
     }
 </script>
@@ -42,7 +42,7 @@
     <div>
       <ol id="steps">
         <li>
-          <input class="step" type="text" name="step"><br>
+          <input class="step" type="text" name="steps"><br>
         </li>
       </ol>
     </div>
@@ -58,7 +58,7 @@
     const steps = document.getElementById('steps');
     document.getElementById('add-step').addEventListener('click', () => {
       const newStep = document.createElement('li');
-      newStep.innerHTML = `<input class="step" type="text" name="step"><br>`;
+      newStep.innerHTML = `<input class="step" type="text" name="steps"><br>`;
       steps.appendChild(newStep);
     });
   });
