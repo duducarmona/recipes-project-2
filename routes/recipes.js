@@ -64,7 +64,6 @@ router.get('/:id', (req, res, next) => {
   Recipe.findById(id)
     .populate('ingredients.ingredient')
     .then((recipe) => {
-      console.log(JSON.stringify(recipe.ingredients));
       res.render('recipe', {
         recipe,
       });
@@ -80,7 +79,6 @@ router.get('/:id/update', (req, res, next) => {
       Recipe.findById(id)
         .populate('ingredients.ingredient')
         .then((recipe) => {
-          console.log(JSON.stringify(recipe.ingredients));
           res.render('update', {
             recipe,
             ingredients,
