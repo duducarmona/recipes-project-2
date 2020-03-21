@@ -44,3 +44,15 @@ h2 {
     background-color: rgb(255, 76, 76, 0.5);
     color: white;
 }
+
+.small-button {
+  width: auto;
+  padding: 5px 10px;
+  margin-top: 10px;
+  display: block;
+  border: 1;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 400;
+  background-color: rgb(255, 255, 255, 0.5);
+}

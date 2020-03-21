@@ -24,50 +24,33 @@
 
       <label for="unit">Unit:</label><br>
       <input type="text" name="unit"><br>
-
-      <button>Remove ingredient</button>
     </div>
-    <button type="button" id="add-ingredient">Add another ingredient</button>
+    <button class="small-button" type="button" id="add-ingredient">Add another ingredient</button>
 
 
     <p>Instructions</p>
-    <div id="steps">
-      <div class="step" id="step1">
-        <label for="number">Number:</label><br>
-        <input type="number" name="number" value=1><br>
-
-        <label for="step">Step:</label><br>
-        <input type="text" name="step"><br>
-
-        <button>Remove step</button>
-      </div>
+    <div>
+      <ol id="steps">
+        <li class="step">
+          <input type="text" name="step"><br>
+        </li>
+      </ol>
     </div>
-    <button type="button" id="add-step">Add another step</button>
+    <button class="small-button" type="button" id="add-step">Add step</button>
 
-    <button class="button" type="submit">Save Recipe</button>
+    <button class="button" type="submit" onClick="foo();" >Save Recipe</button>
   </form>
 
 </main>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const instructions = document.getElementById('steps');
-    let stepNumber = 2; // step 1 already exists in initial DOM
-
+    const steps = document.getElementById('steps');
     document.getElementById('add-step').addEventListener('click', () => {
-      const newStep = document.createElement('div');
+      const newStep = document.createElement('li');
       newStep.className += 'step';
-      newStep.innerHTML = `<div class="step" id="step${stepNumber}">
-          <label for="number">Number:</label><br>
-          <input type="number" name="number" value=${stepNumber}><br>
-
-          <label for="step">Step:</label><br>
-          <input type="text" name="step"><br>
-
-          <button>Remove step</button>
-        </div>`;
-      instructions.appendChild(newStep);
-      stepNumber += 1;
+      newStep.innerHTML = `<input type="text" name="step"><br>`;
+      steps.appendChild(newStep);
     });
   });
 </script>
