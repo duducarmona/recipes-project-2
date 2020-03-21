@@ -30,13 +30,14 @@
     </div>
 
     <p>Instructions</p>
-    <ol>
+    <ol id="steps">
       {{#each recipe.instructions}}
       <li>
         <input class="step" type="text" name="steps" value="{{this.step}}"><br>
       </li>
       {{/each}}
     </ol>
+    <button class="small-button" type="button" id="add-step">Add step</button>
 
     <button class="button" type="submit">Update Recipe</button>
   </form>
@@ -48,5 +49,12 @@
     const selectedIngredientId = {{{ json recipe.ingredients.[0].ingredient._id }}};
     const selectedIngredient = document.querySelector(`select option[value='${selectedIngredientId}']`);
     selectedIngredient.selected = true;
+
+    const steps = document.getElementById('steps');
+    document.getElementById('add-step').addEventListener('click', () => {
+      const newStep = document.createElement('li');
+      newStep.innerHTML = `<input class="step" type="text" name="steps"><br>`;
+      steps.appendChild(newStep);
+    });
   });
 </script>

@@ -42,7 +42,7 @@ router.post('/', (req, res, next) => {
     steps,
   } = req.body;
 
-  const instructions = help.gather([steps]); // single string will be passed as array
+  const instructions = help.gather(steps);
   Recipe.create({
     title,
     userId,
@@ -121,7 +121,7 @@ router.post('/:id', (req, res, next) => {
     steps,
   } = req.body;
 
-  const instructions = help.gather([steps]); // single string will be passed as array
+  const instructions = help.gather(steps);
   Recipe.findByIdAndUpdate(id, {
     title,
     userId,
