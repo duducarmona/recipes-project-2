@@ -58,6 +58,11 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
+
+// GET /recipes/find
+router.get('/find', (req, res, next) => {
+});
+
 // POST /recipes/:id/delete
 router.post('/:id/delete', (req, res, next) => {
   const { id } = req.params;
