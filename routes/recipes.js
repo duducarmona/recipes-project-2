@@ -2,6 +2,7 @@ const express = require('express');
 const Recipe = require('../models/Recipe');
 const Ingredient = require('../models/Ingredient');
 const middleware = require('../helpers/authMiddleware');
+const help = require('../helpers/help');
 
 const router = express.Router();
 router.use(middleware.checkIfUserLoggedIn);
@@ -41,16 +42,7 @@ router.post('/', (req, res, next) => {
     steps,
   } = req.body;
 
-  const instructions = [];
-  let number = 0;
-  steps.forEach((step) => {
-    number += 1;
-    instructions.push({
-      number,
-      step,
-    });
-  });
-
+  const instructions = help.gather(steps);
   Recipe.create({
     title,
     userId,
@@ -126,8 +118,7 @@ router.post('/:id', (req, res, next) => {
     ingredient,
     amount,
     unit,
-    number,
-    step,
+    steps,
   } = req.body;
 
   Recipe.findByIdAndUpdate(id, {

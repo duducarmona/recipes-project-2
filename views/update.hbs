@@ -30,15 +30,13 @@
     </div>
 
     <p>Instructions</p>
-    {{#each recipe.instructions}}
-    <div id="step">
-      <label for="amount">Number:</label><br>
-      <input type="number" name="number" value="{{this.number}}"><br>
-
-      <label for="step">Step:</label><br>
-      <input type="text" name="step" value="{{this.step}}"><br>
-    </div>
-    {{/each}}
+    <ol>
+      {{#each recipe.instructions}}
+      <li>
+        <input class="step" type="text" name="steps" value="{{this.step}}"><br>
+      </li>
+      {{/each}}
+    </ol>
 
     <button class="button" type="submit">Submit</button>
   </form>
