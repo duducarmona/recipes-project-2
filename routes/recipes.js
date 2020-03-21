@@ -38,7 +38,8 @@ router.post('/', (req, res, next) => {
     ingredient,
     amount,
     unit,
-    steps,
+    number,
+    step,
   } = req.body;
 
   Recipe.create({
@@ -50,7 +51,10 @@ router.post('/', (req, res, next) => {
       amount,
       unit,
     }],
-    steps,
+    instructions: [{
+      number,
+      step,
+    }],
   })
     .then(() => {
       res.redirect('/recipes');
@@ -115,7 +119,8 @@ router.post('/:id', (req, res, next) => {
     ingredient,
     amount,
     unit,
-    steps,
+    number,
+    step,
   } = req.body;
 
   Recipe.findByIdAndUpdate(id, {
@@ -127,7 +132,10 @@ router.post('/:id', (req, res, next) => {
       amount,
       unit,
     }],
-    steps,
+    instructions: [{
+      number,
+      step,
+    }],
   })
     .then(() => {
       res.redirect(`/recipes/${id}`);

@@ -5,23 +5,26 @@
   <div id="recipe-list">
     {{#each recipes}}
       <div class="recipe">
-        <img src="{{this.image}}" />
+        <a href="recipes/{{this.id}}"><img src="{{this.image}}" /></a>
         <div class="recipe-info">
           <h2>{{this.title}}</h2>
-          <ul>
-            {{#each this.ingredients}}
-              <li>{{this.ingredient.name}}</li>
-            {{/each}}
-          </ul>
           <div id="buttons"> 
             <a href="recipes/{{this.id}}">See recipe</a>
-            <a href="recipes/{{this.id}}/update">Update</a>  
+            <form action="recipes/{{this.id}}/update" method="get">
+              <input type="image" type="submit" name="update" src="/images/edit-icon-20.png" />
+            </form>     
             <form action="recipes/{{this.id}}/delete" method="post">
-              <input class="button" type="submit" value="Delete" />
+              <input type="image" type="submit" name="delete" src="/images/trash-icon-20.png" />
             </form>
           </div>
+          <ul>
+            {{#each this.ingredients}}
+            <li>{{this.ingredient.name}}</li>
+            {{/each}}
+          </ul>
         </div>
       </div>
+    <hr>
     {{/each}}
   </div>
 </main>

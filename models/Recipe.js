@@ -19,7 +19,7 @@ const recipeSchema = new Schema({
     amount: Number,
     unit: String,
   }],
-  steps: [{
+  instructions: [{
     _id: false,
     number: Number,
     step: String,
