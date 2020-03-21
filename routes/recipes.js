@@ -38,9 +38,18 @@ router.post('/', (req, res, next) => {
     ingredient,
     amount,
     unit,
-    number,
-    step,
+    steps,
   } = req.body;
+
+  const instructions = [];
+  let number = 0;
+  steps.forEach((step) => {
+    number += 1;
+    instructions.push({
+      number,
+      step,
+    });
+  });
 
   Recipe.create({
     title,
@@ -51,10 +60,7 @@ router.post('/', (req, res, next) => {
       amount,
       unit,
     }],
-    instructions: [{
-      number,
-      step,
-    }],
+    instructions,
   })
     .then(() => {
       res.redirect('/recipes');
@@ -65,6 +71,7 @@ router.post('/', (req, res, next) => {
 
 // GET /recipes/find
 router.get('/find', (req, res, next) => {
+  res.render('find');
 });
 
 // POST /recipes/:id/delete

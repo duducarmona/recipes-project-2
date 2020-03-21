@@ -47,8 +47,8 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const selectedIngredientId = {{{ json recipe.ingredients.[0].ingredient._id }}};    
-    const $selectedIngredient = document.querySelector(`select option[value='${selectedIngredientId}']`);
-    $selectedIngredient.selected = true;
+    const selectedIngredientId = {{{ json recipe.ingredients.[0].ingredient._id }}};
+    const selectedIngredient = document.querySelector(`select option[value='${selectedIngredientId}']`);
+    selectedIngredient.selected = true;
   });
 </script>
