@@ -2,7 +2,7 @@
 
   <h1>Update recipe</h1>
 
-  <form action="/recipes" method="post">
+  <form action="/recipes/{{recipe.id}}" method="post">
     <label for="title">Title:</label><br>
     <input type="text" name="title" value="{{recipe.title}}"><br>
 
