@@ -1,9 +1,5 @@
 <script>
     function saveRecipe() {
-      {{!-- const steps = document.querySelectorAll('.step');
-      steps.forEach((step) => {
-        console.log(step.value);
-      }); --}}
       document.querySelector('form').submit();
     }
 </script>
@@ -37,7 +33,6 @@
     </div>
     <button class="small-button" type="button" id="add-ingredient">Add another ingredient</button>
 
-
     <p>Instructions</p>
     <div>
       <ol id="steps">
@@ -48,7 +43,7 @@
     </div>
     <button class="small-button" type="button" id="add-step">Add step</button>
 
-    <button class="button" type="button" onClick="saveRecipe();" >Save Recipe</button>
+    <button class="button" type="button" onClick="saveRecipe();">Save Recipe</button>
   </form>
 
 </main>
