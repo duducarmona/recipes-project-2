@@ -1,3 +1,13 @@
+<script>
+    function saveRecipe() {
+      const steps = document.querySelectorAll('.step');
+      steps.forEach((step) => {
+        console.log(step.value);
+      })
+      document.querySelector('form').submit();
+    }
+</script>
+
 <main id="add-recipe">
 
   <h1>Add recipe</h1>
@@ -31,14 +41,14 @@
     <p>Instructions</p>
     <div>
       <ol id="steps">
-        <li class="step">
-          <input type="text" name="step"><br>
+        <li>
+          <input class="step" type="text" name="step"><br>
         </li>
       </ol>
     </div>
     <button class="small-button" type="button" id="add-step">Add step</button>
 
-    <button class="button" type="submit" onClick="foo();" >Save Recipe</button>
+    <button class="button" type="button" onClick="saveRecipe();" >Save Recipe</button>
   </form>
 
 </main>
@@ -48,8 +58,7 @@
     const steps = document.getElementById('steps');
     document.getElementById('add-step').addEventListener('click', () => {
       const newStep = document.createElement('li');
-      newStep.className += 'step';
-      newStep.innerHTML = `<input type="text" name="step"><br>`;
+      newStep.innerHTML = `<input class="step" type="text" name="step"><br>`;
       steps.appendChild(newStep);
     });
   });
