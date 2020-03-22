@@ -28,7 +28,7 @@ router.get('/:id', (req, res, next) => {
 // POST /users/:id/update
 router.post('/:id/update', (req, res, next) => {
   const { id } = req.params;
-  const { username } = req.body;
+  const { username, password } = req.body;
 
   User.findByIdAndUpdate(id, {
     username,
