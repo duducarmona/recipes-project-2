@@ -3,11 +3,6 @@ const User = require('../models/User');
 
 const router = express.Router();
 
-// /* GET users listing. */
-// router.get('/', (req, res) => {
-//   res.send('respond with a resource');
-// });
-
 // GET /users/:id
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
@@ -40,7 +35,15 @@ router.post('/:id/delete', (req, res, next) => {
 
   User.findByIdAndDelete(id)
     .then(() => {
-      res.redirect('/');
+      req.session.destroy((err) => {
+        if (err) {
+          next(err);
+        }
+        res.clearCookie(process.env.COOKIE_NAME, {
+          path: '/',
+        });
+        res.redirect('/');
+      });
     })
     .catch(next);
 });

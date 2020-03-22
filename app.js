@@ -65,7 +65,7 @@ app.use(session({
   secret: 'basic-auth-secret',
   resave: true,
   saveUninitialized: false,
-  name: 'ironhack',
+  name: process.env.COOKIE_NAME,
   cookie: { maxAge: 24 * 60 * 60 * 1000 },
 }));
 
@@ -73,12 +73,10 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/recipes', recipesRouter);
 
-// catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
 app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
