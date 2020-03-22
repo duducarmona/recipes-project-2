@@ -90,7 +90,7 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 });
 
-// GET /recipes/:id
+// GET /recipes/:id/update
 router.get('/:id/update', (req, res, next) => {
   const { id } = req.params;
   Ingredient.find()
