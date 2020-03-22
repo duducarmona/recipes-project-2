@@ -33,7 +33,6 @@ h2 {
 }
 
 button {
-  border: none;
   background-color: transparent;
   outline: none;
 }
@@ -61,4 +60,8 @@ button {
   text-transform: uppercase;
   font-weight: 400;
   background-color: rgb(255, 255, 255, 0.5);
+}
+
+.delete-button {
+  border: 0;
 }

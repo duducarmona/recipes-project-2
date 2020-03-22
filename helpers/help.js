@@ -1,10 +1,10 @@
-function gather(steps) {
+function collect(steps) {
   const instructions = [];
   let number = 1;
   if (typeof steps === 'string') {
     instructions.push({
       number,
-      steps,
+      step: steps,
     });
   } else {
     steps.forEach((step) => {
@@ -19,5 +19,5 @@ function gather(steps) {
 }
 
 module.exports = {
-  gather,
+  collect,
 };
