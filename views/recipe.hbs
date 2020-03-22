@@ -2,12 +2,11 @@
 
   <h1>{{recipe.title}}</h1>
   <a href="{{recipe.id}}/update">
-    <img src="/images/edit-icon-20.png" alt="Edit icon" />
+    <img src="/images/edit-icon-20.png" alt="edit icon" />
   </a>
   <form action="{{recipe.id}}/delete" method="post">
-    <input type="image" type="submit" name="delete" src="/images/trash-icon-20.png" />
+    <button class="delete-button" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
   </form>
-
   <div class="recipe-card">
     <div class="recipe-image-container">
       <img class="recipe-image" src="{{recipe.image}}" />
@@ -31,3 +30,16 @@
     </div>
   </div>
 </main>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const deleteButton = document.querySelector('.delete-button');
+    deleteButton.addEventListener('click', () => {
+      let confirmDelete = confirm('OK to delete?');
+      if (confirmDelete) {
+        deleteButton.parentNode.submit();
+      }
+    });
+  });
+</script>
