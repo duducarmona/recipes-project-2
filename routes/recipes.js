@@ -42,7 +42,7 @@ router.post('/', (req, res, next) => {
     steps,
   } = req.body;
 
-  const instructions = help.gather(steps);
+  const instructions = help.collect(steps);
   Recipe.create({
     title,
     userId,
@@ -121,7 +121,7 @@ router.post('/:id', (req, res, next) => {
     steps,
   } = req.body;
 
-  const instructions = help.gather(steps);
+  const instructions = help.collect(steps);
   Recipe.findByIdAndUpdate(id, {
     title,
     userId,
