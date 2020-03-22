@@ -61,3 +61,7 @@ button {
   font-weight: 400;
   background-color: rgb(255, 255, 255, 0.5);
 }
+
+.delete-button {
+  border: 0;
+}
