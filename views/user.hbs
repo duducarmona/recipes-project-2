@@ -6,11 +6,11 @@
     <p>Created at: {{user.created_at}}</p>
     <p>Updated at: {{user.updated_at}}</p>
     <button class="button" type="submit">Save</button>
-    <form action="{{user.id}}/delete" method="post">
-      <input type="image" type="submit" name="delete" src="/images/trash-icon-20.png" />
-    </form>
-  </form> 
-    <br>
+  </form>
+  <form action="{{user.id}}/delete" method="post">
+    <button class="delete-button" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
+  </form>
+  <br>
   <form action="/" method="post"></form>
     <h2>Change password:</h2>
     <label for="current-password">Current password:</label><br>
@@ -20,8 +20,18 @@
     <label for="confirm-password">Confirm new password:</label><br>
     <input type="password" name="confirm-password" placeholder="**********"<br>
     <button class="button" type="submit">Change password</button>
-    {{!-- <form action="{{user.id}}/change-password" method="post">
-      <input type="image" type="submit" name="change-password" src="/images/trash-icon-20.png" />
-    </form> --}}
   </form>
 </main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.delete-button').forEach(deleteButton => {
+      deleteButton.addEventListener('click', () => {
+        let confirmDelete = confirm('OK to delete?');
+        if (confirmDelete) {
+          deleteButton.parentNode.submit();
+        }
+      });
+    });
+  });
+</script>

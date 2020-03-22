@@ -25,8 +25,7 @@ router.post('/', (req, res, next) => {
           title: 'Better Chef',
           error: `Username ${username} not found.`,
         });
-      }
-      if (bcrypt.compareSync(password, user.hashedPassword)) {
+      } else if (bcrypt.compareSync(password, user.hashedPassword)) {
         req.session.currentUser = user;
         req.app.locals.currentUser = req.session.currentUser;
         res.redirect('/recipes');

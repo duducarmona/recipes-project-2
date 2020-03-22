@@ -34,4 +34,15 @@ router.post('/:id/update', (req, res, next) => {
     .catch(next);
 });
 
+// POST /users/:id/delete
+router.post('/:id/delete', (req, res, next) => {
+  const { id } = req.params;
+
+  User.findByIdAndDelete(id)
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch(next);
+});
+
 module.exports = router;

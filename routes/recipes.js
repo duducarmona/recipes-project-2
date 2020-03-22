@@ -62,7 +62,7 @@ router.post('/', (req, res, next) => {
 
 
 // GET /recipes/find
-router.get('/find', (req, res, next) => {
+router.get('/find', (req, res) => {
   res.render('find');
 });
 
