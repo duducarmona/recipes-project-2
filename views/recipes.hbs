@@ -11,10 +11,10 @@
           <div id="buttons"> 
             <a href="recipes/{{this.id}}">See recipe</a>
             <form action="recipes/{{this.id}}/update" method="get">
-              <input type="image" type="submit" name="update" src="/images/edit-icon-20.png" />
+              <input type="image" type="image" name="update" src="/images/edit-icon-20.png" alt="edit icon" />
             </form>     
             <form action="recipes/{{this.id}}/delete" method="post">
-              <input type="image" type="submit" name="delete" src="/images/trash-icon-20.png" />
+              <button class="delete-button" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
             </form>
           </div>
           <ul>
@@ -28,3 +28,16 @@
     {{/each}}
   </div>
 </main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.delete-button').forEach(deleteButton => {
+      deleteButton.addEventListener('click', () => {
+        let confirmDelete = confirm('OK to delete?');
+        if (confirmDelete) {
+          deleteButton.parentNode.submit();
+        }
+      });
+    });
+  });
+</script>
