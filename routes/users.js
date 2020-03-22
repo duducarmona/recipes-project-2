@@ -1,7 +1,10 @@
 const express = require('express');
-const User = require('../models/User');
 
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const User = require('../models/User');
+
+const bcryptSalt = process.env.COOKIE_NAME;
 
 // GET /users/logout
 router.get('/logout', (req, res, next) => {
@@ -29,6 +32,20 @@ router.get('/:id', (req, res, next) => {
 router.post('/:id/update', (req, res, next) => {
   const { id } = req.params;
   const { username, password } = req.body;
+
+  User.findOne({ username })
+    .then((user) => {
+      if (password) {
+        if (bcrypt.compareSync(password, user.hashedPassword)) {
+          console.log('correct');
+        } else {
+          res.render('user', {
+            error: 'Incorrect password',
+          });
+        }
+      }
+    })
+    .catch(next);
 
   User.findByIdAndUpdate(id, {
     username,
