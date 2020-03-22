@@ -1,4 +1,5 @@
 const express = require('express');
+const User = require('../models/User');
 
 const router = express.Router();
 
@@ -7,20 +8,28 @@ const router = express.Router();
 //   res.send('respond with a resource');
 // });
 
-// GET /recipes/:id
-router.get('/:id/update', (req, res, next) => {
+// GET /users/:id
+router.get('/:id', (req, res, next) => {
   const { id } = req.params;
-  Ingredient.find()
-    .then((ingredients) => {
-      Recipe.findById(id)
-        .populate('ingredients.ingredient')
-        .then((recipe) => {
-          res.render('update', {
-            recipe,
-            ingredients,
-          });
-        })
-        .catch(next);
+  User.findById(id)
+    .then((user) => {
+      res.render('user', {
+        user,
+      });
+    })
+    .catch(next);
+});
+
+// POST /users/:id/update
+router.post('/:id/update', (req, res, next) => {
+  const { id } = req.params;
+  const { username } = req.body;
+
+  User.findByIdAndUpdate(id, {
+    username,
+  })
+    .then(() => {
+      res.redirect(`/users/${id}`);
     })
     .catch(next);
 });

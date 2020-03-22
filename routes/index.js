@@ -28,11 +28,8 @@ router.post('/', (req, res, next) => {
       }
       if (bcrypt.compareSync(password, user.hashedPassword)) {
         req.session.currentUser = user;
-        // router.locals.currentUser = req.session.currentUser;
-        // app.locals.currentUser = req.session.currentUser;
         req.app.locals.currentUser = req.session.currentUser;
         res.redirect('/recipes');
-        // res.render('recipes', { user });
       } else {
         res.render('index', {
           layout: 'layout-no-nav',
@@ -73,6 +70,7 @@ router.post('/register', (req, res, next) => {
         })
           .then((newUser) => {
             req.session.currentUser = newUser;
+            req.app.locals.currentUser = req.session.currentUser;
             res.redirect('/recipes');
           })
           .catch((error) => next(error));

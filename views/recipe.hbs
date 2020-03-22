@@ -1,9 +1,9 @@
 <main id="recipe">
 
   <h1>{{recipe.title}}</h1>
-  <form action="{{recipe.id}}/update" method="get">
-    <input type="image" type="submit" name="update" src="/images/edit-icon-20.png" />
-  </form>     
+  <a href="{{recipe.id}}/update">
+    <img src="/images/edit-icon-20.png" alt="Edit icon" />
+  </a>
   <form action="{{recipe.id}}/delete" method="post">
     <input type="image" type="submit" name="delete" src="/images/trash-icon-20.png" />
   </form>
