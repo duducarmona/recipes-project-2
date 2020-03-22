@@ -32,6 +32,12 @@ h2 {
   font-style: italic;
 }
 
+button {
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
 .button {
     width: auto;
     padding: 5px 10px;
