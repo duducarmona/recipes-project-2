@@ -1,7 +1,7 @@
 <main id="user">
-  <h1>User profile</h1>
+  <h1>Profile</h1>
   <form action="{{user.id}}/update" method="post">
-    <label for="username">User:</label><br>
+    <label for="username">Username:</label><br>
     <input type="text" name="username" value="{{user.username}}"><br>
     <p>Created at: {{user.created_at}}</p>
     <p>Updated at: {{user.updated_at}}</p>
@@ -10,6 +10,7 @@
   <form action="{{user.id}}/delete" method="post">
     <button class="delete-button" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
   </form>
+  <a href="/users/logout" class="button">Logout</a>
   <br>
   <form action="/" method="post"></form>
     <h2>Change password:</h2>

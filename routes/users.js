@@ -3,6 +3,16 @@ const User = require('../models/User');
 
 const router = express.Router();
 
+// GET /users/logout
+router.get('/logout', (req, res, next) => {
+  req.session.destroy((err) => {
+    if (err) {
+      next(err);
+    }
+    res.redirect('/');
+  });
+});
+
 // GET /users/:id
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
