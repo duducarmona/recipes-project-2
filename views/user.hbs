@@ -1,21 +1,26 @@
 <main id="user">
+
   <h1>User profile</h1>
+
   <a href="/users/logout">
     <button class="small-button">Logout</button>
   </a>
   <form action="{{user.id}}/delete" method="post">
     <button class="delete-button" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
   </form>
-  <form action="{{user.id}}/update" method="post">
+
+  <form action="{{user.id}}" method="post">
     <label for="username">Username:</label><br>
     <input type="text" name="username" value="{{user.username}}"><br>
     <p>Created on {{user.created_at}}</p>
     <p>Updated on {{user.updated_at}}</p>
-    <button id="submit-button" class="button" type="submit">Save Username</button>
+    <button id="submit-button" class="button" type="submit">Save Changes</button>
   </form>
+
   <a href="/users/{{user.id}}/password">
     <button class="small-button">Change Password</button>
   </a>
+
   {{#if error}}
   <div id="error-message">{{error}}</div>
   {{/if}}

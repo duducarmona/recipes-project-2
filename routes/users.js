@@ -4,6 +4,8 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
+const bcryptSalt = process.env.SALT;
+
 // GET /users/logout
 router.get('/logout', (req, res, next) => {
   req.session.destroy((err) => {
@@ -26,37 +28,14 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 });
 
-// POST /users/:id/update
-router.post('/:id/update', (req, res, next) => {
+// POST /users/:id/
+router.post('/:id', (req, res, next) => {
   const { id } = req.params;
-  const {
+  const { username } = req.body;
+
+  User.findByIdAndUpdate(id, {
     username,
-    password,
-    newPassword,
-    confirmPassword,
-  } = req.body;
-
-  if (newPassword !== confirmPassword) {
-    console.log('new passwords don\'t match');
-    res.redirect(`/users/${id}`);
-  }
-
-  User.findOne({ username })
-    .then((user) => {
-      if (!password) {
-        User.findByIdAndUpdate(id, {
-          username,
-        });
-      } else if (bcrypt.compareSync(password, user.hashedPassword)) {
-        console.log('correct password');
-        User.findByIdAndUpdate(id, {
-          username,
-          password,
-        });
-      } else {
-        console.log('wrong password');
-      }
-    })
+  })
     .then(() => {
       res.redirect(`/users/${id}`);
     })
@@ -64,8 +43,48 @@ router.post('/:id/update', (req, res, next) => {
 });
 
 // GET /users/:id/password
-router.get('/:id/password', (req, res) => {
-  res.render('password');
+router.get('/:id/password', (req, res, next) => {
+  const { id } = req.params;
+  User.findById(id)
+    .then((user) => {
+      res.render('password', {
+        user,
+      });
+    })
+    .catch(next);
+});
+
+// POST /users/:id/password
+router.post('/:id/password', (req, res, next) => {
+  const { id } = req.params;
+  const {
+    password,
+    newPassword,
+    confirmPassword,
+  } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    console.log('passwords don\'t match');
+    res.redirect(`/users/${id}/password`);
+  } else {
+    User.findById(id)
+      .then((user) => {
+        if (bcrypt.compareSync(password, user.hashedPassword)) {
+          const salt = bcrypt.genSaltSync(bcryptSalt);
+          const hashedPassword = bcrypt.hashSync(newPassword, salt);
+          User.findByIdAndUpdate(id, {
+            hashedPassword,
+          });
+          console.log('password updated');
+        } else {
+          console.log('wrong password');
+        }
+      })
+      .then(() => {
+        res.redirect(`/users/${id}/password`);
+      })
+      .catch(next);
+  }
 });
 
 // POST /users/:id/delete

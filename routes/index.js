@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
-const bcryptSalt = process.env.COOKIE_NAME;
+const bcryptSalt = process.env.SALT;
 
 router.get('/', (req, res) => {
   res.render('index', {
