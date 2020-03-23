@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const flash = require('connect-flash');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -30,8 +31,6 @@ mongoose
     console.error('Error connecting to mongo', err);
   });
 
-
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -68,6 +67,8 @@ app.use(session({
   name: process.env.COOKIE_NAME,
   cookie: { maxAge: 24 * 60 * 60 * 1000 },
 }));
+
+app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

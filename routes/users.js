@@ -4,8 +4,6 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
-const bcryptSalt = process.env.COOKIE_NAME;
-
 // GET /users/logout
 router.get('/logout', (req, res, next) => {
   req.session.destroy((err) => {
@@ -31,29 +29,43 @@ router.get('/:id', (req, res, next) => {
 // POST /users/:id/update
 router.post('/:id/update', (req, res, next) => {
   const { id } = req.params;
-  const { username, password } = req.body;
+  const {
+    username,
+    password,
+    newPassword,
+    confirmPassword,
+  } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    console.log('new passwords don\'t match');
+    res.redirect(`/users/${id}`);
+  }
 
   User.findOne({ username })
     .then((user) => {
-      if (password) {
-        if (bcrypt.compareSync(password, user.hashedPassword)) {
-          console.log('correct');
-        } else {
-          res.render('user', {
-            error: 'Incorrect password',
-          });
-        }
+      if (!password) {
+        User.findByIdAndUpdate(id, {
+          username,
+        });
+      } else if (bcrypt.compareSync(password, user.hashedPassword)) {
+        console.log('correct password');
+        User.findByIdAndUpdate(id, {
+          username,
+          password,
+        });
+      } else {
+        console.log('wrong password');
       }
     })
-    .catch(next);
-
-  User.findByIdAndUpdate(id, {
-    username,
-  })
     .then(() => {
       res.redirect(`/users/${id}`);
     })
     .catch(next);
+});
+
+// GET /users/:id/password
+router.get('/:id/password', (req, res) => {
+  res.render('password');
 });
 
 // POST /users/:id/delete
