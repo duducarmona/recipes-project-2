@@ -72,10 +72,14 @@ router.post('/:id/password', (req, res, next) => {
         if (bcrypt.compareSync(password, user.hashedPassword)) {
           const salt = bcrypt.genSaltSync(bcryptSalt);
           const hashedPassword = bcrypt.hashSync(newPassword, salt);
+          console.log('old hashed pass', user.hashedPassword);
+          console.log('new hashed pass', hashedPassword);
           User.findByIdAndUpdate(id, {
             hashedPassword,
-          });
-          console.log('password updated');
+          })
+            .then((response) => {
+              console.log('password updated', response);
+            });
         } else {
           console.log('wrong password');
         }
