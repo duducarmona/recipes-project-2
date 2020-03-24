@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const flash = require('connect-flash');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -30,8 +31,6 @@ mongoose
     console.error('Error connecting to mongo', err);
   });
 
-
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -62,12 +61,18 @@ app.use(session({
     mongooseConnection: mongoose.connection,
     ttl: 24 * 60 * 60, // 1 day
   }),
-  secret: 'basic-auth-secret',
+  secret: 'recipes-to-make-it-all-better',
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
   name: process.env.COOKIE_NAME,
   cookie: { maxAge: 24 * 60 * 60 * 1000 },
 }));
+
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.messages = req.flash('message');
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

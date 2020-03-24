@@ -1,6 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #545454;
 }
 
 a {
@@ -33,33 +34,30 @@ h2 {
 }
 
 button {
-  background-color: transparent;
+  background-color: white;
   outline: none;
 }
 
 .button {
-    width: auto;
-    padding: 5px 10px;
-    margin-top: 20px;
-    display: block;
-    border: 0;
-    font-size: 24px;
-    text-transform: uppercase;
-    font-weight: 400;
-    background-color: rgb(255, 76, 76, 0.5);
-    color: white;
+  padding: 5px 10px;
+  margin-top: 20px;
+  border: 0;
+  font-size: 24px;
+  text-transform: uppercase;
+  font-weight: 400;
+  background-color: rgb(255, 76, 76, 0.5);
+  color: white;
 }
 
 .small-button {
-  width: auto;
   padding: 5px 10px;
   margin-top: 10px;
-  display: block;
-  border: 1;
+  border-width: 1px;
   font-size: 11px;
   text-transform: uppercase;
   font-weight: 400;
   background-color: rgb(255, 255, 255, 0.5);
+  color: #545454;
 }
 
 .delete-button {

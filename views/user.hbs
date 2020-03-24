@@ -1,26 +1,33 @@
 <main id="user">
+
   <h1>User profile</h1>
-  <form action="{{user.id}}/update" method="post">
-    <label for="username">User:</label><br>
-    <input type="text" name="username" value="{{user.username}}"><br>
-    <p>Created at: {{user.created_at}}</p>
-    <p>Updated at: {{user.updated_at}}</p>
-    <button class="button" type="submit">Save</button>
-  </form>
+
+  <a href="/users/logout">
+    <button class="small-button">Logout</button>
+  </a>
   <form action="{{user.id}}/delete" method="post">
     <button class="delete-button" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
   </form>
-  <br>
-  <form action="/" method="post"></form>
-    <h2>Change password:</h2>
-    <label for="current-password">Current password:</label><br>
-    <input type="password" name="current-password" placeholder="**********"><br>
-    <label for="new-password">New password:</label><br>
-    <input type="password" name="new-password" placeholder="**********"><br>
-    <label for="confirm-password">Confirm new password:</label><br>
-    <input type="password" name="confirm-password" placeholder="**********"><br>
-    <button class="button" type="submit">Change password</button>
+
+  <form action="{{user.id}}" method="post">
+    <label for="username">Username:</label><br>
+    <input type="text" name="username" value="{{user.username}}"><br>
+    <p>Created on {{user.created_at}}</p>
+    <p>Updated on {{user.updated_at}}</p>
+    <button id="submit-button" class="button" type="submit">Save Changes</button>
   </form>
+
+  <a href="/users/{{user.id}}/password">
+    <button class="small-button">Change Password</button>
+  </a>
+
+  {{#each messages}}
+  <div id="message">{{this}}</div>
+  {{/each}}
+  
+  {{#if error}}
+  <div id="error-message">{{error}}</div>
+  {{/if}}
 </main>
 
 <script>

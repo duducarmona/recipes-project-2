@@ -1,11 +1,10 @@
 const express = require('express');
 
 const router = express.Router();
-
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
-const bcryptSalt = 10;
+const bcryptSalt = process.env.SALT;
 
 router.get('/', (req, res) => {
   res.render('index', {
@@ -37,9 +36,7 @@ router.post('/', (req, res, next) => {
         });
       }
     })
-    .catch((error) => {
-      next(error);
-    });
+    .catch(next);
 });
 
 router.get('/register', (req, res) => {
@@ -72,12 +69,10 @@ router.post('/register', (req, res, next) => {
             req.app.locals.currentUser = req.session.currentUser;
             res.redirect('/recipes');
           })
-          .catch((error) => next(error));
+          .catch(next);
       }
     })
-    .catch((error) => {
-      next(error);
-    });
+    .catch(next);
 });
 
 router.get('/forgot', (req, res) => {
