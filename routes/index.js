@@ -1,12 +1,15 @@
 const express = require('express');
 
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const User = require('../models/User');
 
 const bcryptSalt = process.env.SALT;
+const bcrypt = require('bcrypt');
 
-router.get('/', (req, res) => {
+const middleware = require('../helpers/redirectMiddleware');
+
+const User = require('../models/User');
+
+router.get('/', middleware.redirectSignedInUser, (req, res) => {
   res.render('index', {
     layout: 'layout-no-nav',
     title: 'Better Chef',
@@ -39,7 +42,7 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/register', (req, res) => {
+router.get('/register', middleware.redirectSignedInUser, (req, res) => {
   res.render('register', {
     layout: 'layout-no-nav',
     title: 'Better Chef',
@@ -75,7 +78,7 @@ router.post('/register', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/forgot', (req, res) => {
+router.get('/forgot', middleware.redirectSignedInUser, (req, res) => {
   res.render('forgot', {
     layout: 'layout-no-nav',
     title: 'Better Chef',

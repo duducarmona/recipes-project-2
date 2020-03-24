@@ -1,11 +1,14 @@
 const express = require('express');
-const Recipe = require('../models/Recipe');
-const Ingredient = require('../models/Ingredient');
-const middleware = require('../helpers/authMiddleware');
-const help = require('../helpers/help');
 
 const router = express.Router();
-router.use(middleware.checkIfUserLoggedIn);
+
+const middleware = require('../helpers/redirectMiddleware');
+const help = require('../helpers/help');
+
+const Ingredient = require('../models/Ingredient');
+const Recipe = require('../models/Recipe');
+
+router.use(middleware.redirectUnauthorizedUser);
 
 // GET /recipes
 router.get('/', (req, res, next) => {
