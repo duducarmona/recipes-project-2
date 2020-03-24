@@ -63,12 +63,16 @@ app.use(session({
   }),
   secret: 'recipes-to-make-it-all-better',
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
   name: process.env.COOKIE_NAME,
   cookie: { maxAge: 24 * 60 * 60 * 1000 },
 }));
 
 app.use(flash());
+app.use((req, res, next) => {
+  res.locals.messages = req.flash('message');
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

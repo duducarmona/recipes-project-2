@@ -37,6 +37,7 @@ router.post('/:id', (req, res, next) => {
     username,
   })
     .then(() => {
+      req.flash('message', 'User updated!');
       res.redirect(`/users/${id}`);
     })
     .catch(next);
@@ -64,7 +65,7 @@ router.post('/:id/password', (req, res, next) => {
   } = req.body;
 
   if (newPassword !== confirmPassword) {
-    console.log('passwords don\'t match');
+    req.flash('message', 'New password and confirm didn\'t match. Please try again.');
     res.redirect(`/users/${id}/password`);
   } else {
     User.findById(id)
@@ -72,20 +73,17 @@ router.post('/:id/password', (req, res, next) => {
         if (bcrypt.compareSync(password, user.hashedPassword)) {
           const salt = bcrypt.genSaltSync(bcryptSalt);
           const hashedPassword = bcrypt.hashSync(newPassword, salt);
-          console.log('old hashed pass', user.hashedPassword);
-          console.log('new hashed pass', hashedPassword);
           User.findByIdAndUpdate(id, {
             hashedPassword,
           })
-            .then((response) => {
-              console.log('password updated', response);
+            .then(() => {
+              req.flash('message', 'Password updated!');
+              res.redirect(`/users/${id}/password`);
             });
         } else {
-          console.log('wrong password');
+          req.flash('message', 'Wrong password. Please try again.');
+          res.redirect(`/users/${id}/password`);
         }
-      })
-      .then(() => {
-        res.redirect(`/users/${id}/password`);
       })
       .catch(next);
   }

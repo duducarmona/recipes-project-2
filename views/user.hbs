@@ -21,6 +21,10 @@
     <button class="small-button">Change Password</button>
   </a>
 
+  {{#each messages}}
+  <div id="message">{{this}}</div>
+  {{/each}}
+  
   {{#if error}}
   <div id="error-message">{{error}}</div>
   {{/if}}
