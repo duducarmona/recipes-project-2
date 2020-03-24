@@ -61,7 +61,7 @@ app.use(session({
     mongooseConnection: mongoose.connection,
     ttl: 24 * 60 * 60, // 1 day
   }),
-  secret: 'basic-auth-secret',
+  secret: 'recipes-to-make-it-all-better',
   resave: true,
   saveUninitialized: false,
   name: process.env.COOKIE_NAME,
