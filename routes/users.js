@@ -1,10 +1,15 @@
 const express = require('express');
 
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const User = require('../models/User');
 
 const bcryptSalt = process.env.SALT;
+const bcrypt = require('bcrypt');
+
+const middleware = require('../helpers/authMiddleware');
+
+const User = require('../models/User');
+
+router.use(middleware.redirectUnauthorizedUser);
 
 // GET /users/logout
 router.get('/logout', (req, res, next) => {

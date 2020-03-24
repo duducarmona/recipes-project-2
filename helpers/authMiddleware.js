@@ -1,4 +1,12 @@
-function checkIfUserLoggedIn(req, res, next) {
+function redirectSignedInUser(req, res, next) {
+  if (req.session.currentUser) {
+    res.redirect('/recipes');
+  } else {
+    next();
+  }
+}
+
+function redirectUnauthorizedUser(req, res, next) {
   if (req.session.currentUser) {
     next();
   } else {
@@ -7,5 +15,6 @@ function checkIfUserLoggedIn(req, res, next) {
 }
 
 module.exports = {
-  checkIfUserLoggedIn,
+  redirectSignedInUser,
+  redirectUnauthorizedUser,
 };
