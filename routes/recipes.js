@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const middleware = require('../helpers/authMiddleware');
+const middleware = require('../helpers/redirectMiddleware');
 const help = require('../helpers/help');
 
 const Ingredient = require('../models/Ingredient');

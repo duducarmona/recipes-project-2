@@ -5,7 +5,7 @@ const router = express.Router();
 const bcryptSalt = process.env.SALT;
 const bcrypt = require('bcrypt');
 
-const middleware = require('../helpers/authMiddleware');
+const middleware = require('../helpers/redirectMiddleware');
 
 const User = require('../models/User');
 
