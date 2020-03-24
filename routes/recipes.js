@@ -37,18 +37,17 @@ router.get('/add', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const {
     title,
-    userId,
     image,
     ingredient,
     amount,
     unit,
     steps,
   } = req.body;
-
+  const user = req.session.currentUser._id;
   const instructions = help.collect(steps);
   Recipe.create({
     title,
-    userId,
+    user,
     image,
     ingredients: [{
       ingredient,
