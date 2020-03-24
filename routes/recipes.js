@@ -62,10 +62,37 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
-
 // GET /recipes/find
 router.get('/find', (req, res) => {
   res.render('find');
+});
+
+// GET /recipes/:username
+router.get('/:username', (req, res, next) => {
+  const { username } = req.params;
+  Recipe.aggregate(
+    [
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      {
+        $match: {
+          'user.username': username,
+        },
+      },
+    ],
+    (err, recipes) => {
+      res.render('myrecipes', {
+        recipes,
+      });
+    },
+  )
+    .catch(next);
 });
 
 // POST /recipes/:id/delete
