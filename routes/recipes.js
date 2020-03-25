@@ -17,6 +17,7 @@ router.get('/', (req, res, next) => {
     .then((recipes) => {
       res.render('recipes', {
         recipes,
+        title: 'Recipes',
       });
     })
     .catch(next);
@@ -66,8 +67,8 @@ router.get('/find', (req, res) => {
 });
 
 // GET /recipes/:username
-router.get('/user/:username', (req, res, next) => {
-  const { username } = req.params;
+router.get('/:username', (req, res, next) => {
+  const { username } = res.locals.currentUser;
   Recipe.aggregate(
     [
       {
@@ -83,10 +84,31 @@ router.get('/user/:username', (req, res, next) => {
           'user.username': username,
         },
       },
+      { $unwind: '$ingredients' },
+      {
+        $lookup: {
+          from: 'ingredients',
+          localField: 'ingredients.ingredient',
+          foreignField: '_id',
+          as: 'ingredients.ingredient',
+        },
+      },
+      { $unwind: '$ingredients.ingredient' },
+      {
+        $group: {
+          _id: '$_id',
+          title: { $first: '$title' },
+          user: { $first: '$user' },
+          image: { $first: '$image' },
+          ingredients: { $push: '$ingredients' },
+          instructions: { $first: '$instructions' },
+        },
+      },
     ],
     (err, recipes) => {
-      res.render('myrecipes', {
+      res.render('recipes', {
         recipes,
+        title: 'My recipes',
       });
     },
   )
