@@ -66,7 +66,7 @@ router.get('/find', (req, res) => {
 });
 
 // GET /recipes/:username
-router.get('/:username', (req, res, next) => {
+router.get('/user/:username', (req, res, next) => {
   const { username } = req.params;
   Recipe.aggregate(
     [
