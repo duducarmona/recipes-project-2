@@ -7,6 +7,7 @@ const help = require('../helpers/help');
 
 const Ingredient = require('../models/Ingredient');
 const Recipe = require('../models/Recipe');
+const User = require('../models/User');
 
 router.use(middleware.redirectUnauthorizedUser);
 
@@ -66,9 +67,19 @@ router.get('/find', (req, res) => {
   res.render('find');
 });
 
-// GET /recipes/:username
-router.get('/:username', (req, res, next) => {
-  const { username } = res.locals.currentUser;
+// GET /recipes/users/:username
+router.get('/users/:username', (req, res, next) => {
+  const { username } = req.params;
+  User.findOne({ username })
+    .then((user) => {
+      if (user) {
+        console.log('proceed');
+      } else {
+        console.log('user doesnt exist');
+      }
+    })
+    .catch(next);
+
   Recipe.aggregate(
     [
       {
