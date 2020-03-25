@@ -9,23 +9,31 @@
   </form>
   <div class="recipe-card">
     <div class="recipe-image-container">
-      <img class="recipe-image" src="{{recipe.image}}" />
+      <img class="recipe-image" src="{{recipe.image}}" alt="recipe image"/>
     </div>
     <div>
       <span><strong>Ingredients</strong></span>
       <div class="ingredient-list">
-        {{#each recipe.ingredients}}
-        {{this.ingredient.name}}
-        {{this.amount}}
-        {{this.unit}}
-        {{/each}}
+        <ul>
+          {{#each recipe.ingredients}}
+            <li>
+              {{this.ingredient.name}}
+              {{this.amount}}
+              {{this.unit}}
+            </li>
+          {{/each}}
+        </ul>
       </div>
       <span><strong>Instructions</strong></span>
       <div class="instructions">
-        {{#each recipe.instructions}}
-        {{this.number}}
-        {{this.step}}
-        {{/each}}
+        <ul>
+          {{#each recipe.instructions}}
+            <li>
+              {{this.number}}
+              {{this.step}}
+            </li>
+          {{/each}}
+        </ul>
       </div>
     </div>
   </div>
