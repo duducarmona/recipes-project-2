@@ -12,7 +12,7 @@ router.use(middleware.redirectUnauthorizedUser);
 
 // GET /recipes
 router.get('/', (req, res, next) => {
-  Recipe.find()
+  Recipe.find().sort('title')
     .populate('ingredients.ingredient')
     .then((recipes) => {
       res.render('recipes', {
