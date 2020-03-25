@@ -45,15 +45,13 @@ router.post('/', (req, res, next) => {
   } = req.body;
   const user = req.session.currentUser._id;
   const instructions = help.collect(steps);
+  const ingredients = help.ingredientsToObjects(ingredient, amount, unit);
+
   Recipe.create({
     title,
     user,
     image,
-    ingredients: [{
-      ingredient,
-      amount,
-      unit,
-    }],
+    ingredients,
     instructions,
   })
     .then(() => {
