@@ -10,7 +10,6 @@
     <input type="text" name="image" value="{{recipe.image}}"><br>
 
       {{#each recipe.ingredients}}  
-{{{json .}}}
       <div id="ingredient">
       <label for="ingredient">Ingredient:</label><br>
       <select name="ingredient">
@@ -29,6 +28,7 @@
       <button class="small-button">Remove ingredient</button>
       </div>
       {{/each}}
+      <button class="small-button" type="button" id="add-ingredient">Add another ingredient</button>
 
     <p>Instructions</p>
     <ol id="steps">
@@ -48,32 +48,12 @@
   </form>
 </main>
 
+{{> add_remove_steps}}
+{{> add_remove_ingredients}}
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const selectedIngredientId = {{{ json recipe.ingredients.[0].ingredient._id }}};
     const selectedIngredient = document.querySelector(`select option[value='${selectedIngredientId}']`);
     selectedIngredient.selected = true;
-
-    {{!-- Step controller --}}
-    const steps = document.getElementById('steps');
-    document.getElementById('add-step').addEventListener('click', () => {
-
-      {{!-- Add step --}}
-      const newStep = document.createElement('li');
-      newStep.innerHTML = `
-      <input class="step" type="text" name="steps">
-      <button class="delete-button delete-step" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button><br>
-      `;
-      steps.appendChild(newStep);
-
-      {{!-- Delete step --}}
-      document.querySelectorAll('.delete-step').forEach(deleteButton => {
-        deleteButton.addEventListener('click', () => {
-          const rowToDelete = deleteButton.parentNode;
-          deleteButton.parentNode.parentNode.removeChild(rowToDelete);
-        });
-      });
-      
-    });
-  });
 </script>
