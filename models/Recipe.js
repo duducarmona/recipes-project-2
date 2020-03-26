@@ -15,7 +15,10 @@ const recipeSchema = new Schema({
   image: String,
   ingredients: [{
     _id: false,
-    ingredient: { type: Schema.Types.ObjectId, ref: 'Ingredient' },
+    ingredient: {
+      type: Schema.Types.ObjectId,
+      ref: 'Ingredient',
+    },
     amount: Number,
     unit: String,
   }],

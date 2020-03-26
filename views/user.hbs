@@ -30,15 +30,4 @@
   {{/if}}
 </main>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.delete-button').forEach(deleteButton => {
-      deleteButton.addEventListener('click', () => {
-        let confirmDelete = confirm('OK to delete?');
-        if (confirmDelete) {
-          deleteButton.parentNode.submit();
-        }
-      });
-    });
-  });
-</script>
+{{> confirm_on_delete_script}}

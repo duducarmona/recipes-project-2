@@ -32,7 +32,10 @@ mongoose
   });
 
 app.set('views', path.join(__dirname, 'views'));
+
 app.set('view engine', 'hbs');
+
+hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 hbs.registerHelper('ifEqual', (a, b, options) => {
   if (a === b) {
@@ -71,6 +74,13 @@ app.use(session({
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.messages = req.flash('message');
+  next();
+});
+
+app.use((req, res, next) => {
+  if (req.session.currentUser) {
+    res.locals.currentUser = req.session.currentUser;
+  }
   next();
 });
 

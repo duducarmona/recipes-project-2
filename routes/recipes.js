@@ -7,16 +7,18 @@ const help = require('../helpers/help');
 
 const Ingredient = require('../models/Ingredient');
 const Recipe = require('../models/Recipe');
+const User = require('../models/User');
 
 router.use(middleware.redirectUnauthorizedUser);
 
 // GET /recipes
 router.get('/', (req, res, next) => {
-  Recipe.find()
+  Recipe.find().sort('title')
     .populate('ingredients.ingredient')
     .then((recipes) => {
       res.render('recipes', {
         recipes,
+        title: 'Recipes',
       });
     })
     .catch(next);
@@ -37,20 +39,19 @@ router.get('/add', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const {
     title,
-    userId,
     image,
     ingredient,
     amount,
     unit,
     steps,
   } = req.body;
-
+  const user = req.session.currentUser._id;
   const instructions = help.collect(steps);
   const ingredients = help.ingredientsToObjects(ingredient, amount, unit);
 
   Recipe.create({
     title,
-    userId,
+    user,
     image,
     ingredients,
     instructions,
@@ -61,10 +62,68 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
-
 // GET /recipes/find
 router.get('/find', (req, res) => {
   res.render('find');
+});
+
+// GET /recipes/users/:username
+router.get('/users/:username', (req, res, next) => {
+  const { username } = req.params;
+  User.findOne({ username })
+    .then((user) => {
+      if (user) {
+        console.log('proceed');
+      } else {
+        console.log('user doesnt exist');
+      }
+    })
+    .catch(next);
+
+  Recipe.aggregate(
+    [
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      {
+        $match: {
+          'user.username': username,
+        },
+      },
+      { $unwind: '$ingredients' },
+      {
+        $lookup: {
+          from: 'ingredients',
+          localField: 'ingredients.ingredient',
+          foreignField: '_id',
+          as: 'ingredients.ingredient',
+        },
+      },
+      { $unwind: '$ingredients.ingredient' },
+      {
+        $group: {
+          _id: '$_id',
+          title: { $first: '$title' },
+          user: { $first: '$user' },
+          image: { $first: '$image' },
+          ingredients: { $push: '$ingredients' },
+          instructions: { $first: '$instructions' },
+        },
+      },
+    ],
+    (err, recipes) => {
+      res.render('recipes', {
+        recipes,
+        title: 'My recipes',
+      });
+    },
+  )
+    .catch(next);
 });
 
 // POST /recipes/:id/delete

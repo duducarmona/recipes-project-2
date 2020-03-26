@@ -1,10 +1,10 @@
 <main id="recipe">
 
   <h1>{{recipe.title}}</h1>
-  <a href="{{recipe.id}}/update">
+  <a href="/recipes/{{recipe.id}}/update">
     <img src="/images/edit-icon-20.png" alt="edit icon" />
   </a>
-  <form action="{{recipe.id}}/delete" method="post">
+  <form action="/recipes/{{recipe.id}}/delete" method="post">
     <button class="delete-button" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
   </form>
   <div class="recipe-card">
@@ -47,14 +47,4 @@
 <div id="error-message">{{error}}</div>
 {{/if}}
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const deleteButton = document.querySelector('.delete-button');
-    deleteButton.addEventListener('click', () => {
-      let confirmDelete = confirm('OK to delete?');
-      if (confirmDelete) {
-        deleteButton.parentNode.submit();
-      }
-    });
-  });
-</script>
+{{> confirm_on_delete_script}}
