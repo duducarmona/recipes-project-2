@@ -24,16 +24,24 @@ function ingredientsToObjects(ingredients, amounts, units) {
   let amount;
   let unit;
 
-  for (let index = 0; index < ingredients.length; index += 1) {
-    ingredient = ingredients[index];
-    amount = amounts[index];
-    unit = units[index];
-
+  if (typeof ingredients === 'string') {
     ingredientsObject.push({
-      ingredient,
-      amount,
-      unit,
+      ingredient: ingredients,
+      amount: amounts,
+      unit: units,
     });
+  } else {
+    for (let index = 0; index < ingredients.length; index += 1) {
+      ingredient = ingredients[index];
+      amount = amounts[index];
+      unit = units[index];
+
+      ingredientsObject.push({
+        ingredient,
+        amount,
+        unit,
+      });
+    }
   }
 
   return ingredientsObject;
