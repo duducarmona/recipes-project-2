@@ -79,7 +79,8 @@ app.use('/users', usersRouter);
 app.use('/recipes', recipesRouter);
 
 app.use((req, res, next) => {
-  next(createError(404));
+  // next(createError(404));
+  res.render('error');
 });
 
 app.use((err, req, res) => {
