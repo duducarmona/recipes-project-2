@@ -9,7 +9,8 @@
     <label for="image">Image:</label><br>
     <input type="text" name="image" value="{{recipe.image}}"><br>
 
-      {{#each recipe.ingredients}}  
+      {{#each recipe.ingredients}}
+      {{json .}}
       <div id="ingredient">
       <label for="ingredient">Ingredient:</label><br>
       <select name="ingredient">
@@ -53,7 +54,13 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const selectedIngredientId = {{{ json recipe.ingredients.[0].ingredient._id }}};
-    const selectedIngredient = document.querySelector(`select option[value='${selectedIngredientId}']`);
-    selectedIngredient.selected = true;
+    const ingredientSelectors = document.querySelectorAll('select');
+    ingredientSelectors.forEach((selector, index) => {
+      console.log(index);
+    })
+  })
 </script>
+
+    {{!-- const selectedIngredientId = {{{ json recipe.ingredients.[0].ingredient._id }}}; --}}
+    {{!-- const selectedIngredient = document.querySelector(`select option[value='${selectedIngredientId}']`); --}}
+    {{!-- selectedIngredient.selected = true; --}}
