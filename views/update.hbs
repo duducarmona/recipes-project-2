@@ -4,21 +4,22 @@
 
   <form action="/recipes/{{recipe.id}}" method="post">
     <label for="title">Title:</label><br>
-    <input type="text" name="title" value="{{recipe.title}}"><br>
+    <input type="text" name="title" value="{{recipe.title}}" required><br>
 
     <label for="image">Image:</label><br>
     <input type="text" name="image" value="{{recipe.image}}"><br>
 
-    <div id="ingredient">
+      {{#each recipe.ingredients}}  
+{{{json .}}}
+      <div id="ingredient">
       <label for="ingredient">Ingredient:</label><br>
       <select name="ingredient">
           <option value="">--Please choose an ingredient--</option>
-          {{#each ingredients}}
+          {{#each ../ingredients}}
           <option class="options" value={{this._id}}>{{this.name}}</option>
           {{/each}}
       </select><br>
 
-      {{#each recipe.ingredients}}
       <label for="amount">Amount:</label><br>
       <input type="number" name="amount" value="{{this.amount}}"><br>
 
@@ -26,14 +27,17 @@
       <input type="text" name="unit" value="{{this.unit}}"><br>
 
       <button class="small-button">Remove ingredient</button>
+      </div>
       {{/each}}
-    </div>
 
     <p>Instructions</p>
     <ol id="steps">
       {{#each recipe.instructions}}
       <li>
-        <input class="step" type="text" name="steps" value="{{this.step}}"><br>
+        <input class="step" type="text" name="steps" value="{{this.step}}">
+        <button class="delete-button delete-step" type="button">
+          <img src="/images/trash-icon-20.png" alt="trash icon"/>
+        </button>
       </li>
       {{/each}}
     </ol>
@@ -53,7 +57,10 @@
     const steps = document.getElementById('steps');
     document.getElementById('add-step').addEventListener('click', () => {
       const newStep = document.createElement('li');
-      newStep.innerHTML = `<input class="step" type="text" name="steps"><br>`;
+      newStep.innerHTML = `
+      <input class="step" type="text" name="steps">
+      <button class="delete-button delete-step" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button><br>
+      `;
       steps.appendChild(newStep);
     });
   });
