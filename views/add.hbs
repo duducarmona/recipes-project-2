@@ -49,8 +49,12 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+
+    {{!-- Step controller --}}
     const steps = document.getElementById('steps');
     document.getElementById('add-step').addEventListener('click', () => {
+
+      {{!-- Add step --}}
       const newStep = document.createElement('li');
       newStep.innerHTML = `
       <input class="step" type="text" name="steps">
@@ -67,9 +71,11 @@
       });
     });
 
-    {{!-- Add ingredient --}}
+    {{!-- Ingredient controller --}}
     const addIngredient = document.getElementById('add-ingredient');
     document.getElementById('add-ingredient').addEventListener('click', () => {
+
+      {{!-- Add ingredient --}}
       const newIngredient = document.createElement('div');
       newIngredient.classList.add("ingredient");
       newIngredient.innerHTML = `
@@ -88,7 +94,6 @@
       <input type="text" name="unit"><br>
       <button class="delete-button delete-ingredient" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
       `;
-      
       addIngredient.insertAdjacentElement('beforebegin', newIngredient);
 
       {{!-- Delete ingredient --}}
