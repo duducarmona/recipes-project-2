@@ -66,9 +66,6 @@
       document.querySelectorAll('.delete-step').forEach(deleteButton => {
         deleteButton.addEventListener('click', () => {
           const rowToDelete = deleteButton.parentNode;
-          confirm(rowToDelete.innerHTML);
-
-
           deleteButton.parentNode.parentNode.removeChild(rowToDelete);
         });
       });
