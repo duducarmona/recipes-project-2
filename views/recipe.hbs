@@ -39,14 +39,4 @@
 <div id="error-message">{{error}}</div>
 {{/if}}
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const deleteButton = document.querySelector('.delete-button');
-    deleteButton.addEventListener('click', () => {
-      let confirmDelete = confirm('OK to delete?');
-      if (confirmDelete) {
-        deleteButton.parentNode.submit();
-      }
-    });
-  });
-</script>
+{{> confirm_on_delete_script}}
