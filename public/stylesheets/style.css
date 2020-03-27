@@ -60,6 +60,7 @@ button {
   color: #545454;
 }
 
-.delete-button {
+.delete-button,
+.favorite-button {
   border: 0;
 }

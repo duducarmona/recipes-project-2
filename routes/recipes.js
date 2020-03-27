@@ -15,6 +15,7 @@ router.use(middleware.redirectUnauthorizedUser);
 router.get('/', (req, res, next) => {
   Recipe.find().sort('title')
     .populate('ingredients.ingredient')
+    .populate('user')
     .then((recipes) => {
       res.render('recipes', {
         recipes,

@@ -113,4 +113,19 @@ router.post('/:id/delete', (req, res, next) => {
     .catch(next);
 });
 
+// POST /users/:id/favorites
+router.post('/:id/favorites', (req, res, next) => {
+  const { id } = req.params;
+  const { recipeId } = req.body;
+  console.log(recipeId);
+  User.findByIdAndUpdate(id, {
+    $push: { favorites: recipeId },
+  })
+    .then(() => {
+      console.log(`Added recipe ${recipeId} to favorites`);
+      res.sendStatus(200);
+    })
+    .catch(next);
+});
+
 module.exports = router;
