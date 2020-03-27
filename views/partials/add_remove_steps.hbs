@@ -1,0 +1,32 @@
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const steps = document.getElementById('steps');
+
+    {{!-- Add step --}}
+    document.getElementById('add-step').addEventListener('click', () => {
+      const newStep = document.createElement('li');
+      newStep.innerHTML = `
+      <input class="step" type="text" name="steps">
+      <button class="delete-button delete-step" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button><br>
+      `;
+      steps.appendChild(newStep);
+
+      {{!-- Delete added step --}}
+      newDeleteButton = newStep.querySelector('.delete-step');
+      addDeleteListener(newDeleteButton);
+    });
+
+    {{!-- Delete existing step --}}
+    document.querySelectorAll('.delete-step').forEach(deleteButton => {
+      addDeleteListener(deleteButton);
+    });
+  });
+
+  {{!-- Delete listener and action --}}
+  addDeleteListener = (deleteButton) => {
+    deleteButton.addEventListener('click', () => {
+      const rowToDelete = deleteButton.parentNode;
+      deleteButton.parentNode.parentNode.removeChild(rowToDelete);
+    });
+  };
+</script>

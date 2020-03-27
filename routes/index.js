@@ -29,6 +29,7 @@ router.post('/', (req, res, next) => {
         });
       } else if (bcrypt.compareSync(password, user.hashedPassword)) {
         req.session.currentUser = user;
+        res.locals.currentUser = req.session.currentUser;
         res.redirect('/recipes');
       } else {
         res.render('index', {
@@ -68,6 +69,7 @@ router.post('/register', (req, res, next) => {
         })
           .then((newUser) => {
             req.session.currentUser = newUser;
+            res.locals.currentUser = req.session.currentUser;
             res.redirect('/recipes');
           })
           .catch(next);
