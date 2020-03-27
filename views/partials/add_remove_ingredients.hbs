@@ -1,10 +1,9 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const ingredients = document.getElementById('ingredients');
 
-    const addIngredient = document.getElementById('add-ingredient');
+    {{!-- Add ingredient --}}
     document.getElementById('add-ingredient').addEventListener('click', () => {
-
-      {{!-- Add ingredient --}}
       const newIngredient = document.createElement('div');
       newIngredient.classList.add("ingredient");
       newIngredient.innerHTML = `
@@ -23,17 +22,24 @@
       <input type="text" name="unit"><br>
       <button class="delete-button delete-ingredient" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
       `;
-      addIngredient.insertAdjacentElement('beforebegin', newIngredient);
+      ingredients.appendChild(newIngredient);
 
-      {{!-- Delete ingredient --}}
-      document.querySelectorAll('.delete-ingredient').forEach(deleteButton => {
-        deleteButton.addEventListener('click', () => {
-          const rowToDelete = deleteButton.parentNode;
+      {{!-- Delete added ingredient --}}
+      newDeleteButton = newIngredient.querySelector('.delete-ingredient');
+      addDeleteListener(newDeleteButton);
+    });
 
-          deleteButton.parentNode.parentNode.removeChild(rowToDelete);
-        });
-      });
-      
+    {{!-- Delete existing ingredient --}}
+    document.querySelectorAll('.delete-ingredient').forEach(deleteButton => {
+      addDeleteListener(deleteButton);
     });
   });
+
+  {{!-- Delete listener and action --}}
+  addDeleteListener = (deleteButton) => {
+    deleteButton.addEventListener('click', () => {
+      const rowToDelete = deleteButton.parentNode;
+      deleteButton.parentNode.parentNode.removeChild(rowToDelete);
+    });
+  };
 </script>
