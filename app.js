@@ -32,26 +32,21 @@ mongoose
   });
 
 app.set('views', path.join(__dirname, 'views'));
-
 app.set('view engine', 'hbs');
 
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
-hbs.registerHelper('ifEqual', (a, b, options) => {
-  if (a === b) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
-
-hbs.registerHelper('ifNotEqual', (a, b, options) => {
-  if (a !== b) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
-
 hbs.registerHelper('json', (object) => JSON.stringify(object));
+
+hbs.registerHelper('createOption', (recipeIngredient, listIngredient, ingredientName) => {
+  let option;
+  if (listIngredient.toString() === recipeIngredient.toString()) {
+    option = `<option class="options" value=${listIngredient} selected>${ingredientName}</option>`;
+  } else {
+    option = `<option class="options" value=${listIngredient}>${ingredientName}</option>`;
+  }
+  return new hbs.handlebars.SafeString(option);
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -89,11 +84,10 @@ app.use('/users', usersRouter);
 app.use('/recipes', recipesRouter);
 
 app.use((req, res, next) => {
-  // next(createError(404));
-  res.render('error');
+  next(createError(404));
 });
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

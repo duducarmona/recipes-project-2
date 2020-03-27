@@ -2,6 +2,9 @@
 
   <h1>Edit recipe</h1>
 
+{{#renderVars x y}}
+{{/renderVars}}
+
   <form action="/recipes/{{recipe.id}}" method="post">
     <label for="title">Title:</label><br>
     <input type="text" name="title" value="{{recipe.title}}" required><br>
@@ -10,16 +13,17 @@
     <input type="text" name="image" value="{{recipe.image}}"><br>
 
       {{#each recipe.ingredients}}
-      {{json .}}
+
       <div id="ingredient">
       <label for="ingredient">Ingredient:</label><br>
       <select name="ingredient">
           <option value="">--Please choose an ingredient--</option>
           {{#each ../ingredients}}
-          <option class="options" value={{this._id}}>{{this.name}}</option>
+          {{#createOption ../this.ingredient._id this._id this.name}}
+          {{/createOption}}
+          {{!-- <option class="options" value={{this._id}}>{{this.name}}</option> --}}
           {{/each}}
       </select><br>
-
       <label for="amount">Amount:</label><br>
       <input type="number" name="amount" value="{{this.amount}}"><br>
 
@@ -57,10 +61,13 @@
     const ingredientSelectors = document.querySelectorAll('select');
     ingredientSelectors.forEach((selector, index) => {
       console.log(index);
+
+      const selectedIngredientId = {{{ json recipe.ingredients.[2].ingredient._id }}};
+      console.log(selectedIngredientId);
+
+      const selectedIngredient = document.querySelector(`select option[value='${selectedIngredientId}']`);
+      selectedIngredient.selected = true;
     })
   })
 </script>
 
-    {{!-- const selectedIngredientId = {{{ json recipe.ingredients.[0].ingredient._id }}}; --}}
-    {{!-- const selectedIngredient = document.querySelector(`select option[value='${selectedIngredientId}']`); --}}
-    {{!-- selectedIngredient.selected = true; --}}
