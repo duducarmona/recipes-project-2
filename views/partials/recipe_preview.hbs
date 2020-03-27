@@ -13,7 +13,7 @@
       </a>
       <form class="favorites-form" action="/users/{{@root.currentUser._id}}/favorites" method="post">
         <input type="hidden" name="recipeId" value="{{this._id}}">
-        <button class="favorite-button" type="button"><img src="/images/heart-icon-outline-20.png" alt="outlined heart icon" /></button>
+        <button class="favorite-button" type="submit"><img src="/images/heart-icon-outline-20.png" alt="outlined heart icon" /></button>
       </form>
     </div>
     <ul>

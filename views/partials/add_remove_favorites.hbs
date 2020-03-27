@@ -1,12 +1,27 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.favorite-button').forEach(favoriteButton => {
-      favoriteButton.addEventListener('click', (e) => {
+
+    const favoritesForm = document.querySelector('.favorites-form');
+    
+    favoritesForm.addEventListener('submit', (event) => {
+      const target = event.target;
+      alert('foo');
+
+      fetch(favoritesForm.action, {
+        method: favoritesForm.method,
+        body: new URLSearchParams(new FormData(favoritesForm)),
+      })
+
+      event.preventDefault();
+    })
+
+    {{!-- const favoriteButton = document.querySelector('.favorite-button');
+    favoriteButton.addEventListener('click', (e) => {
         let confirmFavorite = confirm('OK to add to favorites?');
         if (confirmFavorite) {
           favoriteButton.parentNode.submit();
         }
-      });
-    });
+      }); --}}
+    
   });
 </script>
