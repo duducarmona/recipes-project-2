@@ -173,7 +173,6 @@ router.post('/:id', (req, res, next) => {
   const { id } = req.params;
   const {
     title,
-    userId,
     image,
     ingredient,
     amount,
@@ -182,15 +181,12 @@ router.post('/:id', (req, res, next) => {
   } = req.body;
 
   const instructions = help.collect(steps);
+  const ingredients = help.ingredientsToObjects(ingredient, amount, unit);
+
   Recipe.findByIdAndUpdate(id, {
     title,
-    userId,
     image,
-    ingredients: [{
-      ingredient,
-      amount,
-      unit,
-    }],
+    ingredients,
     instructions,
   })
     .then(() => {
