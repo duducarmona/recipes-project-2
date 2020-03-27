@@ -10,7 +10,7 @@
     <input type="text" name="image"><br>
 
     <p>Ingredients</p>
-    <div id="ingredient" class="ingredient">
+    <div class="ingredient">
       <label for="ingredient">Ingredient:</label><br>
       <select name="ingredient" required>
           <option value="">--Please choose an ingredient--</option>
@@ -24,21 +24,20 @@
 
       <label for="unit">Unit:</label><br>
       <input type="text" name="unit"><br>
+      
       <button class="delete-button delete-ingredient" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
     </div>
     <button class="small-button" type="button" id="add-ingredient">Add another ingredient</button>
 
     <p>Instructions</p>
-    <div>
-      <ol id="steps">
-        <li>
-          <input class="step" type="text" name="steps">
-          <button class="delete-button delete-step" type="button">
-            <img src="/images/trash-icon-20.png" alt="trash icon"/>
-          </button>
-        </li>
-      </ol>
-    </div>
+    <ol id="steps">
+      <li>
+        <input class="step" type="text" name="steps">
+        <button class="delete-button delete-step" type="button">
+          <img src="/images/trash-icon-20.png" alt="trash icon"/>
+        </button>
+      </li>
+    </ol>
     <button class="small-button" type="button" id="add-step">Add step</button>
 
     <br>

@@ -41,9 +41,9 @@ hbs.registerHelper('json', (object) => JSON.stringify(object));
 hbs.registerHelper('createOption', (recipeIngredient, listIngredient, ingredientName) => {
   let option;
   if (listIngredient.toString() === recipeIngredient.toString()) {
-    option = `<option class="options" value=${listIngredient} selected>${ingredientName}</option>`;
+    option = `<option value=${listIngredient} selected>${ingredientName}</option>`;
   } else {
-    option = `<option class="options" value=${listIngredient}>${ingredientName}</option>`;
+    option = `<option value=${listIngredient}>${ingredientName}</option>`;
   }
   return new hbs.handlebars.SafeString(option);
 });
