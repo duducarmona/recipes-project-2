@@ -72,58 +72,21 @@ router.get('/users/:username', (req, res, next) => {
   const { username } = req.params;
   User.findOne({ username })
     .then((user) => {
-      if (user) {
-        console.log('proceed');
+      if (!user) {
+        res.redirect('/recipes');
       } else {
-        console.log('user doesnt exist');
+        console.log('User is', user);
+        Recipe.find({ user })
+          .populate('ingredients.ingredient')
+          .then((recipes) => {
+            res.render('recipes', {
+              recipes,
+              title: 'My recipes',
+            });
+          })
+          .catch(next);
       }
-    })
-    .catch(next);
-
-  Recipe.aggregate(
-    [
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'user',
-          foreignField: '_id',
-          as: 'user',
-        },
-      },
-      {
-        $match: {
-          'user.username': username,
-        },
-      },
-      { $unwind: '$ingredients' },
-      {
-        $lookup: {
-          from: 'ingredients',
-          localField: 'ingredients.ingredient',
-          foreignField: '_id',
-          as: 'ingredients.ingredient',
-        },
-      },
-      { $unwind: '$ingredients.ingredient' },
-      {
-        $group: {
-          _id: '$_id',
-          title: { $first: '$title' },
-          user: { $first: '$user' },
-          image: { $first: '$image' },
-          ingredients: { $push: '$ingredients' },
-          instructions: { $first: '$instructions' },
-        },
-      },
-    ],
-    (err, recipes) => {
-      res.render('recipes', {
-        recipes,
-        title: 'My recipes',
-      });
-    },
-  )
-    .catch(next);
+    });
 });
 
 // POST /recipes/:id/delete
