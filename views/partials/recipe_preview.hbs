@@ -1,17 +1,26 @@
 <div class="recipe">
-
+  
   <a href="recipes/{{this.id}}"><img src="{{this.image}}" /></a>
   <div class="recipe-info">
     <h2>{{this.title}}</h2>
     <div id="buttons"> 
       <a href="/recipes/{{this._id}}">See recipe</a>
-      <a href="/recipes/{{this._id}}/update">
-        <img src="/images/edit-icon-20.png" alt="edit icon" />
-      </a>
       <form action="/recipes/{{this._id}}/delete" method="post">
         <button class="delete-button" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
       </form>
+      <a href="/recipes/{{this._id}}/update">
+        <img src="/images/edit-icon-20.png" alt="edit icon" />
+      </a>
+
+      <form class="favorites-form {{#ifIn this.id @root.currentUser.favorites}}is-favorite{{/ifIn}}" action="/users/{{@root.currentUser._id}}/favorites" method="post">
+        <input type="hidden" name="recipeId" value="{{this._id}}">
+        <button class="favorite-button" type="submit">
+          <img src="/images/heart-icon-outline-20.png" class="{{#ifIn this.id @root.currentUser.favorites}}hidden{{/ifIn}}" alt="outlined heart icon" />
+          <img src="/images/heart-icon-filled-20.png" class="{{#ifNotIn this.id @root.currentUser.favorites}}hidden{{/ifNotIn}}" alt="filled heart icon" />
+        </button>
+      </form>
     </div>
+    
     <ul>
       {{#each this.ingredients}}
       <li>{{this.ingredient.name}}</li>
@@ -19,3 +28,4 @@
     </ul>
   </div>
 </div>
+

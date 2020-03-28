@@ -142,4 +142,39 @@ router.post('/:id/delete', (req, res, next) => {
     .catch(next);
 });
 
+// POST /users/:id/favorites
+router.post('/:id/favorites', (req, res, next) => {
+  const { id } = req.params;
+  const { recipeId } = req.body;
+  let { isFavorite } = req.body;
+  isFavorite = (isFavorite === 'true');
+
+  User.findById(id)
+    .then((user) => {
+      const recipeInFavorites = user.favorites.some((favorite) => favorite.equals(recipeId));
+      if (!isFavorite && !recipeInFavorites) {
+        user.favorites.push(recipeId);
+        user.save()
+          .then((results) => {
+            req.session.currentUser = user;
+            res.locals.currentUser = req.session.currentUser;
+            res.json(results);
+          })
+          .catch(next);
+      } else if (isFavorite && recipeInFavorites) {
+        user.favorites.pull(recipeId);
+        user.save()
+          .then((results) => {
+            req.session.currentUser = user;
+            res.locals.currentUser = req.session.currentUser;
+            res.json(results);
+          })
+          .catch(next);
+      } else {
+        res.sendStatus(200);
+      }
+    })
+    .catch(next);
+});
+
 module.exports = router;

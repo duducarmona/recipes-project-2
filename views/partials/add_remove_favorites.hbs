@@ -1,0 +1,30 @@
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.favorites-form').forEach((favoritesForm) => {
+      if (favoritesForm) {
+        let isFavorite = favoritesForm.classList.contains('is-favorite');
+
+        favoritesForm.addEventListener('submit', (event) => {
+          const { target } = event;
+
+          const body = new URLSearchParams(new FormData(favoritesForm));
+          body.append('isFavorite', isFavorite);
+          fetch(favoritesForm.action, {
+            method: favoritesForm.method,
+            body,
+          })
+            .then(() => {
+              isFavorite = !isFavorite;
+              favoritesForm.classList.toggle('is-favorite');
+
+              const hearts = target.querySelectorAll('.favorite-button img');
+              hearts.forEach((heart) => {
+                heart.classList.toggle('hidden');
+              });
+            });
+          event.preventDefault();
+        });
+      }
+    });
+  });
+</script>

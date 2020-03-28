@@ -48,6 +48,20 @@ hbs.registerHelper('createOption', (recipeIngredient, listIngredient, ingredient
   return new hbs.handlebars.SafeString(option);
 });
 
+hbs.registerHelper('ifIn', (element, list, options) => {
+  if (list.indexOf(element) > -1) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
+hbs.registerHelper('ifNotIn', (element, list, options) => {
+  if (list.indexOf(element) > -1) {
+    return options.inverse(this);
+  }
+  return options.fn(this);
+});
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
