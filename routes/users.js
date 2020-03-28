@@ -25,23 +25,28 @@ router.get('/logout', (req, res, next) => {
 // GET /users/:id
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
-  User.findById(id)
-    .then((user) => {
-      if (user) {
-        res.render('user', {
-          user,
-        });
-      } else {
-        next(createError(404, 'User not found'));
-      }
-    })
-    .catch((error) => {
-      if (error.name === 'CastError') {
-        next(createError(404, 'User not found'));
-      } else {
-        next(error);
-      }
-    });
+
+  if (id === req.session.currentUser._id) {
+    User.findById(id)
+      .then((user) => {
+        if (user) {
+          res.render('user', {
+            user,
+          });
+        } else {
+          next(createError(404, 'User not found'));
+        }
+      })
+      .catch((error) => {
+        if (error.name === 'CastError') {
+          next(createError(404, 'User not found'));
+        } else {
+          next(error);
+        }
+      });
+  } else {
+    next(createError(403));
+  }
 });
 
 // POST /users/:id/
@@ -49,26 +54,35 @@ router.post('/:id', (req, res, next) => {
   const { id } = req.params;
   const { username } = req.body;
 
-  User.findByIdAndUpdate(id, {
-    username,
-  })
-    .then(() => {
-      req.flash('message', 'User updated!');
-      res.redirect(`/users/${id}`);
+  if (id === req.session.currentUser._id) {
+    User.findByIdAndUpdate(id, {
+      username,
     })
-    .catch(next);
+      .then(() => {
+        req.flash('message', 'User updated!');
+        res.redirect(`/users/${id}`);
+      })
+      .catch(next);
+  } else {
+    next(createError(403));
+  }
 });
 
 // GET /users/:id/password
 router.get('/:id/password', (req, res, next) => {
   const { id } = req.params;
-  User.findById(id)
-    .then((user) => {
-      res.render('password', {
-        user,
-      });
-    })
-    .catch(next);
+
+  if (id === req.session.currentUser._id) {
+    User.findById(id)
+      .then((user) => {
+        res.render('password', {
+          user,
+        });
+      })
+      .catch(next);
+  } else {
+    next(createError(403));
+  }
 });
 
 // POST /users/:id/password
@@ -80,28 +94,32 @@ router.post('/:id/password', (req, res, next) => {
     confirmPassword,
   } = req.body;
 
-  if (newPassword !== confirmPassword) {
-    req.flash('message', 'New password and confirm didn\'t match. Please try again.');
-    res.redirect(`/users/${id}/password`);
+  if (id === req.session.currentUser._id) {
+    if (newPassword !== confirmPassword) {
+      req.flash('message', 'New password and confirm didn\'t match. Please try again.');
+      res.redirect(`/users/${id}/password`);
+    } else {
+      User.findById(id)
+        .then((user) => {
+          if (bcrypt.compareSync(password, user.hashedPassword)) {
+            const salt = bcrypt.genSaltSync(bcryptSalt);
+            const hashedPassword = bcrypt.hashSync(newPassword, salt);
+            User.findByIdAndUpdate(id, {
+              hashedPassword,
+            })
+              .then(() => {
+                req.flash('message', 'Password updated!');
+                res.redirect(`/users/${id}/password`);
+              });
+          } else {
+            req.flash('message', 'Wrong password. Please try again.');
+            res.redirect(`/users/${id}/password`);
+          }
+        })
+        .catch(next);
+    }
   } else {
-    User.findById(id)
-      .then((user) => {
-        if (bcrypt.compareSync(password, user.hashedPassword)) {
-          const salt = bcrypt.genSaltSync(bcryptSalt);
-          const hashedPassword = bcrypt.hashSync(newPassword, salt);
-          User.findByIdAndUpdate(id, {
-            hashedPassword,
-          })
-            .then(() => {
-              req.flash('message', 'Password updated!');
-              res.redirect(`/users/${id}/password`);
-            });
-        } else {
-          req.flash('message', 'Wrong password. Please try again.');
-          res.redirect(`/users/${id}/password`);
-        }
-      })
-      .catch(next);
+    next(createError(403));
   }
 });
 

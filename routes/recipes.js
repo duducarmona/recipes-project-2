@@ -71,32 +71,44 @@ router.get('/find', (req, res) => {
 // GET /recipes/users/:username
 router.get('/users/:username', (req, res, next) => {
   const { username } = req.params;
-  User.findOne({ username })
-    .then((user) => {
-      if (!user) {
-        res.redirect('/recipes');
-      } else {
-        console.log('User is', user);
-        Recipe.find({ user })
-          .populate('ingredients.ingredient')
-          .then((recipes) => {
-            res.render('recipes', {
-              recipes,
-              title: 'My recipes',
-            });
-          })
-          .catch(next);
-      }
-    });
+
+  if (username === req.session.currentUser.username) {
+    User.findOne({ username })
+      .then((user) => {
+        if (!user) {
+          res.redirect('/recipes');
+        } else {
+          Recipe.find({ user })
+            .populate('ingredients.ingredient')
+            .then((recipes) => {
+              res.render('recipes', {
+                recipes,
+                title: 'My recipes',
+              });
+            })
+            .catch(next);
+        }
+      });
+  } else {
+    next(createError(403));
+  }
 });
 
 // POST /recipes/:id/delete
 router.post('/:id/delete', (req, res, next) => {
   const { id } = req.params;
 
-  Recipe.findByIdAndDelete(id)
-    .then(() => {
-      res.redirect('/recipes');
+  Recipe.find({ _id: id, user: req.session.currentUser._id })
+    .then((recipe) => {
+      if (recipe.length === 1) {
+        Recipe.findByIdAndDelete(id)
+          .then(() => {
+            res.redirect('/recipes');
+          })
+          .catch(next);
+      } else {
+        next(createError(403, 'You only can delete your recipes.'));
+      }
     })
     .catch(next);
 });
@@ -123,17 +135,26 @@ router.get('/:id', (req, res, next) => {
 // GET /recipes/:id/update
 router.get('/:id/update', (req, res, next) => {
   const { id } = req.params;
-  Ingredient.find()
-    .then((ingredients) => {
-      Recipe.findById(id)
-        .populate('ingredients.ingredient')
-        .then((recipe) => {
-          res.render('update', {
-            recipe,
-            ingredients,
-          });
-        })
-        .catch(next);
+
+  Recipe.find({ _id: id, user: req.session.currentUser._id })
+    .then((recipeFound) => {
+      if (recipeFound.length === 1) {
+        Ingredient.find()
+          .then((ingredients) => {
+            Recipe.findById(id)
+              .populate('ingredients.ingredient')
+              .then((recipe) => {
+                res.render('update', {
+                  recipe,
+                  ingredients,
+                });
+              })
+              .catch(next);
+          })
+          .catch(next);
+      } else {
+        next(createError(403, 'You only can edit your recipes.'));
+      }
     })
     .catch(next);
 });
