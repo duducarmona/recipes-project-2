@@ -1,12 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,600,700i&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width: 100%;
+  padding: 30px;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
   color: #545454;
+}
+
+input, textarea, select, button {
+  font-family: inherit;
 }
 
 a {
   color: #FF4C4C;
   text-decoration: none;
+  font-weight: 600;
+}
+
+#home {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#home #title {
+  width: 230px;
+  margin-top: 10px;
+  text-align: justify;
+}
+
+#home h1 {
+  font-family: "Alegreya", serif;
+  font-size: 48px;
+  font-weight: 400;
+}
+
+#home #title p {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+#home form {
+  width: 100%;
+  margin-top: 20px;
+}
+
+#home form label {
+  font-size: 16px;
+  line-height: 40px;
+}
+
+#home form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background: rgba(221, 99, 99, 0.15);
+  border: 0;
+}
+
+#home form #button-container {
+  margin-top: 5px;
+  text-align: center;
+}
+
+#home #error-message {
+  margin-top: 18px;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+#home #footer {
+  margin-top: 10px;
+  text-align: center;
+}
+
+#home #footer p {
+  padding: 5px;
+  font-size: 16px;
 }
 
 nav ul {
@@ -22,15 +102,10 @@ nav a {
   font-size: 14px;
   font-weight: 400;
   padding: 0;
-  text-transform: uppercase;
 }
 
 h2 {
   font-size: 16px;
-}
-
-#error-message {
-  font-style: italic;
 }
 
 button {
@@ -62,7 +137,7 @@ button {
 
 .delete-button,
 .favorite-button {
-  border: 0;
+  border: 10px;
 }
 
 .hidden {
