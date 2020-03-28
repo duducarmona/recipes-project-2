@@ -20,7 +20,7 @@
     "express-session": "^1.17.0",
     "hbs": "^4.1.0",
     "http-errors": "^1.7.3",
-    "mongoose": "^5.9.5",
+    "mongoose": "^5.9.6",
     "morgan": "~1.9.1"
   },
   "devDependencies": {

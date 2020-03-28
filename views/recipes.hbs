@@ -1,12 +1,13 @@
 <main id="recipes">
-  {{!-- {{{json .}}} --}}
-  <h1>{{title}}</h1>
 
+  <h1>{{title}}</h1>
+  
   <div id="recipe-list">
     {{#each recipes}}
-      {{> recipe_preview}}
+      {{> recipe_preview }}
     {{/each}}
   </div>
 </main>
 
 {{> confirm_on_delete}}
+{{> add_remove_favorites}}
