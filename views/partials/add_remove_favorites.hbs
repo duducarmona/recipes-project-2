@@ -1,32 +1,30 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const favoritesForm = document.querySelector('.favorites-form');
-
-    document.querySelectorAll('.favorites-form').forEach(favoritesForm => {
+    document.querySelectorAll('.favorites-form').forEach((favoritesForm) => {
       if (favoritesForm) {
-        let isFavorite = favoritesForm.classList.contains("is-favorite");
+        let isFavorite = favoritesForm.classList.contains('is-favorite');
 
         favoritesForm.addEventListener('submit', (event) => {
-          const target = event.target;
+          const { target } = event;
 
           const body = new URLSearchParams(new FormData(favoritesForm));
           body.append('isFavorite', isFavorite);
           fetch(favoritesForm.action, {
             method: favoritesForm.method,
-            body: body,
+            body,
           })
-            .then((data) => {
+            .then(() => {
               isFavorite = !isFavorite;
-              favoritesForm.classList.toggle("is-favorite");
+              favoritesForm.classList.toggle('is-favorite');
 
               const hearts = target.querySelectorAll('.favorite-button img');
               hearts.forEach((heart) => {
-                heart.classList.toggle("hidden");
-              })
-            })
+                heart.classList.toggle('hidden');
+              });
+            });
           event.preventDefault();
-        })
+        });
       }
-    })
+    });
   });
 </script>
