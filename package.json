@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start-dev": "nodemon -e js,hbs,json ./bin/www",
-    "debug": "nodemon -e js,hbs,json --inspect ./bin/www",
+    "start-dev": "nodemon -e js,hbs,css,json ./bin/www",
+    "debug": "nodemon -e js,hbs,css,json --inspect ./bin/www",
     "seed": "node ./bin/seeds"
   },
   "dependencies": {
