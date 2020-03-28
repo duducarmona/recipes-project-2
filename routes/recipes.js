@@ -79,7 +79,16 @@ router.get('/users/:username', (req, res, next) => {
         if (!user) {
           res.redirect('/recipes');
         } else {
-          Recipe.find({ user })
+          Recipe.find({
+            $or: [
+              { user },
+              {
+                _id: {
+                  $in: user.favorites,
+                },
+              },
+            ],
+          })
             .populate('ingredients.ingredient')
             .then((recipes) => {
               res.render('recipes', {
