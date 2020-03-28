@@ -1,8 +1,70 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #545454;
 }
 
 a {
-  color: #00B7FF;
+  color: #FF4C4C;
+  text-decoration: none;
+}
+
+nav ul {
+  width: 550px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 0;
+}
+
+nav a {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+#error-message {
+  font-style: italic;
+}
+
+button {
+  background-color: white;
+  outline: none;
+}
+
+.button {
+  padding: 5px 10px;
+  margin-top: 20px;
+  border: 0;
+  font-size: 24px;
+  text-transform: uppercase;
+  font-weight: 400;
+  background-color: rgb(255, 76, 76, 0.5);
+  color: white;
+}
+
+.small-button {
+  padding: 5px 10px;
+  margin-top: 10px;
+  border-width: 1px;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 400;
+  background-color: rgb(255, 255, 255, 0.5);
+  color: #545454;
+}
+
+.delete-button,
+.favorite-button {
+  border: 0;
+}
+
+.hidden {
+  display: none;
 }

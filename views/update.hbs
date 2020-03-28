@@ -1,0 +1,55 @@
+<main id="update-recipe">
+
+  <h1>Edit recipe</h1>
+
+  <form action="/recipes/{{recipe.id}}" method="post">
+    <label for="title">Title:</label><br>
+    <input type="text" name="title" value="{{recipe.title}}" required><br>
+
+    <label for="image">Image:</label><br>
+    <input type="text" name="image" value="{{recipe.image}}"><br>
+
+    <p>Ingredients</p>
+    <div id="ingredients">
+      {{#each recipe.ingredients}}
+      <div class="ingredient">
+        <label for="ingredient">Ingredient:</label><br>
+        <select name="ingredient" required>
+            <option value="">--Please choose an ingredient--</option>
+            {{#each ../ingredients}}
+              {{#createOption ../this.ingredient._id this._id this.name}}{{/createOption}}
+            {{/each}}
+        </select><br>
+
+        <label for="amount">Amount:</label><br>
+        <input type="number" name="amount" step="any" min="0" value="{{this.amount}}"><br>
+
+        <label for="unit">Unit:</label><br>
+        <input type="text" name="unit" value="{{this.unit}}"><br>
+
+        <button class="delete-button delete-ingredient" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
+      </div>
+      {{/each}}
+    </div>
+    <button class="small-button" type="button" id="add-ingredient">Add another ingredient</button>
+
+    <p>Instructions</p>
+    <ol id="steps">
+      {{#each recipe.instructions}}
+      <li>
+        <input class="step" type="text" name="steps" value="{{this.step}}">
+        <button class="delete-button delete-step" type="button">
+          <img src="/images/trash-icon-20.png" alt="trash icon"/>
+        </button>
+      </li>
+      {{/each}}
+    </ol>
+    <button class="small-button" type="button" id="add-step">Add step</button>
+
+    <br>
+    <button class="button" type="submit">Save Recipe</button>
+  </form>
+</main>
+
+{{> add_remove_steps}}
+{{> add_remove_ingredients}}
