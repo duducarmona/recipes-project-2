@@ -1,4 +1,5 @@
 const express = require('express');
+const createError = require('http-errors');
 
 const router = express.Router();
 
@@ -26,11 +27,21 @@ router.get('/:id', (req, res, next) => {
   const { id } = req.params;
   User.findById(id)
     .then((user) => {
-      res.render('user', {
-        user,
-      });
+      if (user) {
+        res.render('user', {
+          user,
+        });
+      } else {
+        next(createError(404, 'User not found'));
+      }
     })
-    .catch(next);
+    .catch((error) => {
+      if (error.name === 'CastError') {
+        next(createError(404, 'User not found'));
+      } else {
+        next(error);
+      }
+    });
 });
 
 // POST /users/:id/
