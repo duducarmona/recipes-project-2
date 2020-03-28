@@ -38,6 +38,24 @@ hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 hbs.registerHelper('json', (object) => JSON.stringify(object));
 
+hbs.registerHelper('ifEqualStrings', (a, b, options) => {
+  if (a && b) {
+    if (a.toString() === b.toString()) {
+      return options.fn(this);
+    }
+  }
+  return options.inverse(this);
+});
+
+hbs.registerHelper('ifNotEqualStrings', (a, b, options) => {
+  if (a && b) {
+    if (a.toString() === b.toString()) {
+      return options.inverse(this);
+    }
+  }
+  return options.fn(this);
+});
+
 hbs.registerHelper('createOption', (recipeIngredient, listIngredient, ingredientName) => {
   let option;
   if (listIngredient.toString() === recipeIngredient.toString()) {
