@@ -37,7 +37,6 @@ router.get('/:id', (req, res, next) => {
         next(createError(404, 'User not found'));
       }
     })
-    // .catch(next);
     .catch((error) => {
       console.log(error);
       if (error.name === 'CastError') {
@@ -46,8 +45,6 @@ router.get('/:id', (req, res, next) => {
         next(error);
       }
     });
-    // .catch(next('PRUEBA ECO'));
-    // .catch(next(createError(404, 'User not found')));
 });
 
 // POST /users/:id/

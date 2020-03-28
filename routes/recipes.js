@@ -111,8 +111,14 @@ router.get('/:id', (req, res, next) => {
         recipe,
       });
     })
-    // .catch(next);
-    .catch(next(createError(404, 'Recipe not found')));
+    .catch((error) => {
+      console.log(error);
+      if (error.name === 'CastError') {
+        next(createError(404, 'Recipe not found'));
+      } else {
+        next(error);
+      }
+    });
 });
 
 // GET /recipes/:id/update
