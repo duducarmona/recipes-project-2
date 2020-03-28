@@ -126,6 +126,7 @@ router.post('/:id/favorites', (req, res, next) => {
   // User.findByIdAndUpdate(id, {
   //   $push: { favorites: recipeId },
   // })
+
   User.findById(id)
     .then((user) => {
       const recipeInFavorites = user.favorites.some((favorite) => favorite.equals(recipeId));
@@ -135,6 +136,8 @@ router.post('/:id/favorites', (req, res, next) => {
         user.favorites.push(recipeId);
         user.save()
           .then((results) => {
+            req.session.currentUser = user;
+            res.locals.currentUser = req.session.currentUser;
             console.log(`Added recipe ${recipeId} to favorites`);
             console.log('results', results);
             res.json(results);
@@ -145,6 +148,8 @@ router.post('/:id/favorites', (req, res, next) => {
         user.favorites.pull(recipeId);
         user.save()
           .then((results) => {
+            req.session.currentUser = user;
+            res.locals.currentUser = req.session.currentUser;
             console.log(`Removed recipe ${recipeId} from favorites`);
             console.log('results', results);
             res.json(results);
