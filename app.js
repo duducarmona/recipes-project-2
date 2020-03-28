@@ -32,26 +32,21 @@ mongoose
   });
 
 app.set('views', path.join(__dirname, 'views'));
-
 app.set('view engine', 'hbs');
 
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
-hbs.registerHelper('ifEqual', (a, b, options) => {
-  if (a === b) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
-
-hbs.registerHelper('ifNotEqual', (a, b, options) => {
-  if (a !== b) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
-
 hbs.registerHelper('json', (object) => JSON.stringify(object));
+
+hbs.registerHelper('createOption', (recipeIngredient, listIngredient, ingredientName) => {
+  let option;
+  if (listIngredient.toString() === recipeIngredient.toString()) {
+    option = `<option value=${listIngredient} selected>${ingredientName}</option>`;
+  } else {
+    option = `<option value=${listIngredient}>${ingredientName}</option>`;
+  }
+  return new hbs.handlebars.SafeString(option);
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -90,8 +85,6 @@ app.use('/recipes', recipesRouter);
 
 app.use((req, res, next) => {
   next(createError(404));
-  // res.status(404);
-  // res.render('error');
 });
 
 app.use((err, req, res, next) => {
