@@ -1,6 +1,5 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-
     const favoritesForm = document.querySelector('.favorites-form');
     let isFavorite = false;
 
@@ -16,17 +15,15 @@
       })
         .then((data) => {
           console.log('data returned: ', data);
+          isFavorite = !isFavorite;
+          favoritesForm.classList.toggle("is-favorite");
 
-      favoritesForm.classList.toggle("is-favorite");
-
+          const hearts = target.querySelectorAll('.favorite-button img');
+          hearts.forEach((heart) => {
+            heart.classList.toggle("hidden");
+          })
         })
       event.preventDefault();
-
-      const hearts = target.querySelectorAll('.favorite-button img');
-      hearts.forEach((heart) => {
-        heart.classList.toggle("hidden");
-      })
     })
-
   });
 </script>

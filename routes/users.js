@@ -128,23 +128,31 @@ router.post('/:id/favorites', (req, res, next) => {
   // })
   User.findById(id)
     .then((user) => {
-      const recipeInFavorites = user.favorites.some((favorite) => {
-        return favorite.equals(recipeId);
-      });
+      const recipeInFavorites = user.favorites.some((favorite) => favorite.equals(recipeId));
       console.log(`user ${user}, recipeId ${recipeId}, isFavorite ${isFavorite}, recipeInFavorites ${recipeInFavorites}`);
-      if (isFavorite && !recipeInFavorites) {
+      if (!isFavorite && !recipeInFavorites) {
         console.log('adding favorite');
         user.favorites.push(recipeId);
-      } else if (!isFavorite && recipeInFavorites) {
+        user.save()
+          .then((results) => {
+            console.log(`Added recipe ${recipeId} to favorites`);
+            console.log('results', results);
+            res.json(results);
+          })
+          .catch(next);
+      } else if (isFavorite && recipeInFavorites) {
         console.log('removing favorite');
         user.favorites.pull(recipeId);
+        user.save()
+          .then((results) => {
+            console.log(`Removed recipe ${recipeId} from favorites`);
+            console.log('results', results);
+            res.json(results);
+          })
+          .catch(next);
+      } else {
+        res.sendStatus(200);
       }
-      user.save();
-    })
-    .then((results) => {
-      // console.log(`Added recipe ${recipeId} to favorites`);
-      console.log('results', results);
-      res.json(results);
     })
     .catch(next);
 });
