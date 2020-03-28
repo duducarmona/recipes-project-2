@@ -23,70 +23,58 @@ router.get('/logout', (req, res, next) => {
 });
 
 // GET /users/:id
-router.get('/:id', (req, res, next) => {
+router.get('/:id', middleware.userIsNotMe, (req, res, next) => {
   const { id } = req.params;
 
-  if (id === req.session.currentUser._id) {
-    User.findById(id)
-      .then((user) => {
-        if (user) {
-          res.render('user', {
-            user,
-          });
-        } else {
-          next(createError(404, 'User not found'));
-        }
-      })
-      .catch((error) => {
-        if (error.name === 'CastError') {
-          next(createError(404, 'User not found'));
-        } else {
-          next(error);
-        }
-      });
-  } else {
-    next(createError(403));
-  }
+  User.findById(id)
+    .then((user) => {
+      if (user) {
+        res.render('user', {
+          user,
+        });
+      } else {
+        next(createError(404, 'User not found'));
+      }
+    })
+    .catch((error) => {
+      if (error.name === 'CastError') {
+        next(createError(404, 'User not found'));
+      } else {
+        next(error);
+      }
+    });
 });
 
 // POST /users/:id/
-router.post('/:id', (req, res, next) => {
+router.post('/:id', middleware.userIsNotMe, (req, res, next) => {
   const { id } = req.params;
   const { username } = req.body;
 
-  if (id === req.session.currentUser._id) {
-    User.findByIdAndUpdate(id, {
-      username,
+  User.findByIdAndUpdate(id, {
+    username,
+  })
+    .then(() => {
+      req.flash('message', 'User updated!');
+      res.redirect(`/users/${id}`);
     })
-      .then(() => {
-        req.flash('message', 'User updated!');
-        res.redirect(`/users/${id}`);
-      })
-      .catch(next);
-  } else {
-    next(createError(403));
-  }
+    .catch(next);
 });
 
 // GET /users/:id/password
-router.get('/:id/password', (req, res, next) => {
+router.get('/:id/password', middleware.userIsNotMe, (req, res, next) => {
   const { id } = req.params;
 
-  if (id === req.session.currentUser._id) {
-    User.findById(id)
-      .then((user) => {
-        res.render('password', {
-          user,
-        });
-      })
-      .catch(next);
-  } else {
-    next(createError(403));
-  }
+  User.findById(id)
+    .then((user) => {
+      res.render('password', {
+        user,
+      });
+    })
+    .catch(next);
 });
 
 // POST /users/:id/password
-router.post('/:id/password', (req, res, next) => {
+router.post('/:id/password', middleware.userIsNotMe, (req, res, next) => {
   const { id } = req.params;
   const {
     password,
@@ -94,37 +82,33 @@ router.post('/:id/password', (req, res, next) => {
     confirmPassword,
   } = req.body;
 
-  if (id === req.session.currentUser._id) {
-    if (newPassword !== confirmPassword) {
-      req.flash('message', 'New password and confirm didn\'t match. Please try again.');
-      res.redirect(`/users/${id}/password`);
-    } else {
-      User.findById(id)
-        .then((user) => {
-          if (bcrypt.compareSync(password, user.hashedPassword)) {
-            const salt = bcrypt.genSaltSync(bcryptSalt);
-            const hashedPassword = bcrypt.hashSync(newPassword, salt);
-            User.findByIdAndUpdate(id, {
-              hashedPassword,
-            })
-              .then(() => {
-                req.flash('message', 'Password updated!');
-                res.redirect(`/users/${id}/password`);
-              });
-          } else {
-            req.flash('message', 'Wrong password. Please try again.');
-            res.redirect(`/users/${id}/password`);
-          }
-        })
-        .catch(next);
-    }
+  if (newPassword !== confirmPassword) {
+    req.flash('message', 'New password and confirm didn\'t match. Please try again.');
+    res.redirect(`/users/${id}/password`);
   } else {
-    next(createError(403));
+    User.findById(id)
+      .then((user) => {
+        if (bcrypt.compareSync(password, user.hashedPassword)) {
+          const salt = bcrypt.genSaltSync(bcryptSalt);
+          const hashedPassword = bcrypt.hashSync(newPassword, salt);
+          User.findByIdAndUpdate(id, {
+            hashedPassword,
+          })
+            .then(() => {
+              req.flash('message', 'Password updated!');
+              res.redirect(`/users/${id}/password`);
+            });
+        } else {
+          req.flash('message', 'Wrong password. Please try again.');
+          res.redirect(`/users/${id}/password`);
+        }
+      })
+      .catch(next);
   }
 });
 
 // POST /users/:id/delete
-router.post('/:id/delete', (req, res, next) => {
+router.post('/:id/delete', middleware.userIsNotMe, (req, res, next) => {
   const { id } = req.params;
 
   User.findByIdAndDelete(id)

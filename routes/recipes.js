@@ -70,55 +70,43 @@ router.get('/find', (req, res) => {
 });
 
 // GET /recipes/users/:username
-router.get('/users/:username', (req, res, next) => {
+router.get('/users/:username', middleware.userNameIsNotMine, (req, res, next) => {
   const { username } = req.params;
 
-  if (username === req.session.currentUser.username) {
-    User.findOne({ username })
-      .then((user) => {
-        if (!user) {
-          res.redirect('/recipes');
-        } else {
-          Recipe.find({
-            $or: [
-              { user },
-              {
-                _id: {
-                  $in: user.favorites,
-                },
+  User.findOne({ username })
+    .then((user) => {
+      if (!user) {
+        res.redirect('/recipes');
+      } else {
+        Recipe.find({
+          $or: [
+            { user },
+            {
+              _id: {
+                $in: user.favorites,
               },
-            ],
+            },
+          ],
+        })
+          .populate('ingredients.ingredient')
+          .then((recipes) => {
+            res.render('recipes', {
+              recipes,
+              title: 'My recipes',
+            });
           })
-            .populate('ingredients.ingredient')
-            .then((recipes) => {
-              res.render('recipes', {
-                recipes,
-                title: 'My recipes',
-              });
-            })
-            .catch(next);
-        }
-      });
-  } else {
-    next(createError(403));
-  }
+          .catch(next);
+      }
+    });
 });
 
 // POST /recipes/:id/delete
-router.post('/:id/delete', (req, res, next) => {
+router.post('/:id/delete', middleware.recipeIsNotMine, (req, res, next) => {
   const { id } = req.params;
 
-  Recipe.find({ _id: id, user: req.session.currentUser._id })
-    .then((recipe) => {
-      if (recipe.length === 1) {
-        Recipe.findByIdAndDelete(id)
-          .then(() => {
-            res.redirect('/recipes');
-          })
-          .catch(next);
-      } else {
-        next(createError(403, 'You only can delete your recipes.'));
-      }
+  Recipe.findByIdAndDelete(id)
+    .then(() => {
+      res.redirect('/recipes');
     })
     .catch(next);
 });
@@ -126,6 +114,7 @@ router.post('/:id/delete', (req, res, next) => {
 // GET /recipes/:id
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
+
   Recipe.findById(id)
     .populate('ingredients.ingredient')
     .then((recipe) => {
@@ -143,28 +132,20 @@ router.get('/:id', (req, res, next) => {
 });
 
 // GET /recipes/:id/update
-router.get('/:id/update', (req, res, next) => {
+router.get('/:id/update', middleware.recipeIsNotMine, (req, res, next) => {
   const { id } = req.params;
 
-  Recipe.find({ _id: id, user: req.session.currentUser._id })
-    .then((recipeFound) => {
-      if (recipeFound.length === 1) {
-        Ingredient.find()
-          .then((ingredients) => {
-            Recipe.findById(id)
-              .populate('ingredients.ingredient')
-              .then((recipe) => {
-                res.render('update', {
-                  recipe,
-                  ingredients,
-                });
-              })
-              .catch(next);
-          })
-          .catch(next);
-      } else {
-        next(createError(403, 'You only can edit your recipes.'));
-      }
+  Ingredient.find()
+    .then((ingredients) => {
+      Recipe.findById(id)
+        .populate('ingredients.ingredient')
+        .then((recipe) => {
+          res.render('update', {
+            recipe,
+            ingredients,
+          });
+        })
+        .catch(next);
     })
     .catch(next);
 });
