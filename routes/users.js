@@ -121,9 +121,10 @@ router.post('/:id/favorites', (req, res, next) => {
   User.findByIdAndUpdate(id, {
     $push: { favorites: recipeId },
   })
-    .then(() => {
+    .then((results) => {
       console.log(`Added recipe ${recipeId} to favorites`);
-      res.sendStatus(200);
+      console.log('results', results);
+      res.json(results);
     })
     .catch(next);
 });

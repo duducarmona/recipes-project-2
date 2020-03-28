@@ -2,7 +2,6 @@
   document.addEventListener('DOMContentLoaded', () => {
 
     const favoritesForm = document.querySelector('.favorites-form');
-    
     favoritesForm.addEventListener('submit', (event) => {
       const target = event.target;
       console.log('event target is ', target);
@@ -11,6 +10,9 @@
         method: favoritesForm.method,
         body: new URLSearchParams(new FormData(favoritesForm)),
       })
+        .then((data) => {
+          console.log('data returned: ', data);
+        })
       event.preventDefault();
 
       const hearts = target.querySelectorAll('.favorite-button img');
