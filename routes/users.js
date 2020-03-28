@@ -116,8 +116,9 @@ router.post('/:id/delete', (req, res, next) => {
 // POST /users/:id/favorites
 router.post('/:id/favorites', (req, res, next) => {
   const { id } = req.params;
-  const { recipeId } = req.body;
-  console.log(recipeId);
+  const { recipeId, isFavorite } = req.body;
+  console.log('recipe ID ', recipeId);
+  console.log('isFavorite ', isFavorite);
   User.findByIdAndUpdate(id, {
     $push: { favorites: recipeId },
   })

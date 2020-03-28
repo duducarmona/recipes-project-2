@@ -2,13 +2,18 @@
   document.addEventListener('DOMContentLoaded', () => {
 
     const favoritesForm = document.querySelector('.favorites-form');
+    let isFavorite = false;
     favoritesForm.addEventListener('submit', (event) => {
       const target = event.target;
       console.log('event target is ', target);
 
+      favoritesForm.classList.toggle("is-favorite");
+
+      const body = new URLSearchParams(new FormData(favoritesForm));
+      body.append('isFavorite', isFavorite);
       fetch(favoritesForm.action, {
         method: favoritesForm.method,
-        body: new URLSearchParams(new FormData(favoritesForm)),
+        body: body,
       })
         .then((data) => {
           console.log('data returned: ', data);
