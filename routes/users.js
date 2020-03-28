@@ -28,17 +28,14 @@ router.get('/:id', (req, res, next) => {
   User.findById(id)
     .then((user) => {
       if (user) {
-        console.log('proceed');
         res.render('user', {
           user,
         });
       } else {
-        console.log('user doesnt exist');
         next(createError(404, 'User not found'));
       }
     })
     .catch((error) => {
-      console.log(error);
       if (error.name === 'CastError') {
         next(createError(404, 'User not found'));
       } else {

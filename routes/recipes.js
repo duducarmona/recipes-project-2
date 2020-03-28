@@ -112,7 +112,6 @@ router.get('/:id', (req, res, next) => {
       });
     })
     .catch((error) => {
-      console.log(error);
       if (error.name === 'CastError') {
         next(createError(404, 'Recipe not found'));
       } else {
