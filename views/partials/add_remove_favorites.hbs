@@ -5,23 +5,19 @@
     
     favoritesForm.addEventListener('submit', (event) => {
       const target = event.target;
-      alert('foo');
+      console.log('event target is ', target);
 
       fetch(favoritesForm.action, {
         method: favoritesForm.method,
         body: new URLSearchParams(new FormData(favoritesForm)),
       })
-
       event.preventDefault();
+
+      const hearts = target.querySelectorAll('.favorite-button img');
+      hearts.forEach((heart) => {
+        heart.classList.toggle("hidden");
+      })
     })
 
-    {{!-- const favoriteButton = document.querySelector('.favorite-button');
-    favoriteButton.addEventListener('click', (e) => {
-        let confirmFavorite = confirm('OK to add to favorites?');
-        if (confirmFavorite) {
-          favoriteButton.parentNode.submit();
-        }
-      }); --}}
-    
   });
 </script>
