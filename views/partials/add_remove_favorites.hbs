@@ -2,34 +2,31 @@
   document.addEventListener('DOMContentLoaded', () => {
     const favoritesForm = document.querySelector('.favorites-form');
 
-    if (favoritesForm) {
-      let isFavorite = favoritesForm.classList.contains("is-favorite");
+    document.querySelectorAll('.favorites-form').forEach(favoritesForm => {
+      if (favoritesForm) {
+        let isFavorite = favoritesForm.classList.contains("is-favorite");
 
-      favoritesForm.addEventListener('submit', (event) => {
-        const target = event.target;
-        console.log('event target is ', target);
+        favoritesForm.addEventListener('submit', (event) => {
+          const target = event.target;
 
-        const body = new URLSearchParams(new FormData(favoritesForm));
-        body.append('isFavorite', isFavorite);
-        fetch(favoritesForm.action, {
-          method: favoritesForm.method,
-          body: body,
-        })
-          .then((data) => {
-            console.log('data returned: ', data);
-            isFavorite = !isFavorite;
-            console.log("isFavorite", isFavorite);
-            favoritesForm.classList.toggle("is-favorite");
-
-            const hearts = target.querySelectorAll('.favorite-button img');
-            hearts.forEach((heart) => {
-              heart.classList.toggle("hidden");
-            })
+          const body = new URLSearchParams(new FormData(favoritesForm));
+          body.append('isFavorite', isFavorite);
+          fetch(favoritesForm.action, {
+            method: favoritesForm.method,
+            body: body,
           })
-        event.preventDefault();
-      })
+            .then((data) => {
+              isFavorite = !isFavorite;
+              favoritesForm.classList.toggle("is-favorite");
 
-    }
-
+              const hearts = target.querySelectorAll('.favorite-button img');
+              hearts.forEach((heart) => {
+                heart.classList.toggle("hidden");
+              })
+            })
+          event.preventDefault();
+        })
+      }
+    })
   });
 </script>

@@ -12,10 +12,6 @@
         <img src="/images/edit-icon-20.png" alt="edit icon" />
       </a>
 
-<p>This is: {{this.id}}</p>
-<p>Current user favorites: {{@root.currentUser.favorites}}</p>
-{{#ifIn this.id @root.currentUser.favorites}}hidden{{/ifIn}}
-
       <form class="favorites-form {{#ifIn this.id @root.currentUser.favorites}}is-favorite{{/ifIn}}" action="/users/{{@root.currentUser._id}}/favorites" method="post">
         <input type="hidden" name="recipeId" value="{{this._id}}">
         <button class="favorite-button" type="submit">
@@ -24,6 +20,7 @@
         </button>
       </form>
     </div>
+    
     <ul>
       {{#each this.ingredients}}
       <li>{{this.ingredient.name}}</li>
