@@ -1,4 +1,5 @@
 const express = require('express');
+const createError = require('http-errors');
 
 const router = express.Router();
 
@@ -147,7 +148,8 @@ router.get('/:id', (req, res, next) => {
         recipe,
       });
     })
-    .catch(next);
+    // .catch(next);
+    .catch(next(createError(404, 'Recipe not found')));
 });
 
 // GET /recipes/:id/update

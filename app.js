@@ -89,11 +89,12 @@ app.use('/users', usersRouter);
 app.use('/recipes', recipesRouter);
 
 app.use((req, res, next) => {
-  // next(createError(404));
-  res.render('error');
+  next(createError(404));
+  // res.status(404);
+  // res.render('error');
 });
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
