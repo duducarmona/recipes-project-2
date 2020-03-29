@@ -4,10 +4,10 @@
 
   <form action="/recipes" method="post">
     <label for="title">Title:</label><br>
-    <input type="text" name="title" required><br>
+    <input type="text" name="title" placeholder="Veggie Paella" required><br>
 
     <label for="image">Image:</label><br>
-    <input type="text" name="image"><br>
+    <input type="text" name="image" placeholder="https://thor.myblog.com/paella.jpg"><br>
 
     <h2>Add ingredients:</h2>
     <div id="ingredients">
@@ -23,31 +23,32 @@
         </select><br>
 
         <label for="amount">Amount (number):</label><br>
-        <input type="number" name="amount" step="any" min="0"><br>
+        <input type="number" name="amount" step="any" min="0" placeholder="1.5" ><br>
 
         <label for="unit">Unit:</label><br>
-        <input type="text" name="unit"><br>        
+        <input type="text" name="unit" placeholder="cups" ><br>        
       </div>
     </div>
     <div class="button-container">
-      <button class="small-button" type="button" id="add-ingredient">Add another ingredient</button>
+      <button class="small-button" type="button" id="add-ingredient">Add Another Ingredient</button>
     </div>
 
     <h2>Add instructions:</h2>
     <ol id="steps">
       <li>
-        <input class="step" type="text" name="steps">
+        <input class="step" type="text" name="steps" placeholder="Dice all veggies finely." >
         <button class="remove-step" type="button">
           <img src="/images/remove-icon.png" alt="remove icon"/>
         </button>
       </li>
     </ol>
     <div class="button-container">
-      <button class="small-button" type="button" id="add-step">Add step</button>
+      <button class="small-button" type="button" id="add-step">Add Another Step</button>
     </div>
 
-    <br>
-    <button class="button" type="submit">Save Recipe</button>
+    <div class="button-container">
+      <button class="button" type="submit">Save Recipe</button>
+    </div>
   </form>
 
 </main>

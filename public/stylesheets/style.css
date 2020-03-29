@@ -261,6 +261,10 @@ main:not(.home) {
   padding-left: 20px;
 }
 
+#recipe .recipe-detail ul {
+  margin-bottom: 5px;
+}
+
 #recipe .recipe-detail li {
   line-height: 22px;
 }
@@ -317,21 +321,48 @@ main:not(.home) {
 #add-recipe select {
   width: 100%;
   height: 36px;
+  padding: 5px;
   border: none;
   background-color: rgba(221, 99, 99, 0.15);
   background-image: url('/images/dropdown-icon.png');
   background-repeat: no-repeat;
-  background-position-x: 96%;
+  background-position-x: 97%;
   background-position-y: 16px;
   color:black;
   font-size: 13px;
 }
 
-
 #add-recipe .remove-ingredient {
   position: absolute;
-  top: 10px;
-  right: 20px;
+  top: 11px;
+  right: 19px;
+}
+
+#add-recipe #steps {
+  border: 1px solid rgba(84,84,84,0.5);
+  padding: 10px 30px 10px 20px;
+}
+
+#add-recipe #steps input {
+  font-size: 13px;
+}
+
+#add-recipe #steps li {
+  position: relative;
+}
+
+#add-recipe #steps li:not(:first-child) {
+  margin-top: 5px;
+}
+
+#add-recipe #steps label {
+  font-size: 13px;
+}
+
+#add-recipe .remove-step {
+  position: absolute;
+  top: 12px;
+  right: -22px;
 }
 
 #add-recipe .button-container {
