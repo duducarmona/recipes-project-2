@@ -366,33 +366,33 @@ main:not(.home) {
 
 /* my account user profile */
 
-#user form {
+.user form {
   width: 100%;
 }
 
-#user form label {
+.user form label {
   font-size: 16px;
   line-height: 40px;
 }
 
-#user form input {
+.user form input {
   width: 100%;
   padding: 10px;
   font-size: 16px;
 }
 
-#user .account-info {
+.user .account-info {
   font-size: 12px;
   font-weight: 300;
   font-style: italic;
   padding: 10px 5px 0 5px;
 }
 
-#user #user-info {
+.user #user-info {
   position: relative;
 }
 
-#user .delete-button {
+.user .delete-button {
   position: absolute;
   top: 5px;
   right: 0;
