@@ -67,12 +67,6 @@ input:focus, select:focus {
   box-shadow: 0 0 5px #DD6363;
 }
 
-select {
-  background-color: rgba(221, 99, 99, 0.15);
-  border: 0;
-  color:black;
-}
-
 button {
   background-color: transparent;
   outline: none;
@@ -106,8 +100,10 @@ button {
 }
 
 .delete-button,
+.remove-ingredient,
+.remove-step,
 .favorite-button {
-  border: 10px;
+  border: none;
 }
 
  /* styles for layout-no-nav: home (sign in), register, forgot password */
@@ -260,7 +256,6 @@ main:not(.home) {
 }
 
 #recipe h1 {
-  /* font-size: 30px; */
   letter-spacing: -2px;
 }
 
@@ -270,15 +265,50 @@ main:not(.home) {
 }
 
 #recipe .recipe-detail li {
-  line-height: 25px;
+  line-height: 22px;
 }
 
 #recipe .recipe-detail ol li {
   padding-bottom: 5px;
 }
 
-#recipe .recipe-detail .ingredient {
+#recipe .recipe-detail .ingredient-name {
   font-weight: 400;
+}
+
+#recipe .recipe-detail .step {
+  font-weight: 300;
+}
+
+/* add form */
+
+#add-recipe form {
+  width: 100%;
+  margin-top: 0px;
+}
+
+#add-recipe form label {
+  font-size: 16px;
+  line-height: 40px;
+}
+
+#add-recipe form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#add-recipe select {
+  width: 100%;
+  height: 40px;
+  background-color: rgba(221, 99, 99, 0.15);
+  border: 0;
+  color:black;
+}
+
+#add-recipe .ingredient-container {
+  border: 1px solid rgba(84,84,84,0.5);
+  padding: 10px;
 }
 
 /* shake animation from https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */

@@ -5,8 +5,9 @@
     {{!-- Add ingredient --}}
     document.getElementById('add-ingredient').addEventListener('click', () => {
       const newIngredient = document.createElement('div');
-      newIngredient.classList.add("ingredient");
+      newIngredient.classList.add("ingredient-container");
       newIngredient.innerHTML = `
+      <button class="remove-button remove-ingredient" type="button"><img src="/images/remove-icon.png" alt="remove icon"/></button>
       <label for="ingredient">Ingredient:</label><br>
       <select name="ingredient">
           <option value="">--Please choose an ingredient--</option>
@@ -20,26 +21,25 @@
 
       <label for="unit">Unit:</label><br>
       <input type="text" name="unit"><br>
-      <button class="delete-button delete-ingredient" type="button"><img src="/images/trash-icon.png" alt="trash icon"/></button>
       `;
       ingredients.appendChild(newIngredient);
 
-      {{!-- Delete added ingredient --}}
-      newDeleteButton = newIngredient.querySelector('.delete-ingredient');
-      addDeleteListener(newDeleteButton);
+      {{!-- remove added ingredient --}}
+      newremoveButton = newIngredient.querySelector('.remove-ingredient');
+      addremoveListener(newremoveButton);
     });
 
-    {{!-- Delete existing ingredient --}}
-    document.querySelectorAll('.delete-ingredient').forEach(deleteButton => {
-      addDeleteListener(deleteButton);
+    {{!-- remove existing ingredient --}}
+    document.querySelectorAll('.remove-ingredient').forEach(removeButton => {
+      addremoveListener(removeButton);
     });
   });
 
-  {{!-- Delete listener and action --}}
-  addDeleteListener = (deleteButton) => {
-    deleteButton.addEventListener('click', () => {
-      const rowToDelete = deleteButton.parentNode;
-      deleteButton.parentNode.parentNode.removeChild(rowToDelete);
+  {{!-- remove listener and action --}}
+  addremoveListener = (removeButton) => {
+    removeButton.addEventListener('click', () => {
+      const rowToremove = removeButton.parentNode;
+      removeButton.parentNode.parentNode.removeChild(rowToremove);
     });
   };
 </script>

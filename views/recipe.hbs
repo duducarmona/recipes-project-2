@@ -39,7 +39,7 @@
     <ul>
       {{#each recipe.ingredients}}
         <li>
-          <span class="ingredient">{{this.ingredient.name}}</span>
+          <span class="ingredient-name">{{this.ingredient.name}}</span>
           {{#or this.amount this.unit}}
             ({{this.amount}} {{this.unit}})
           {{/or}}
@@ -51,7 +51,7 @@
     <ol>
       {{#each recipe.instructions}}
         <li>
-          {{this.step}}
+          <span class="step">{{this.step}}</span>
         </li>
       {{/each}}
     </ol>
