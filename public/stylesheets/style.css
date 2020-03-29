@@ -22,18 +22,18 @@ h1, h2, h3 {
 }
 
 h1:not(.home) {
-  font-size: 36;
+  font-size: 36px;
   font-weight: 400;
-  margin: 5px 0;
+  margin: 10px 0;
 }
 
 h2 {
-  font-size: 24;
+  font-size: 24px;
   font-weight: 500;
 }
 
 h3 {
-  font-size: 18;
+  font-size: 18px;
   font-weight: 400;
 }
 
@@ -54,7 +54,7 @@ input, textarea, select, button {
 }
 
 input {
-  background: rgba(221, 99, 99, 0.15);
+  background-color: rgba(221, 99, 99, 0.15);
   border: 0;  
 }
 
@@ -65,7 +65,7 @@ input:focus, select:focus {
 }
 
 select {
-  background: rgba(221, 99, 99, 0.15);
+  background-color: rgba(221, 99, 99, 0.15);
   border: 0;
   color:black;
 }
@@ -180,6 +180,7 @@ header {
   padding: 10px 20px;
   top: 0;
   background-color: white;
+  z-index: 1;
 }
 
 header #logo {
@@ -220,7 +221,7 @@ main:not(.home) {
   padding: 20px;
 }
 
- /* styles for recipes */
+ /* styles for recipe preview and detail */
 
 .recipe-image {
   width: 100%;
@@ -229,14 +230,16 @@ main:not(.home) {
 
 .recipe-preview {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
 
 .recipe-preview a h2 {
+  margin: 7px 0;
+  line-height: 100%;
   color: #545454;
-  margin: 5px 0;
 }
 
+.recipe-preview .edit-delete-buttons,
 .recipe-preview .favorites-form {
   position: absolute;
   top: 20px;
@@ -252,7 +255,9 @@ main:not(.home) {
 }
 
 #recipe-detail h1 {
+  font-size: 30px;
   letter-spacing: -1px;
+  line-height: 100%;
 }
 
 /* shake animation from https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */

@@ -11,11 +11,11 @@
         {{#ifNotEqualStrings this.user._id @root.currentUser._id}}hidden{{/ifNotEqualStrings}}">
         <form action="/recipes/{{this._id}}/delete" method="post">
           <button class="delete-button" type="button">
-            <img src="/images/trash-icon-20.png" alt="trash icon"/>
+            <img src="/images/trash-icon.png" alt="trash icon"/>
           </button>
         </form>
         <a href="/recipes/{{this._id}}/update">
-          <img src="/images/edit-icon-20.png" alt="edit icon" />
+          <img src="/images/edit-icon.png" alt="edit icon" />
         </a>
       </div>
 
@@ -25,10 +25,10 @@
         action="/users/{{@root.currentUser._id}}/favorites" method="post">
         <input type="hidden" name="recipeId" value="{{this._id}}">
         <button class="favorite-button" type="submit">
-          <img src="/images/heart-icon-outline-20.png"
+          <img src="/images/heart-icon-outline.png"
             class="{{#ifIn this.id @root.currentUser.favorites}}hidden{{/ifIn}}"
             alt="outlined heart icon" />
-          <img src="/images/heart-icon-filled-20.png"
+          <img src="/images/heart-icon-filled.png"
             class="{{#ifNotIn this.id @root.currentUser.favorites}}hidden{{/ifNotIn}}"
             alt="filled heart icon" />
         </button>
