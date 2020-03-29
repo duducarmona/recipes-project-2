@@ -6,9 +6,11 @@
     document.getElementById('add-step').addEventListener('click', () => {
       const newStep = document.createElement('li');
       newStep.innerHTML = `
-      <input class="step" type="text" name="steps">
-      <button class="remove-step" type="button"><img src="/images/remove-icon.png" alt="remove icon"/></button><br>
-      `;
+        <input class="step" type="text" name="steps" placeholder="Dice all veggies finely." >
+        <button class="remove-step" type="button">
+          <img src="/images/remove-icon.png" alt="remove icon"/>
+        </button>
+        `;
       steps.appendChild(newStep);
 
       {{!-- remove added step --}}
