@@ -72,6 +72,10 @@ button {
   outline: none;
 }
 
+.center-button {
+  text-align: center;
+}
+
 .button {
   padding: 5px 10px;
   margin-top: 20px;
@@ -141,11 +145,6 @@ button {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-}
-
-.home form #button-container {
-  margin-top: 5px;
-  text-align: center;
 }
 
 .home #error-message {
@@ -365,9 +364,24 @@ main:not(.home) {
   right: -22px;
 }
 
-#add-update-recipe .button-container {
-  text-align: center;
+/* my account user profile */
+
+#user form {
+  width: 100%;
 }
+
+#user form label {
+  font-size: 16px;
+  line-height: 40px;
+}
+
+#user form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+
 
 /* shake animation from https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
 img:active {

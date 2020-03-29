@@ -2,9 +2,6 @@
 
   <h1>{{title}}</h1>
 
-  <a href="/users/logout">
-    <button class="small-button">Logout</button>
-  </a>
   <form action="{{user.id}}/delete" method="post">
     <button class="delete-button" type="button"><img src="/images/trash-icon.png" alt="trash icon"/></button>
   </form>
@@ -17,9 +14,17 @@
     <button id="submit-button" class="button" type="submit">Save Changes</button>
   </form>
 
-  <a href="/users/{{user.id}}/password">
-    <button class="small-button">Change Password</button>
-  </a>
+  <div class="center-button">
+    <a href="/users/{{user.id}}/password">
+      <button class="small-button">Change Password</button>
+    </a>
+  </div>
+
+  <div class="center-button">
+    <a href="/users/logout">
+      <button class="small-button">Logout</button>
+    </a>
+  </div>
 
   {{#each messages}}
   <div id="message">{{this}}</div>
