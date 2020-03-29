@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Alegreya:400,700&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Lato:300,400,600,700i&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,600,700,700i&display=swap');
 
 * {
   box-sizing: border-box;
@@ -90,9 +90,10 @@ a {
 
 header {
   width: 100vw;
-  padding: 0 20px;
-  top: 0;
   position: fixed;
+  padding: 10px 20px;
+  top: 0;
+  background-color: white;
 }
 
 header #title {
@@ -107,13 +108,10 @@ header #title a {
   padding: 0 5px;
 }
 
-header #user-settings {
-  top: 0;
-  right: 0;
-}
-
-#top {
+#user-settings {
   position: fixed;
+  top: 20px;
+  right: 20px;
 }
 
 nav ul {
@@ -126,12 +124,13 @@ nav ul {
 }
 
 nav a {
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
-#recipes {
-  margin-top: 0;
+#recipes, #user {
+  margin-top: 60px;
   padding: 20px;
 }
 
