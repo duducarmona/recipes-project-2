@@ -35,30 +35,26 @@
       </button>
     </form>
 
-    <span><strong>Ingredients</strong></span>
-    <div class="ingredient-list">
-      <ul>
-        {{#each recipe.ingredients}}
-          <li>
-            {{this.ingredient.name}}
-            {{this.amount}}
-            {{this.unit}}
-          </li>
-        {{/each}}
-      </ul>
-    </div>
+    <h2>Ingredients</h2>
+    <ul>
+      {{#each recipe.ingredients}}
+        <li>
+          <span class="ingredient">{{this.ingredient.name}}</span>
+          {{#or this.amount this.unit}}
+            ({{this.amount}} {{this.unit}})
+          {{/or}}
+        </li>
+      {{/each}}
+    </ul>
 
-    <span><strong>Instructions</strong></span>
-    <div class="instructions">
-      <ul>
-        {{#each recipe.instructions}}
-          <li>
-            {{this.number}}
-            {{this.step}}
-          </li>
-        {{/each}}
-      </ul>
-    </div>
+    <h2>Instructions</h2>
+    <ol>
+      {{#each recipe.instructions}}
+        <li>
+          {{this.step}}
+        </li>
+      {{/each}}
+    </ol>
     
   </div>
 </main>

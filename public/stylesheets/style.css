@@ -29,6 +29,7 @@ h1:not(.home) {
 }
 
 h2 {
+  margin: 5px 0;
   font-size: 24px;
   font-weight: 500;
   letter-spacing: -1px;
@@ -131,7 +132,6 @@ button {
 
 .home #logo p {
   font-size: 20px;
-  font-weight: 300;
 }
 
 .home form {
@@ -237,8 +237,6 @@ main:not(.home) {
 }
 
 .recipe-preview a h2 {
-  margin: 7px 0;
-  line-height: 100%;
   color: #545454;
 }
 
@@ -253,6 +251,8 @@ main:not(.home) {
 
 .ingredients-preview {
   margin: 5px 0;
+  font-weight: 300;
+  line-height: 18px;
 }
 
 .ingredients-preview .comma:not(:last-child):after {
@@ -262,6 +262,23 @@ main:not(.home) {
 #recipe h1 {
   /* font-size: 30px; */
   letter-spacing: -2px;
+}
+
+#recipe .recipe-detail ul,
+#recipe .recipe-detail ol {
+  padding-left: 20px;
+}
+
+#recipe .recipe-detail li {
+  line-height: 25px;
+}
+
+#recipe .recipe-detail ol li {
+  padding-bottom: 5px;
+}
+
+#recipe .recipe-detail .ingredient {
+  font-weight: 400;
 }
 
 /* shake animation from https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */

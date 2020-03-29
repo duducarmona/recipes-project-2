@@ -38,6 +38,15 @@ hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 hbs.registerHelper('json', (object) => JSON.stringify(object));
 
+// eslint-disable-next-line func-names
+hbs.registerHelper('or', function (a, b, options) {
+  // must use a regular function here otherwise context is lost with arrow function
+  if (a || b) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
 hbs.registerHelper('ifEqualStrings', (a, b, options) => {
   if (a && b) {
     if (a.toString() === b.toString()) {
@@ -119,6 +128,7 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
