@@ -32,6 +32,7 @@ router.get('/add', (req, res, next) => {
     .then((ingredients) => {
       res.render('add', {
         ingredients,
+        title: 'Add recipe',
       });
     })
     .catch(next);
@@ -66,7 +67,9 @@ router.post('/', (req, res, next) => {
 
 // GET /recipes/find
 router.get('/find', (req, res) => {
-  res.render('find');
+  res.render('find', {
+    title: 'Find recipe',
+  });
 });
 
 // GET /recipes/users/:username
@@ -120,6 +123,7 @@ router.get('/:id', (req, res, next) => {
     .then((recipe) => {
       res.render('recipe', {
         recipe,
+        title: recipe.title,
       });
     })
     .catch((error) => {
@@ -143,6 +147,7 @@ router.get('/:id/update', middleware.recipeIsNotMine, (req, res, next) => {
           res.render('update', {
             recipe,
             ingredients,
+            title: 'Edit recipe',
           });
         })
         .catch(next);

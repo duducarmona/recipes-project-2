@@ -35,75 +35,70 @@ select {
   color:black;
 }
 
-option:not(:checked) { 
-  background-color: yellow; 
-  color:blue;
-}
-
 a {
   color: #FF4C4C;
   text-decoration: none;
   font-weight: 600;
 }
 
-#home {
+.home {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 30px;
 }
 
-#home #title {
+.home #logo {
   width: 230px;
   margin-top: 10px;
   text-align: justify;
 }
 
-#home h1 {
+.home h1 {
   font-family: "Alegreya", serif;
   font-size: 48px;
   font-weight: 400;
 }
 
-#home #title p {
+.home #logo p {
   font-size: 20px;
   font-weight: 300;
 }
 
-#home form {
+.home form {
   width: 100%;
   margin-top: 20px;
 }
 
-#home form label {
+.home form label {
   font-size: 16px;
   line-height: 40px;
 }
 
-#home form input {
+.home form input {
   width: 100%;
   padding: 10px;
   font-size: 16px;
 }
 
-#home form #button-container {
+.home form #button-container {
   margin-top: 5px;
   text-align: center;
 }
 
-#home #error-message {
+.home #error-message {
   margin-top: 18px;
   font-style: italic;
   font-weight: 700;
   font-size: 14px;
 }
 
-#home #footer {
+.home #footer {
   margin-top: 10px;
   text-align: center;
 }
 
-#home #footer p {
+.home #footer p {
   padding: 6px;
   font-size: 16px;
 }
@@ -116,14 +111,14 @@ header {
   background-color: white;
 }
 
-header #title {
+header #logo {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-header #title a {
+header #logo a {
   color: #545454;
   padding: 0 5px;
 }
@@ -149,7 +144,7 @@ nav a {
   text-transform: uppercase;
 }
 
-main:not(#home) {
+main:not(.home) {
   margin-top: 60px;
   padding: 20px;
 }
