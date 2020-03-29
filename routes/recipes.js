@@ -177,7 +177,7 @@ router.post('/:id', (req, res, next) => {
     instructions,
   })
     .then(() => {
-      req.flash('message', 'Recipe updated!');
+      req.flash('message', 'Recipe updated');
       res.redirect(`/recipes/${id}`);
     })
     .catch(next);

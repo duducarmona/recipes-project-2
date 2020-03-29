@@ -18,12 +18,12 @@
     </div>
   </form>
 
-  {{#if error}}
-  <div id="error-message">{{error}}</div>
-  {{/if}}
-
   <div id="footer">
     <p><a href="forgot/">Forgot password?</a></p>
     <p>Don't have an account? <a href="/register">Register here</a></p>
   </div>
+
+  {{#each messages}}
+  <div id="message">{{this}}</div>
+  {{/each}}
 </main>
