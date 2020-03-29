@@ -18,6 +18,28 @@ input, textarea, select, button {
   font-family: inherit;
 }
 
+input {
+  background: rgba(221, 99, 99, 0.15);
+  border: 0;  
+}
+
+input:focus, select:focus {
+  outline: none;
+  border: 0;
+  box-shadow: 0 0 5px #DD6363;
+}
+
+select {
+  background: rgba(221, 99, 99, 0.15);
+  border: 0;
+  color:black;
+}
+
+option:not(:checked) { 
+  background-color: yellow; 
+  color:blue;
+}
+
 a {
   color: #FF4C4C;
   text-decoration: none;
@@ -62,8 +84,6 @@ a {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  background: rgba(221, 99, 99, 0.15);
-  border: 0;
 }
 
 #home form #button-container {
@@ -181,4 +201,30 @@ button {
 
 .hidden {
   display: none;
+}
+
+/* shake animation from https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
+img:active {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
