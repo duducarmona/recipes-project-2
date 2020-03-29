@@ -9,7 +9,7 @@
     <label for="image">Image:</label><br>
     <input type="text" name="image"><br>
 
-    <h2>Ingredients</h2>
+    <h2>Add ingredients:</h2>
     <div id="ingredients">
       <div class="ingredient-container">
         <button class="remove-ingredient" type="button"><img src="/images/remove-icon.png" alt="remove icon"/></button>
@@ -29,9 +29,11 @@
         <input type="text" name="unit"><br>        
       </div>
     </div>
-    <button class="small-button" type="button" id="add-ingredient">Add another ingredient</button>
+    <div class="button-container">
+      <button class="small-button" type="button" id="add-ingredient">Add another ingredient</button>
+    </div>
 
-    <h2>Instructions</h2>
+    <h2>Add instructions:</h2>
     <ol id="steps">
       <li>
         <input class="step" type="text" name="steps">
@@ -40,7 +42,9 @@
         </button>
       </li>
     </ol>
-    <button class="small-button" type="button" id="add-step">Add step</button>
+    <div class="button-container">
+      <button class="small-button" type="button" id="add-step">Add step</button>
+    </div>
 
     <br>
     <button class="button" type="submit">Save Recipe</button>
