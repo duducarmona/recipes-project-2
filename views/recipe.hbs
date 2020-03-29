@@ -3,6 +3,7 @@
   <h1>{{title}}</h1>
 
   <div class="recipe-detail">
+
     <img class="recipe-image"
       src="{{#if recipe.image}}{{recipe.image}}{{else}}/images/food-placeholder.jpg{{/if}}" />
     <div>
@@ -19,30 +20,46 @@
       </a>
     </div>
 
-      <span><strong>Ingredients</strong></span>
-      <div class="ingredient-list">
-        <ul>
-          {{#each recipe.ingredients}}
-            <li>
-              {{this.ingredient.name}}
-              {{this.amount}}
-              {{this.unit}}
-            </li>
-          {{/each}}
-        </ul>
-      </div>
-      <span><strong>Instructions</strong></span>
-      <div class="instructions">
-        <ul>
-          {{#each recipe.instructions}}
-            <li>
-              {{this.number}}
-              {{this.step}}
-            </li>
-          {{/each}}
-        </ul>
-      </div>
+    <form class="favorites-form
+      {{#ifEqualStrings recipe.user._id @root.currentUser._id}}hidden{{/ifEqualStrings}}
+      {{#ifIn recipe.id @root.currentUser.favorites}}is-favorite{{/ifIn}}"
+      action="/users/{{@root.currentUser._id}}/favorites" method="post">
+      <input type="hidden" name="recipeId" value="{{recipe._id}}">
+      <button class="favorite-button" type="submit">
+        <img src="/images/heart-icon-outline.png"
+          class="{{#ifIn recipe.id @root.currentUser.favorites}}hidden{{/ifIn}}"
+          alt="outlined heart icon" />
+        <img src="/images/heart-icon-filled.png"
+          class="{{#ifNotIn recipe.id @root.currentUser.favorites}}hidden{{/ifNotIn}}"
+          alt="filled heart icon" />
+      </button>
+    </form>
+
+    <span><strong>Ingredients</strong></span>
+    <div class="ingredient-list">
+      <ul>
+        {{#each recipe.ingredients}}
+          <li>
+            {{this.ingredient.name}}
+            {{this.amount}}
+            {{this.unit}}
+          </li>
+        {{/each}}
+      </ul>
     </div>
+
+    <span><strong>Instructions</strong></span>
+    <div class="instructions">
+      <ul>
+        {{#each recipe.instructions}}
+          <li>
+            {{this.number}}
+            {{this.step}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+    
   </div>
 </main>
   
@@ -55,3 +72,4 @@
 {{/if}}
 
 {{> confirm_on_delete}}
+{{> add_remove_favorites}}

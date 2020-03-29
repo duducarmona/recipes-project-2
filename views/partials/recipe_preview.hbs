@@ -4,42 +4,43 @@
     <img class="recipe-image"
       src="{{#if this.image}}{{this.image}}{{else}}/images/food-placeholder.jpg{{/if}}" />
   </a>
-  <div>
-    <a href="/recipes/{{this.id}}"><h2>{{this.title}}</h2></a>
-    <div> 
-      <div class="edit-delete-buttons
-        {{#ifNotEqualStrings this.user._id @root.currentUser._id}}hidden{{/ifNotEqualStrings}}">
-        <form action="/recipes/{{this._id}}/delete" method="post">
-          <button class="delete-button" type="button">
-            <img src="/images/trash-icon.png" alt="trash icon"/>
-          </button>
-        </form>
-        <a href="/recipes/{{this._id}}/update">
-          <img src="/images/edit-icon.png" alt="edit icon" />
-        </a>
-      </div>
 
-      <form class="favorites-form
-        {{#ifEqualStrings this.user._id @root.currentUser._id}}hidden{{/ifEqualStrings}}
-        {{#ifIn this.id @root.currentUser.favorites}}is-favorite{{/ifIn}}"
-        action="/users/{{@root.currentUser._id}}/favorites" method="post">
-        <input type="hidden" name="recipeId" value="{{this._id}}">
-        <button class="favorite-button" type="submit">
-          <img src="/images/heart-icon-outline.png"
-            class="{{#ifIn this.id @root.currentUser.favorites}}hidden{{/ifIn}}"
-            alt="outlined heart icon" />
-          <img src="/images/heart-icon-filled.png"
-            class="{{#ifNotIn this.id @root.currentUser.favorites}}hidden{{/ifNotIn}}"
-            alt="filled heart icon" />
-        </button>
-      </form>
-    </div>
-    
-    <div class="ingredients-preview">
-      {{#each this.ingredients}}
-      <span class="comma">{{this.ingredient.name}}</span>
-      {{/each}}
-    </div>
+  <a href="/recipes/{{this.id}}">
+    <h2>{{this.title}}</h2>
+  </a>
+
+  <div class="edit-delete-buttons
+    {{#ifNotEqualStrings this.user._id @root.currentUser._id}}hidden{{/ifNotEqualStrings}}">
+    <form action="/recipes/{{this._id}}/delete" method="post">
+      <button class="delete-button" type="button">
+        <img src="/images/trash-icon.png" alt="trash icon"/>
+      </button>
+    </form>
+    <a href="/recipes/{{this._id}}/update">
+      <img src="/images/edit-icon.png" alt="edit icon" />
+    </a>
   </div>
+
+  <form class="favorites-form
+    {{#ifEqualStrings this.user._id @root.currentUser._id}}hidden{{/ifEqualStrings}}
+    {{#ifIn this.id @root.currentUser.favorites}}is-favorite{{/ifIn}}"
+    action="/users/{{@root.currentUser._id}}/favorites" method="post">
+    <input type="hidden" name="recipeId" value="{{this._id}}">
+    <button class="favorite-button" type="submit">
+      <img src="/images/heart-icon-outline.png"
+        class="{{#ifIn this.id @root.currentUser.favorites}}hidden{{/ifIn}}"
+        alt="outlined heart icon" />
+      <img src="/images/heart-icon-filled.png"
+        class="{{#ifNotIn this.id @root.currentUser.favorites}}hidden{{/ifNotIn}}"
+        alt="filled heart icon" />
+    </button>
+  </form>
+
+  <div class="ingredients-preview">
+    {{#each this.ingredients}}
+    <span class="comma">{{this.ingredient.name}}</span>
+    {{/each}}
+  </div>
+
 </div>
 

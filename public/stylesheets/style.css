@@ -182,7 +182,7 @@ header {
   padding: 10px 20px;
   top: 0;
   background-color: white;
-  z-index: 1;
+  z-index: 10;
 }
 
 header #logo {
@@ -244,11 +244,11 @@ main:not(.home) {
 
 .recipe-preview .edit-delete-buttons,
 .recipe-preview .favorites-form,
-.recipe-detail .edit-delete-buttons {
+.recipe-detail .edit-delete-buttons,
+.recipe-detail .favorites-form {
   position: absolute;
   top: 20px;
   right: 20px;
-  z-index: 10;
 }
 
 .ingredients-preview {
