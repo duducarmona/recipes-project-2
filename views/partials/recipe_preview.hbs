@@ -1,11 +1,9 @@
-<div class="recipe">
+<div class="recipe-preview">
   
   <a href="recipes/{{this.id}}"><img class="recipe-image" src="{{this.image}}" /></a>
   <div class="recipe-info">
-    <h2>{{this.title}}</h2>
-    <div id="buttons"> 
-      <a href="/recipes/{{this._id}}">See recipe</a>
-
+    <a href="recipes/{{this.id}}"><h2>{{this.title}}</h2></a>
+    <div> 
       <div class="edit-delete-buttons
         {{#ifNotEqualStrings this.user._id @root.currentUser._id}}hidden{{/ifNotEqualStrings}}">
         <form action="/recipes/{{this._id}}/delete" method="post">
@@ -34,11 +32,11 @@
       </form>
     </div>
     
-    <ul>
+    <div class="ingredients-preview">
       {{#each this.ingredients}}
-      <li>{{this.ingredient.name}}</li>
+      <span class="comma">{{this.ingredient.name}}</span>
       {{/each}}
-    </ul>
+    </div>
   </div>
 </div>
 
