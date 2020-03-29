@@ -22,14 +22,16 @@ h1, h2, h3 {
 }
 
 h1:not(.home) {
+  margin: 15px 0;
+  line-height: 100%;
   font-size: 36px;
   font-weight: 400;
-  margin: 10px 0;
 }
 
 h2 {
   font-size: 24px;
   font-weight: 500;
+  letter-spacing: -1px;
 }
 
 h3 {
@@ -228,7 +230,8 @@ main:not(.home) {
   border-radius: 1%;
 }
 
-.recipe-preview {
+.recipe-preview,
+.recipe-detail {
   position: relative;
   margin-bottom: 40px;
 }
@@ -240,10 +243,12 @@ main:not(.home) {
 }
 
 .recipe-preview .edit-delete-buttons,
-.recipe-preview .favorites-form {
+.recipe-preview .favorites-form,
+.recipe-detail .edit-delete-buttons {
   position: absolute;
   top: 20px;
   right: 20px;
+  z-index: 10;
 }
 
 .ingredients-preview {
@@ -254,10 +259,9 @@ main:not(.home) {
   content: ", ";
 }
 
-#recipe-detail h1 {
-  font-size: 30px;
-  letter-spacing: -1px;
-  line-height: 100%;
+#recipe h1 {
+  /* font-size: 30px; */
+  letter-spacing: -2px;
 }
 
 /* shake animation from https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */

@@ -1,17 +1,24 @@
-<main id="recipe-detail">
+<main id="recipe">
 
   <h1>{{title}}</h1>
-  <a href="/recipes/{{recipe.id}}/update">
-    <img src="/images/edit-icon.png" alt="edit icon" />
-  </a>
-  <form action="/recipes/{{recipe.id}}/delete" method="post">
-    <button class="delete-button" type="button"><img src="/images/trash-icon.png" alt="trash icon"/></button>
-  </form>
-  <div class="recipe-card">
-    <div class="recipe-image-container">
-      <img class="recipe-image" src="{{recipe.image}}" alt="recipe image"/>
-    </div>
+
+  <div class="recipe-detail">
+    <img class="recipe-image"
+      src="{{#if recipe.image}}{{recipe.image}}{{else}}/images/food-placeholder.jpg{{/if}}" />
     <div>
+
+    <div class="edit-delete-buttons
+        {{#ifNotEqualStrings recipe.user._id @root.currentUser._id}}hidden{{/ifNotEqualStrings}}">
+        <form action="/recipes/{{recipe._id}}/delete" method="post">
+      <form action="/recipes/{{recipe.id}}/delete" method="post">
+        <button class="delete-button" type="button">
+          <img src="/images/trash-icon.png" alt="trash icon"/></button>
+      </form>
+      <a href="/recipes/{{recipe.id}}/update">
+        <img src="/images/edit-icon.png" alt="edit icon" />
+      </a>
+    </div>
+
       <span><strong>Ingredients</strong></span>
       <div class="ingredient-list">
         <ul>
