@@ -2,17 +2,21 @@
 
   <h1>{{title}}</h1>
 
-  <form action="{{user.id}}/delete" method="post">
-    <button class="delete-button" type="button"><img src="/images/trash-icon.png" alt="trash icon"/></button>
-  </form>
+  <div id="user-info">
+    <form action="{{user.id}}/delete" method="post">
+      <button class="delete-button" type="button"><img src="/images/trash-icon.png" alt="trash icon"/></button>
+    </form>
 
-  <form action="{{user.id}}" method="post">
-    <label for="username">Username:</label><br>
-    <input type="text" name="username" value="{{user.username}}"><br>
-    <p>Created on {{user.created_at}}</p>
-    <p>Updated on {{user.updated_at}}</p>
-    <button id="submit-button" class="button" type="submit">Save Changes</button>
-  </form>
+    <form action="{{user.id}}" method="post">
+      <label for="username">Username:</label><br>
+      <input type="text" name="username" value="{{user.username}}"><br>
+      <p class="account-info">Account created on {{user.created_at}}</p>
+      <p class="account-info">Account updated on {{user.updated_at}}</p>
+      <div class="center-button">
+        <button id="submit-button" class="button" type="submit">Save Changes</button>
+      </div>
+    </form>
+  </div>
 
   <div class="center-button">
     <a href="/users/{{user.id}}/password">
