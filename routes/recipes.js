@@ -90,7 +90,7 @@ router.get('/users/:username', middleware.userNameIsNotMine, (req, res, next) =>
               },
             },
           ],
-        })
+        }).sort('title')
           .populate('ingredients.ingredient')
           .then((recipes) => {
             res.render('recipes', {
