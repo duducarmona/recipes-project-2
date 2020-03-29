@@ -129,9 +129,13 @@ nav a {
   text-transform: uppercase;
 }
 
-#recipes, #user {
+main:not(#home) {
   margin-top: 60px;
   padding: 20px;
+}
+
+.recipe-image {
+  width: 100%;
 }
 
 h2 {
