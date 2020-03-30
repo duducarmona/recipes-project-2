@@ -213,9 +213,14 @@ nav ul {
   border-top: 1px solid rgba(84,84,84,0.15);
 }
 
+nav li.active a {
+  color: #FF4C4C;
+}
+
 nav a {
   font-size: 11px;
   font-weight: 700;
+  color: #545454;
 }
 
 nav li {
@@ -419,7 +424,8 @@ main:not(.home) {
 }
 
 /* shake animation from https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
-img:active {
+img:active,
+i:active {
   animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
