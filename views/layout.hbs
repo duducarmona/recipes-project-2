@@ -17,17 +17,30 @@
       <a href="/users/{{currentUser._id}}">
         <img id="user-settings" src="/images/settings-icon.png" alt="user settings icon" />
       </a>
-
-      <nav>
-        <ul>
-          <li><a href="/recipes/users/{{currentUser.username}}">My Recipes</a></li>
-          <li><a href="/recipes">Recipes</a></li>
-          <li><a href="/recipes/add">Add Recipe</a></li>
-          <li><a href="/recipes/find">Find Recipes</a></li>
-        </ul>
-      </nav>
     </header>
 
+    <nav>
+      <ul>
+        <li>
+          <a href="/recipes/users/{{currentUser.username}}">
+            <i class="material-icons">favorite</i><br>My recipes</a>
+        </li>
+        <li>
+          <a href="/recipes">
+            <i class="material-icons">restaurant</i><br>Recipes</a>
+        </li>
+        <li>
+          <a href="/recipes/add">
+            <i class="material-icons">note_add</i><br>Add recipe</a>
+        </li>
+        <li>
+          <a href="/recipes/find">
+            <i class="material-icons">search</i><br>Search</a>
+        </li>
+      </ul>
+    </nav>
+
     {{{body}}}
+
   </body>
 </html>
