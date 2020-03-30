@@ -1,4 +1,15 @@
 <script>
+  const addFavoriteSound = new Audio('../audio/state-change_confirm-up.ogg');
+  const removeFavoriteSound = new Audio('../audio/state-change_confirm-down.ogg');
+
+  function playAddFavoriteSound() {
+    addFavoriteSound.play();
+  }
+
+  function playRemoveFavoriteSound() {
+    removeFavoriteSound.play();
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.favorites-form').forEach((favoritesForm) => {
       if (favoritesForm) {
@@ -15,6 +26,11 @@
           })
             .then(() => {
               isFavorite = !isFavorite;
+              if (isFavorite) {
+                playAddFavoriteSound();
+              } else {
+                playRemoveFavoriteSound();
+              }
               favoritesForm.classList.toggle('is-favorite');
 
               const hearts = target.querySelectorAll('.favorite-button img');
