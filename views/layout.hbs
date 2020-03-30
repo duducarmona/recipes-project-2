@@ -2,22 +2,32 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>{{title}}</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <nav>
-      <a href="/"><img src="/images/chef-40.png" /></a>
-      <h2>Better Chef</h2>
-      <a href="/users/{{currentUser._id}}">User</a>
-      <ul>
-        <li><a href="/recipes/users/{{currentUser.username}}">My Recipes</a></li>
-        <li><a href="/recipes">Recipes</a></li>
-        <li><a href="/recipes/add">Add Recipe</a></li>
-        <li><a href="/recipes/find">Find Recipes</a></li>
-      </ul>
-    </nav>
+
+    <header>
+      <div id="logo">
+        <a href="/"><img src="/images/chef-40.png" /></a>
+        <a href="/"><h3>Better Chef</h3></a>
+      </div>
+
+      <a href="/users/{{currentUser._id}}">
+        <img id="user-settings" src="/images/settings-icon.png" alt="user settings icon" />
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="/recipes/users/{{currentUser.username}}">My Recipes</a></li>
+          <li><a href="/recipes">Recipes</a></li>
+          <li><a href="/recipes/add">Add Recipe</a></li>
+          <li><a href="/recipes/find">Find Recipes</a></li>
+        </ul>
+      </nav>
+    </header>
+
     {{{body}}}
   </body>
 </html>

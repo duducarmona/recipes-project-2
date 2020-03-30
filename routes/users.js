@@ -31,6 +31,7 @@ router.get('/:id', middleware.userIsNotMe, (req, res, next) => {
       if (user) {
         res.render('user', {
           user,
+          title: 'My account',
         });
       } else {
         next(createError(404, 'User not found'));
@@ -54,7 +55,7 @@ router.post('/:id', middleware.userIsNotMe, (req, res, next) => {
     username,
   })
     .then(() => {
-      req.flash('message', 'User updated!');
+      req.flash('message', 'Username changed');
       res.redirect(`/users/${id}`);
     })
     .catch(next);
@@ -68,6 +69,7 @@ router.get('/:id/password', middleware.userIsNotMe, (req, res, next) => {
     .then((user) => {
       res.render('password', {
         user,
+        title: 'Change password',
       });
     })
     .catch(next);
@@ -83,7 +85,7 @@ router.post('/:id/password', middleware.userIsNotMe, (req, res, next) => {
   } = req.body;
 
   if (newPassword !== confirmPassword) {
-    req.flash('message', 'New password and confirm didn\'t match. Please try again.');
+    req.flash('message', 'New passwords didn\'t match');
     res.redirect(`/users/${id}/password`);
   } else {
     User.findById(id)
@@ -95,11 +97,11 @@ router.post('/:id/password', middleware.userIsNotMe, (req, res, next) => {
             hashedPassword,
           })
             .then(() => {
-              req.flash('message', 'Password updated!');
+              req.flash('message', 'Password changed');
               res.redirect(`/users/${id}/password`);
             });
         } else {
-          req.flash('message', 'Wrong password. Please try again.');
+          req.flash('message', 'Password incorrect');
           res.redirect(`/users/${id}/password`);
         }
       })

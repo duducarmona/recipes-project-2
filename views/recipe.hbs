@@ -1,41 +1,61 @@
 <main id="recipe">
 
-  <h1>{{recipe.title}}</h1>
-  <a href="/recipes/{{recipe.id}}/update">
-    <img src="/images/edit-icon-20.png" alt="edit icon" />
-  </a>
-  <form action="/recipes/{{recipe.id}}/delete" method="post">
-    <button class="delete-button" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
-  </form>
-  <div class="recipe-card">
-    <div class="recipe-image-container">
-      <img class="recipe-image" src="{{recipe.image}}" alt="recipe image"/>
-    </div>
+  <h1>{{title}}</h1>
+
+  <div class="recipe-detail">
+
+    <img class="recipe-image"
+      src="{{#if recipe.image}}{{recipe.image}}{{else}}/images/food-placeholder.jpg{{/if}}" />
     <div>
-      <span><strong>Ingredients</strong></span>
-      <div class="ingredient-list">
-        <ul>
-          {{#each recipe.ingredients}}
-            <li>
-              {{this.ingredient.name}}
-              {{this.amount}}
-              {{this.unit}}
-            </li>
-          {{/each}}
-        </ul>
-      </div>
-      <span><strong>Instructions</strong></span>
-      <div class="instructions">
-        <ul>
-          {{#each recipe.instructions}}
-            <li>
-              {{this.number}}
-              {{this.step}}
-            </li>
-          {{/each}}
-        </ul>
-      </div>
+
+    <div class="edit-delete-buttons
+        {{#ifNotEqualStrings recipe.user._id @root.currentUser._id}}hidden{{/ifNotEqualStrings}}">
+        <form action="/recipes/{{recipe._id}}/delete" method="post">
+      <form action="/recipes/{{recipe.id}}/delete" method="post">
+        <button class="delete-button" type="button">
+          <img src="/images/trash-icon.png" alt="trash icon"/></button>
+      </form>
+      <a href="/recipes/{{recipe.id}}/update">
+        <img src="/images/edit-icon.png" alt="edit icon" />
+      </a>
     </div>
+
+    <form class="favorites-form
+      {{#ifEqualStrings recipe.user._id @root.currentUser._id}}hidden{{/ifEqualStrings}}
+      {{#ifIn recipe.id @root.currentUser.favorites}}is-favorite{{/ifIn}}"
+      action="/users/{{@root.currentUser._id}}/favorites" method="post">
+      <input type="hidden" name="recipeId" value="{{recipe._id}}">
+      <button class="favorite-button" type="submit">
+        <img src="/images/heart-icon-outline.png"
+          class="{{#ifIn recipe.id @root.currentUser.favorites}}hidden{{/ifIn}}"
+          alt="outlined heart icon" />
+        <img src="/images/heart-icon-filled.png"
+          class="{{#ifNotIn recipe.id @root.currentUser.favorites}}hidden{{/ifNotIn}}"
+          alt="filled heart icon" />
+      </button>
+    </form>
+
+    <h2>Ingredients</h2>
+    <ul>
+      {{#each recipe.ingredients}}
+        <li>
+          <span class="ingredient-name">{{this.ingredient.name}}</span>
+          {{#or this.amount this.unit}}
+            ({{this.amount}} {{this.unit}})
+          {{/or}}
+        </li>
+      {{/each}}
+    </ul>
+
+    <h2>Instructions</h2>
+    <ol>
+      {{#each recipe.instructions}}
+        <li>
+          <span class="step">{{this.step}}</span>
+        </li>
+      {{/each}}
+    </ol>
+    
   </div>
 </main>
   
@@ -43,8 +63,5 @@
 <div id="message">{{this}}</div>
 {{/each}}
 
-{{#if error}}
-<div id="error-message">{{error}}</div>
-{{/if}}
-
 {{> confirm_on_delete}}
+{{> add_remove_favorites}}
