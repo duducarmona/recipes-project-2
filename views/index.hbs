@@ -1,23 +1,29 @@
-<main id="home">
+<main class="home">
 
-  <img src="/images/chef-180.png" />
-  <h1>{{title}}</h1>
-  <p>recipes to make it all better</p>
+  <img class="logo" src="/images/chef-180.png" />
+  <div id="logo">
+    <h1>{{title}}</h1>
+    <p>recipes to make it better</p>
+  </div>
 
   <form action="/" method="post">
     <label for="username">Username:</label><br>
-    <input type="text" name="username" placeholder="Your username" required><br>
+    <input type="text" name="username" placeholder="Thor" required><br>
 
     <label for="password">Password:</label><br>
-    <input type="password" name="password" placeholder="**********" required><br>
+    <input type="password" name="password" placeholder="•••••••••" required><br>
 
-    <button class="button" type="submit">Sign In</button>
+    <div class="center-button">
+      <button class="button" type="submit">Sign In</button>
+    </div>
   </form>
 
-  {{#if error}}
-  <div id="error-message">{{error}}</div>
-  {{/if}}
+  <div id="footer">
+    <p><a href="forgot/">Forgot password?</a></p>
+    <p>Don't have an account? <a href="/register">Register here</a></p>
+  </div>
 
-  <p><a href="forgot/">Forgot password?</a></p>
-  <p>Don't have an account? <a href="/register">Register here</a></p>
+  {{#each messages}}
+  <div id="message">{{this}}</div>
+  {{/each}}
 </main>

@@ -5,41 +5,41 @@
     {{!-- Add ingredient --}}
     document.getElementById('add-ingredient').addEventListener('click', () => {
       const newIngredient = document.createElement('div');
-      newIngredient.classList.add("ingredient");
+      newIngredient.classList.add("ingredient-container");
       newIngredient.innerHTML = `
-      <label for="ingredient">Ingredient:</label><br>
-      <select name="ingredient">
-          <option value="">--Please choose an ingredient--</option>
-          {{#each ingredients}}
-            <option value={{this._id}}>{{this.name}}</option>
-          {{/each}}
-      </select><br>
+        <button class="remove-button remove-ingredient" type="button"><img src="/images/remove-icon.png" alt="remove icon"/></button>
+        <label for="ingredient">Ingredient:</label><br>
+        <select name="ingredient">
+            <option value="">--Please choose an ingredient--</option>
+            {{#each ingredients}}
+              <option value={{this._id}}>{{this.name}}</option>
+            {{/each}}
+        </select><br>
 
-      <label for="amount">Amount:</label><br>
-      <input type="number" name="amount" step="any" min="0"><br>
+        <label for="amount">Amount (number):</label><br>
+        <input class="no-highlight" type="number" name="amount" step="any" min="0" placeholder="1.5" ><br>
 
-      <label for="unit">Unit:</label><br>
-      <input type="text" name="unit"><br>
-      <button class="delete-button delete-ingredient" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
+        <label for="unit">Unit:</label><br>
+        <input class="no-highlight" type="text" name="unit" placeholder="cup" ><br>
       `;
       ingredients.appendChild(newIngredient);
 
-      {{!-- Delete added ingredient --}}
-      newDeleteButton = newIngredient.querySelector('.delete-ingredient');
-      addDeleteListener(newDeleteButton);
+      {{!-- remove added ingredient --}}
+      newremoveButton = newIngredient.querySelector('.remove-ingredient');
+      addremoveListener(newremoveButton);
     });
 
-    {{!-- Delete existing ingredient --}}
-    document.querySelectorAll('.delete-ingredient').forEach(deleteButton => {
-      addDeleteListener(deleteButton);
+    {{!-- remove existing ingredient --}}
+    document.querySelectorAll('.remove-ingredient').forEach(removeButton => {
+      addremoveListener(removeButton);
     });
   });
 
-  {{!-- Delete listener and action --}}
-  addDeleteListener = (deleteButton) => {
-    deleteButton.addEventListener('click', () => {
-      const rowToDelete = deleteButton.parentNode;
-      deleteButton.parentNode.parentNode.removeChild(rowToDelete);
+  {{!-- remove listener and action --}}
+  addremoveListener = (removeButton) => {
+    removeButton.addEventListener('click', () => {
+      const rowToremove = removeButton.parentNode;
+      removeButton.parentNode.parentNode.removeChild(rowToremove);
     });
   };
 </script>

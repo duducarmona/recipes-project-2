@@ -1,41 +1,96 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya:400,500,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,600,700,700i&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+ /* general styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width: 100%;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
   color: #545454;
+}
+
+h1, h2, h3 {
+  font-family: "Alegreya", serif;
+}
+
+h1:not(.home) {
+  margin: 15px 0;
+  line-height: 100%;
+  font-size: 36px;
+  font-weight: 400;
+}
+
+h2 {
+  color: #232323;
+  margin: 5px 0;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 400;
 }
 
 a {
   color: #FF4C4C;
   text-decoration: none;
+  font-weight: 600;
 }
 
-nav ul {
-  width: 550px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  list-style-type: none;
-  padding: 0;
-}
-
-nav a {
-  font-size: 14px;
-  font-weight: 400;
-  padding: 0;
+#message {
+  text-align: center;
+  margin-top: 7px;
+  color: #FF4C4C;
   text-transform: uppercase;
-}
-
-h2 {
-  font-size: 16px;
-}
-
-#error-message {
   font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.hidden {
+  display: none;
+}
+
+ /* general form and button styles */
+
+input, textarea, select, button {
+  font-family: inherit;
+}
+
+input {
+  background-color: rgba(221, 99, 99, 0.10);
+  border: 0;  
+}
+
+input.no-highlight {
+  background-color: white;
+  border: 1px solid rgba(221, 99, 99, 0.10);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border: 0;
+  box-shadow: 0 0 5px #DD6363;
 }
 
 button {
-  background-color: white;
+  background-color: transparent;
   outline: none;
+}
+
+.center-button {
+  text-align: center;
 }
 
 .button {
@@ -46,6 +101,11 @@ button {
   text-transform: uppercase;
   font-weight: 400;
   background-color: rgb(255, 76, 76, 0.5);
+  color: white;
+}
+
+.button:active {
+  background-color: rgb(255, 76, 76, 0.8);
   color: white;
 }
 
@@ -60,11 +120,357 @@ button {
   color: #545454;
 }
 
-.delete-button,
-.favorite-button {
-  border: 0;
+.delete-button, .remove-ingredient, .remove-step, .favorite-button {
+  border: none;
 }
 
-.hidden {
-  display: none;
+ /* styles for layout-no-nav: home (sign in), register, forgot password */
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+
+.home #logo {
+  width: 230px;
+  margin-top: 10px;
+  text-align: justify;
+}
+
+.home h1 {
+  font-size: 48px;
+  font-weight: 400;
+}
+
+.home #logo p {
+  font-size: 22px;
+}
+
+.home form {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.home form label {
+  font-size: 16px;
+  line-height: 40px;
+}
+
+.home form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.home #footer {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.home #footer p {
+  padding: 6px;
+  font-size: 16px;
+}
+
+ /* styles for layout (with nav) */
+
+header {
+  width: 100vw;
+  position: fixed;
+  padding: 5px 0;
+  top: 0;
+  background-color: white;
+  border-bottom: 1px solid rgba(84,84,84,0.10);
+  z-index: 10;
+}
+
+header #logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header #logo a {
+  color: #545454;
+  padding: 0 5px;
+}
+
+#back-button {
+  position: fixed;
+  top: 12px;
+  left: 20px;
+  color: #545454;
+}
+
+#user-settings {
+  position: fixed;
+  top: 12px;
+  right: 20px;
+}
+
+ a.active i#user-settings {
+  color: #FF4C4C;
+}
+
+a i#user-settings {
+  color: #545454;
+}
+
+nav ul {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  padding: 10px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 1 1 0px;
+  justify-content: space-around;
+  list-style-type: none;
+  border-top: 1px solid rgba(84,84,84,0.10);
+}
+
+nav li.active a {
+  color: #FF4C4C;
+}
+
+nav a {
+  font-size: 11px;
+  font-weight: 700;
+  color: #545454;
+}
+
+nav li {
+  text-align: center;
+}
+
+main:not(.home) {
+  margin-top: 30px;
+  margin-bottom: 60px;
+  padding: 20px;
+}
+
+ /* styles for recipe preview and detail */
+
+.recipe-image {
+  width: 100%;
+  border-radius: 1%;
+}
+
+.recipe-preview,
+.recipe-detail {
+  position: relative;
+}
+
+.recipe-preview:not(:last-child) {
+  margin-bottom: 40px;
+}
+
+.recipe-preview a h2 {
+  color: #333333;
+}
+
+.recipe-preview .edit-delete-buttons,
+.recipe-preview .favorites-form,
+.recipe-detail .edit-delete-buttons,
+.recipe-detail .favorites-form {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.ingredients-preview {
+  margin: 5px 0;
+  font-weight: 300;
+  line-height: 18px;
+}
+
+.ingredients-preview .comma:not(:last-child):after {
+  content: ", ";
+}
+
+#recipe h1 {
+  letter-spacing: -2px;
+}
+
+#recipe .recipe-detail ul,
+#recipe .recipe-detail ol {
+  padding-left: 20px;
+}
+
+#recipe .recipe-detail ul {
+  margin-bottom: 5px;
+}
+
+#recipe .recipe-detail li {
+  line-height: 22px;
+}
+
+#recipe .recipe-detail ol li {
+  padding-bottom: 5px;
+}
+
+#recipe .recipe-detail .ingredient-name {
+  font-weight: 400;
+}
+
+#recipe #ingredient-list {
+  margin-bottom: 10px;
+}
+
+#recipe .recipe-detail .step {
+  font-weight: 300;
+}
+
+/* add or update recipe */
+
+#add-update-recipe form {
+  width: 100%;
+  margin-top: 0px;
+}
+
+#add-update-recipe form label {
+  font-size: 16px;
+  line-height: 40px;
+}
+
+#add-update-recipe form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#add-update-recipe h2 {
+  margin-top: 20px;
+}
+
+#add-update-recipe .ingredient-container {
+  border: 1px solid rgba(84,84,84,0.5);
+  padding: 0 10px 10px 10px;
+  position: relative;
+}
+
+#add-update-recipe .ingredient-container:not(:first-child) {
+  margin-top: 20px;
+}
+
+#add-update-recipe .ingredient-container label,
+#add-update-recipe .ingredient-container input {
+  font-size: 13px;
+}
+
+#add-update-recipe select {
+  width: 100%;
+  height: 36px;
+  padding: 5px;
+  border: none;
+  background-color: rgba(221, 99, 99, 0.10);
+  background-image: url('/images/dropdown-icon.png');
+  background-repeat: no-repeat;
+  background-position-x: 97%;
+  background-position-y: 16px;
+  color:black;
+  font-size: 13px;
+}
+
+#add-update-recipe .remove-ingredient {
+  position: absolute;
+  top: 11px;
+  right: 19px;
+}
+
+#add-update-recipe #steps {
+  border: 1px solid rgba(84,84,84,0.5);
+  padding: 10px 30px 10px 20px;
+}
+
+#add-update-recipe #steps input {
+  font-size: 13px;
+}
+
+#add-update-recipe #steps li {
+  position: relative;
+}
+
+#add-update-recipe #steps li:not(:first-child) {
+  margin-top: 5px;
+}
+
+#add-update-recipe #steps label {
+  font-size: 13px;
+}
+
+#add-update-recipe .remove-step {
+  position: absolute;
+  top: 12px;
+  right: -22px;
+}
+
+/* my account user profile */
+
+.user form {
+  width: 100%;
+}
+
+.user form label {
+  font-size: 16px;
+  line-height: 40px;
+}
+
+.user form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.user .account-info {
+  font-size: 12px;
+  font-weight: 300;
+  font-style: italic;
+  padding: 10px 5px 0 5px;
+}
+
+.user #user-info {
+  position: relative;
+}
+
+.user .delete-button {
+  position: absolute;
+  top: 5px;
+  right: 0;
+}
+
+.user button {
+  margin-bottom: 5px;
+}
+
+/* shake animation from https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
+img:active,
+i:active {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }

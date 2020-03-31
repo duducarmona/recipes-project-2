@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const hbs = require('hbs');
+const favicon = require('serve-favicon');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -38,6 +39,33 @@ hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 hbs.registerHelper('json', (object) => JSON.stringify(object));
 
+// eslint-disable-next-line func-names
+hbs.registerHelper('or', function (a, b, options) {
+  // must use a regular function here otherwise context is lost with arrow function
+  if (a || b) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
+hbs.registerHelper('ifEqualStrings', (a, b, options) => {
+  if (a && b) {
+    if (a.toString() === b.toString()) {
+      return options.fn(this);
+    }
+  }
+  return options.inverse(this);
+});
+
+hbs.registerHelper('ifNotEqualStrings', (a, b, options) => {
+  if (a && b) {
+    if (a.toString() === b.toString()) {
+      return options.inverse(this);
+    }
+  }
+  return options.fn(this);
+});
+
 hbs.registerHelper('createOption', (recipeIngredient, listIngredient, ingredientName) => {
   let option;
   if (listIngredient.toString() === recipeIngredient.toString()) {
@@ -67,6 +95,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 app.use(session({
   store: new MongoStore({
@@ -101,6 +130,7 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;

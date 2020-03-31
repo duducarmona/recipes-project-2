@@ -21,6 +21,7 @@ router.get('/', (req, res, next) => {
       res.render('recipes', {
         recipes,
         title: 'Recipes',
+        active: { recipes: true },
       });
     })
     .catch(next);
@@ -32,6 +33,8 @@ router.get('/add', (req, res, next) => {
     .then((ingredients) => {
       res.render('add', {
         ingredients,
+        title: 'Add recipe',
+        active: { add: true },
       });
     })
     .catch(next);
@@ -58,15 +61,18 @@ router.post('/', (req, res, next) => {
     ingredients,
     instructions,
   })
-    .then(() => {
-      res.redirect('/recipes');
+    .then((recipe) => {
+      res.redirect(`/recipes/${recipe._id}`);
     })
     .catch(next);
 });
 
 // GET /recipes/find
-router.get('/find', (req, res) => {
-  res.render('find');
+router.get('/search', (req, res) => {
+  res.render('search', {
+    title: 'Search recipes',
+    active: { search: true },
+  });
 });
 
 // GET /recipes/users/:username
@@ -87,12 +93,13 @@ router.get('/users/:username', middleware.userNameIsNotMine, (req, res, next) =>
               },
             },
           ],
-        })
+        }).sort('title')
           .populate('ingredients.ingredient')
           .then((recipes) => {
             res.render('recipes', {
               recipes,
               title: 'My recipes',
+              active: { myRecipes: true },
             });
           })
           .catch(next);
@@ -106,7 +113,12 @@ router.post('/:id/delete', middleware.recipeIsNotMine, (req, res, next) => {
 
   Recipe.findByIdAndDelete(id)
     .then(() => {
-      res.redirect('/recipes');
+      const deletedRecipeURL = `${req.headers.origin}/recipes/${id}`;
+      if (req.headers.referer === deletedRecipeURL) {
+        res.redirect('/recipes');
+      } else {
+        res.redirect('back');
+      }
     })
     .catch(next);
 });
@@ -120,6 +132,7 @@ router.get('/:id', (req, res, next) => {
     .then((recipe) => {
       res.render('recipe', {
         recipe,
+        title: recipe.title,
       });
     })
     .catch((error) => {
@@ -143,6 +156,7 @@ router.get('/:id/update', middleware.recipeIsNotMine, (req, res, next) => {
           res.render('update', {
             recipe,
             ingredients,
+            title: 'Edit recipe',
           });
         })
         .catch(next);
@@ -172,7 +186,7 @@ router.post('/:id', (req, res, next) => {
     instructions,
   })
     .then(() => {
-      req.flash('message', 'Recipe updated!');
+      req.flash('message', 'Recipe updated');
       res.redirect(`/recipes/${id}`);
     })
     .catch(next);

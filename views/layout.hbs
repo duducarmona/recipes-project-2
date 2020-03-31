@@ -2,22 +2,53 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>{{title}}</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
+
+    <header>
+      <a id="back-button" class="{{#if active.back}}active{{/if}}" href="javascript:history.back()">
+        <i class="material-icons" >arrow_back_ios</i>
+      </a>
+
+      <div id="logo">
+        <a href="/"><img src="/images/chef-40.png" /></a>
+        <a href="/"><h3>Better Chef</h3></a>
+      </div>
+
+      <a class="{{#if active.user}}active{{/if}}" href="/users/{{currentUser._id}}">
+        <i class="material-icons" id="user-settings">settings</i>
+      </a>
+    </header>
+
     <nav>
-      <a href="/"><img src="/images/chef-40.png" /></a>
-      <h2>Better Chef</h2>
-      <a href="/users/{{currentUser._id}}">User</a>
       <ul>
-        <li><a href="/recipes/users/{{currentUser.username}}">My Recipes</a></li>
-        <li><a href="/recipes">Recipes</a></li>
-        <li><a href="/recipes/add">Add Recipe</a></li>
-        <li><a href="/recipes/find">Find Recipes</a></li>
+        <li class="{{#if active.recipes}}active{{/if}}">
+          <a href="/recipes">
+            <i class="material-icons">restaurant</i><br>Recipes
+          </a>
+        </li>
+        <li class="{{#if active.myRecipes}}active{{/if}}">
+          <a href="/recipes/users/{{currentUser.username}}">
+            <i class="material-icons">favorite</i><br>My recipes
+          </a>
+        </li>
+        <li class="{{#if active.add}}active{{/if}}">
+          <a href="/recipes/add">
+            <i class="material-icons">note_add</i><br>Add recipe
+          </a>
+        </li>
+        <li class="{{#if active.search}}active{{/if}}">
+          <a href="/recipes/search">
+            <i class="material-icons">search</i><br>Search
+          </a>
+        </li>
       </ul>
     </nav>
+
     {{{body}}}
+
   </body>
 </html>

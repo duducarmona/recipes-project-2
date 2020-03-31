@@ -22,21 +22,15 @@ router.post('/', (req, res, next) => {
   User.findOne({ username })
     .then((user) => {
       if (!user) {
-        res.render('index', {
-          layout: 'layout-no-nav',
-          title: 'Better Chef',
-          error: `Username ${username} not found.`,
-        });
+        req.flash('message', 'Username not found');
+        res.redirect('/');
       } else if (bcrypt.compareSync(password, user.hashedPassword)) {
         req.session.currentUser = user;
         res.locals.currentUser = req.session.currentUser;
         res.redirect('/recipes');
       } else {
-        res.render('index', {
-          layout: 'layout-no-nav',
-          title: 'Better Chef',
-          error: 'Incorrect password',
-        });
+        req.flash('message', 'Password incorrect');
+        res.redirect('/');
       }
     })
     .catch(next);
@@ -55,11 +49,8 @@ router.post('/register', (req, res, next) => {
   User.findOne({ username })
     .then((user) => {
       if (user) {
-        res.render('register', {
-          layout: 'layout-no-nav',
-          title: 'Better Chef',
-          error: `Username ${user.username} already exists.`,
-        });
+        req.flash('message', 'Username already exists');
+        res.redirect('/register');
       } else {
         const salt = bcrypt.genSaltSync(bcryptSalt);
         const hashedPassword = bcrypt.hashSync(password, salt);

@@ -1,18 +1,22 @@
-<main id="update-recipe">
+<main id="add-update-recipe">
 
-  <h1>Edit recipe</h1>
+  <h1>{{title}}</h1>
 
   <form action="/recipes/{{recipe.id}}" method="post">
     <label for="title">Title:</label><br>
-    <input type="text" name="title" value="{{recipe.title}}" required><br>
+    <input type="text" name="title" value="{{recipe.title}}" placeholder="Veggie Paella" required><br>
 
     <label for="image">Image:</label><br>
-    <input type="text" name="image" value="{{recipe.image}}"><br>
+    <input class="no-highlight" type="text" name="image" value="{{recipe.image}}" placeholder="https://thor.myblog.com/paella.jpg"><br>
 
-    <p>Ingredients</p>
+    <h2>Ingredients</h2>
     <div id="ingredients">
       {{#each recipe.ingredients}}
-      <div class="ingredient">
+      <div class="ingredient-container">
+        <button class="remove-ingredient" type="button">
+          <img src="/images/remove-icon.png" alt="remove icon"/>
+        </button>
+
         <label for="ingredient">Ingredient:</label><br>
         <select name="ingredient" required>
             <option value="">--Please choose an ingredient--</option>
@@ -21,34 +25,38 @@
             {{/each}}
         </select><br>
 
-        <label for="amount">Amount:</label><br>
-        <input type="number" name="amount" step="any" min="0" value="{{this.amount}}"><br>
+        <label for="amount">Amount (number):</label><br>
+        <input class="no-highlight" type="number" name="amount" step="any" min="0" value="{{this.amount}}" placeholder="1.5"><br>
 
         <label for="unit">Unit:</label><br>
-        <input type="text" name="unit" value="{{this.unit}}"><br>
-
-        <button class="delete-button delete-ingredient" type="button"><img src="/images/trash-icon-20.png" alt="trash icon"/></button>
+        <input class="no-highlight" type="text" name="unit" value="{{this.unit}}" placeholder="cup"><br>
       </div>
       {{/each}}
     </div>
-    <button class="small-button" type="button" id="add-ingredient">Add another ingredient</button>
+    <div class="center-button">
+      <button class="small-button" type="button" id="add-ingredient">Add Another Ingredient</button>
+    </div>
 
-    <p>Instructions</p>
+    <h2>Instructions</h2>
     <ol id="steps">
       {{#each recipe.instructions}}
       <li>
-        <input class="step" type="text" name="steps" value="{{this.step}}">
-        <button class="delete-button delete-step" type="button">
-          <img src="/images/trash-icon-20.png" alt="trash icon"/>
+        <input class="step no-highlight" type="text" name="steps" value="{{this.step}}" placeholder="Dice all veggies finely.">
+        <button class="remove-step" type="button">
+          <img src="/images/remove-icon.png" alt="remove icon"/>
         </button>
       </li>
       {{/each}}
     </ol>
-    <button class="small-button" type="button" id="add-step">Add step</button>
+    <div class="center-button">
+      <button class="small-button" type="button" id="add-step">Add Another Step</button>
+    </div>
 
-    <br>
-    <button class="button" type="submit">Save Recipe</button>
+    <div class="center-button">
+      <button class="button" type="submit">Save Recipe</button>
+    </div>
   </form>
+
 </main>
 
 {{> add_remove_steps}}
