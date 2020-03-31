@@ -57,11 +57,12 @@
     </ol>
     
   </div>
+
+  {{#each messages}}
+  <div id="message">{{this}}</div>
+  {{/each}}
+
 </main>
-  
-{{#each messages}}
-<div id="message">{{this}}</div>
-{{/each}}
 
 {{> confirm_on_delete}}
 {{> add_remove_favorites}}

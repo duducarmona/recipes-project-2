@@ -61,8 +61,8 @@ router.post('/', (req, res, next) => {
     ingredients,
     instructions,
   })
-    .then(() => {
-      res.redirect('/recipes');
+    .then((recipe) => {
+      res.redirect(`/recipes/${recipe._id}`);
     })
     .catch(next);
 });
@@ -113,7 +113,12 @@ router.post('/:id/delete', middleware.recipeIsNotMine, (req, res, next) => {
 
   Recipe.findByIdAndDelete(id)
     .then(() => {
-      res.redirect('/recipes');
+      const deletedRecipeURL = `${req.headers.origin}/recipes/${id}`;
+      if (req.headers.referer === deletedRecipeURL) {
+        res.redirect('/recipes');
+      } else {
+        res.redirect('back');
+      }
     })
     .catch(next);
 });

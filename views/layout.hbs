@@ -25,14 +25,14 @@
 
     <nav>
       <ul>
-        <li class="{{#if active.myRecipes}}active{{/if}}">
-          <a href="/recipes/users/{{currentUser.username}}">
-            <i class="material-icons">favorite</i><br>My recipes
-          </a>
-        </li>
         <li class="{{#if active.recipes}}active{{/if}}">
           <a href="/recipes">
             <i class="material-icons">restaurant</i><br>Recipes
+          </a>
+        </li>
+        <li class="{{#if active.myRecipes}}active{{/if}}">
+          <a href="/recipes/users/{{currentUser.username}}">
+            <i class="material-icons">favorite</i><br>My recipes
           </a>
         </li>
         <li class="{{#if active.add}}active{{/if}}">
