@@ -193,10 +193,17 @@ header #logo a {
   padding: 0 5px;
 }
 
+#back-button {
+  position: fixed;
+  top: 12px;
+  left: 15px;
+  color: #545454;
+}
+
 #user-settings {
   position: fixed;
   top: 12px;
-  right: 10px;
+  right: 15px;
 }
 
  a.active i#user-settings {
