@@ -36,7 +36,7 @@
     </form>
 
     <h2>Ingredients</h2>
-    <ul>
+    <ul id="ingredient-list">
       {{#each recipe.ingredients}}
         <li>
           <span class="ingredient-name">{{this.ingredient.name}}</span>
@@ -57,11 +57,12 @@
     </ol>
     
   </div>
+
+  {{#each messages}}
+  <div id="message">{{this}}</div>
+  {{/each}}
+
 </main>
-  
-{{#each messages}}
-<div id="message">{{this}}</div>
-{{/each}}
 
 {{> confirm_on_delete}}
 {{> add_remove_favorites}}
