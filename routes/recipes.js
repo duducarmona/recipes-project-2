@@ -1,7 +1,6 @@
 const express = require('express');
 const createError = require('http-errors');
 const unirest = require('unirest');
-const mongoose = require('mongoose');
 
 const router = express.Router();
 
@@ -87,6 +86,7 @@ router.post('/discover', (req, res, next) => {
   let requestString = '';
   const ingredientsId = req.body.ingredient;
 
+  // 1. Busco los ingredientes para saber sus nombres y meterlos en la consulta.
   Ingredient.find({
     _id: {
       $in: ingredientsId,
@@ -104,22 +104,79 @@ router.post('/discover', (req, res, next) => {
 
       requestString = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=${ingredientNames}&number=3`;
 
-      // return requestString;
+      // 2. Con los nombres de los ingredientes busco las recetas por ingredientes.
+      return unirest.get(requestString);
+    })
+    .then((result) => {
+      if (result.status === 200) {
+        console.log(result.body);
+        const recipes = result.body;
+        // res.render('discover', {
+        //   recipes,
+        //   title: recipes.title,
+        // });
 
-      unirest.get(requestString)
-        .then((result) => {
-          if (result.status === 200) {
-            console.log(result.body);
-            const recipes = result.body;
-            res.render('discover', {
-              recipes,
+        let title;
+        let image;
+        let ingredientsArray;
+        let amountsArray;
+        let unitsArray;
+        let ingredients;
+        let instructionsArray;
+        let instructions;
+        // let recipeIds;
+
+        recipes.forEach((recipe) => {
+          // recipeIds.push(recipe.id);
+          requestString = `https://api.spoonacular.com/recipes/${recipe.id}/information`;
+
+          unirest.get(requestString)
+            .then((recipeNew) => {
+              title = recipeNew.title;
+              image = recipeNew.image;
+
+              recipeNew.extendedIngredients.forEach((ingredient) => {
+                ingredientsArray.push(ingredient.name);
+                amountsArray.push(ingredient.amount);
+                unitsArray.push(ingredient.unit);
+              });
+
+              ingredients = help.ingredientsToObjects(ingredientsArray, amountsArray, unitsArray);
+
+              recipeNew.analyzedInstructions.steps.array.forEach((step) => {
+                instructionsArray.push(step.step);
+              });
+
+              instructions = help.collect(instructionsArray);
+
+              return Recipe.create({
+                title,
+                image,
+                ingredients,
+                instructions,
+              })
+                .then((recipeToRender) => {
+                  recipeToRender.title = title;
+                  recipeToRender.image = image;
+                  recipeToRender.ingredients = ingredients;
+                  recipeToRender.instructions = instructions;
+
+                  recipesToRender.push(recipeToRender);
+                });
+            })
+            // .catch();
+        });
+        .then((recipesToRender) => {
+          res.render('discover', {
+            recipesToRender,
               title: recipes.title,
             });
-          }
         })
-        .catch(next);
+      }
     })
     .catch(next);
+  // })
+  // .catch(next);
 
   // unirest.get(requestString)
   //   .then((result) => {
