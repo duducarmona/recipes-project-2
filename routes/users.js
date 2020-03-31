@@ -32,6 +32,7 @@ router.get('/:id', middleware.userIsNotMe, (req, res, next) => {
         res.render('user', {
           user,
           title: 'My account',
+          active: { user: true },
         });
       } else {
         next(createError(404, 'User not found'));
@@ -70,6 +71,7 @@ router.get('/:id/password', middleware.userIsNotMe, (req, res, next) => {
       res.render('password', {
         user,
         title: 'Change password',
+        active: { user: true },
       });
     })
     .catch(next);

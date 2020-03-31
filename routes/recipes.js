@@ -22,6 +22,7 @@ router.get('/', (req, res, next) => {
       res.render('recipes', {
         recipes,
         title: 'Recipes',
+        active: { recipes: true },
       });
     })
     .catch(next);
@@ -34,6 +35,7 @@ router.get('/add', (req, res, next) => {
       res.render('add', {
         ingredients,
         title: 'Add recipe',
+        active: { add: true },
       });
     })
     .catch(next);
@@ -60,26 +62,26 @@ router.post('/', (req, res, next) => {
     ingredients,
     instructions,
   })
-    .then(() => {
-      res.redirect('/recipes');
+    .then((recipe) => {
+      res.redirect(`/recipes/${recipe._id}`);
     })
     .catch(next);
 });
 
-// GET /recipes/find
-router.get('/find', (req, res, next) => {
+// GET /recipes/discover
+router.get('/discover', (req, res, next) => {
   Ingredient.find()
     .then((ingredients) => {
-      res.render('find', {
+      res.render('discover', {
         ingredients,
-        title: 'Find Spoonacular recipes',
+        title: 'Discover recipes',
       });
     })
     .catch(next);
 });
 
-// POST /recipes/find
-router.post('/find', (req, res, next) => {
+// POST /recipes/discover
+router.post('/discover', (req, res, next) => {
   const requestString = 'https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=apples,+flour,+sugar&number=2';
 
   console.log('req.body = ', req.body);
@@ -90,7 +92,7 @@ router.post('/find', (req, res, next) => {
       if (result.status === 200) {
         console.log(result.body);
         const recipes = result.body;
-        res.render('find', {
+        res.render('discover', {
           recipes,
           title: recipes.title,
         });
@@ -123,6 +125,7 @@ router.get('/users/:username', middleware.userNameIsNotMine, (req, res, next) =>
             res.render('recipes', {
               recipes,
               title: 'My recipes',
+              active: { myRecipes: true },
             });
           })
           .catch(next);
@@ -136,7 +139,12 @@ router.post('/:id/delete', middleware.recipeIsNotMine, (req, res, next) => {
 
   Recipe.findByIdAndDelete(id)
     .then(() => {
-      res.redirect('/recipes');
+      const deletedRecipeURL = `${req.headers.origin}/recipes/${id}`;
+      if (req.headers.referer === deletedRecipeURL) {
+        res.redirect('/recipes');
+      } else {
+        res.redirect('back');
+      }
     })
     .catch(next);
 });

@@ -9,25 +9,46 @@
   <body>
 
     <header>
+      <a id="back-button" class="{{#if active.back}}active{{/if}}" href="javascript:history.back()">
+        <i class="material-icons" >arrow_back_ios</i>
+      </a>
+
       <div id="logo">
         <a href="/"><img src="/images/chef-40.png" /></a>
         <a href="/"><h3>Better Chef</h3></a>
       </div>
 
-      <a href="/users/{{currentUser._id}}">
-        <img id="user-settings" src="/images/settings-icon.png" alt="user settings icon" />
+      <a class="{{#if active.user}}active{{/if}}" href="/users/{{currentUser._id}}">
+        <i class="material-icons" id="user-settings">settings</i>
       </a>
-
-      <nav>
-        <ul>
-          <li><a href="/recipes/users/{{currentUser.username}}">My Recipes</a></li>
-          <li><a href="/recipes">Recipes</a></li>
-          <li><a href="/recipes/add">Add Recipe</a></li>
-          <li><a href="/recipes/find">Find Recipes</a></li>
-        </ul>
-      </nav>
     </header>
 
+    <nav>
+      <ul>
+        <li class="{{#if active.recipes}}active{{/if}}">
+          <a href="/recipes">
+            <i class="material-icons">restaurant</i><br>Recipes
+          </a>
+        </li>
+        <li class="{{#if active.myRecipes}}active{{/if}}">
+          <a href="/recipes/users/{{currentUser.username}}">
+            <i class="material-icons">favorite</i><br>My recipes
+          </a>
+        </li>
+        <li class="{{#if active.add}}active{{/if}}">
+          <a href="/recipes/add">
+            <i class="material-icons">note_add</i><br>Add recipe
+          </a>
+        </li>
+        <li class="{{#if active.search}}active{{/if}}">
+          <a href="/recipes/discover">
+            <i class="material-icons">search</i><br>Discover
+          </a>
+        </li>
+      </ul>
+    </nav>
+
     {{{body}}}
+
   </body>
 </html>
