@@ -7,7 +7,7 @@
     <input type="text" name="title" placeholder="Veggie Paella" required><br>
 
     <label for="image">Image:</label><br>
-    <input type="text" name="image" placeholder="https://thor.myblog.com/paella.jpg"><br>
+    <input class="no-highlight" type="text" name="image" placeholder="https://thor.myblog.com/paella.jpg"><br>
 
     <h2>Add ingredients:</h2>
     <div id="ingredients">
@@ -25,10 +25,10 @@
         </select><br>
 
         <label for="amount">Amount (number):</label><br>
-        <input type="number" name="amount" step="any" min="0" placeholder="1.5" ><br>
+        <input class="no-highlight" type="number" name="amount" step="any" min="0" placeholder="1.5" ><br>
 
         <label for="unit">Unit:</label><br>
-        <input type="text" name="unit" placeholder="cup" ><br>        
+        <input class="no-highlight" type="text" name="unit" placeholder="cup" ><br>        
       </div>
     </div>
     <div class="center-button">
@@ -38,7 +38,7 @@
     <h2>Add instructions:</h2>
     <ol id="steps">
       <li>
-        <input class="step" type="text" name="steps" placeholder="Dice all veggies finely.">
+        <input class="step no-highlight" type="text" name="steps" placeholder="Dice all veggies finely.">
         <button class="remove-step" type="button">
           <img src="/images/remove-icon.png" alt="remove icon"/>
         </button>

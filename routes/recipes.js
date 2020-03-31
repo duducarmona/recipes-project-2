@@ -21,6 +21,7 @@ router.get('/', (req, res, next) => {
       res.render('recipes', {
         recipes,
         title: 'Recipes',
+        active: { recipes: true },
       });
     })
     .catch(next);
@@ -33,6 +34,7 @@ router.get('/add', (req, res, next) => {
       res.render('add', {
         ingredients,
         title: 'Add recipe',
+        active: { add: true },
       });
     })
     .catch(next);
@@ -59,16 +61,17 @@ router.post('/', (req, res, next) => {
     ingredients,
     instructions,
   })
-    .then(() => {
-      res.redirect('/recipes');
+    .then((recipe) => {
+      res.redirect(`/recipes/${recipe._id}`);
     })
     .catch(next);
 });
 
 // GET /recipes/find
-router.get('/find', (req, res) => {
-  res.render('find', {
-    title: 'Find recipe',
+router.get('/search', (req, res) => {
+  res.render('search', {
+    title: 'Search recipes',
+    active: { search: true },
   });
 });
 
@@ -96,6 +99,7 @@ router.get('/users/:username', middleware.userNameIsNotMine, (req, res, next) =>
             res.render('recipes', {
               recipes,
               title: 'My recipes',
+              active: { myRecipes: true },
             });
           })
           .catch(next);
@@ -109,7 +113,12 @@ router.post('/:id/delete', middleware.recipeIsNotMine, (req, res, next) => {
 
   Recipe.findByIdAndDelete(id)
     .then(() => {
-      res.redirect('/recipes');
+      const deletedRecipeURL = `${req.headers.origin}/recipes/${id}`;
+      if (req.headers.referer === deletedRecipeURL) {
+        res.redirect('/recipes');
+      } else {
+        res.redirect('back');
+      }
     })
     .catch(next);
 });
