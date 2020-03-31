@@ -80,6 +80,52 @@ router.get('/discover', (req, res, next) => {
     .catch(next);
 });
 
+// GET /recipes/get-and-save-recipe/:id
+router.get('/get-and-save-recipe/:spoonacularId', (req, res, next) => {
+  const { spoonacularId } = req.params;
+  const requestString = `https://api.spoonacular.com/recipes/${spoonacularId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`;
+  unirest.get(requestString)
+    .then((result) => {
+      if (result.status === 200) {
+        console.log(result.body);
+        const {
+          title,
+          image,
+          extendedIngredients,
+          analyzedInstructions,
+        } = result.body;
+
+        const ingredients = [];
+        const instructions = [];
+
+        extendedIngredients.forEach((ingredient) => {
+          Ingredient.findOne({ spoonacularId: ingredient.id })
+            .then((ingredientResult) => {
+              if (ingredientResult) {
+                const newRecord = {
+                  ingredient: ingredientResult._id,
+                  amount: ingredient.amount,
+                  unit: ingredient.unit,
+                };
+                ingredients.push(newRecord);
+              } else {
+                console.log('need to add ingredient to our database', ingredient);
+              }
+            });
+        });
+
+        console.log('ingredients end up', ingredients);
+
+        const recipe = result.body;
+        res.render('recipe', {
+          recipe,
+          title: recipe.title,
+        });
+      }
+    })
+    .catch(next);
+});
+
 // POST /recipes/discover
 router.post('/discover', (req, res, next) => {
   const requestString = 'https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=apples,+flour,+sugar&number=2';
