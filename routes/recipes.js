@@ -1,5 +1,6 @@
 const express = require('express');
 const createError = require('http-errors');
+const unirest = require('unirest');
 
 const router = express.Router();
 
@@ -66,10 +67,36 @@ router.post('/', (req, res, next) => {
 });
 
 // GET /recipes/find
-router.get('/find', (req, res) => {
-  res.render('find', {
-    title: 'Find recipe',
-  });
+router.get('/find', (req, res, next) => {
+  Ingredient.find()
+    .then((ingredients) => {
+      res.render('find', {
+        ingredients,
+        title: 'Find Spoonacular recipes',
+      });
+    })
+    .catch(next);
+});
+
+// POST /recipes/find
+router.post('/find', (req, res, next) => {
+  const requestString = 'https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=apples,+flour,+sugar&number=2';
+
+  console.log('req.body = ', req.body);
+
+  unirest.get(requestString)
+    // .header()
+    .then((result) => {
+      if (result.status === 200) {
+        console.log(result.body);
+        const recipes = result.body;
+        res.render('find', {
+          recipes,
+          title: recipes.title,
+        });
+      }
+    })
+    .catch(next);
 });
 
 // GET /recipes/users/:username

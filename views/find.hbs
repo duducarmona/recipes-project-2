@@ -2,7 +2,24 @@
 
   <h1>{{title}}</h1>
 
-  <div id="find-recipes">
-    
-  </div>
+  {{!-- <div id="find-recipes"> --}}
+  <form action="/recipes/find" method="post">
+    <h2>Ingredients:</h2>
+
+    <select name="ingredient" multiple>
+        <option value="">--Please choose an ingredient--</option>
+        {{#each ingredients}}
+          <option value={{this._id}}>{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    {{#each recipes}}
+      {{> recipe_preview }}
+    {{/each}}
+
+    <div class="center-button">
+      <button id="find-recipes" class="button" type="submit">Find Recipe</button>
+    </div>
+  {{!-- </div> --}}
+  </form>
 </main>
