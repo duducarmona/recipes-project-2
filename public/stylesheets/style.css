@@ -69,8 +69,13 @@ input, textarea, select, button {
 }
 
 input {
-  background-color: rgba(221, 99, 99, 0.15);
+  background-color: rgba(221, 99, 99, 0.10);
   border: 0;  
+}
+
+input.no-highlight {
+  background-color: white;
+  border: 1px solid rgba(221, 99, 99, 0.10);
 }
 
 input:focus, select:focus {
@@ -177,7 +182,7 @@ header {
   padding: 5px 0;
   top: 0;
   background-color: white;
-  border-bottom: 1px solid rgba(84,84,84,0.15);
+  border-bottom: 1px solid rgba(84,84,84,0.10);
   z-index: 10;
 }
 
@@ -196,14 +201,14 @@ header #logo a {
 #back-button {
   position: fixed;
   top: 12px;
-  left: 15px;
+  left: 20px;
   color: #545454;
 }
 
 #user-settings {
   position: fixed;
   top: 12px;
-  right: 15px;
+  right: 20px;
 }
 
  a.active i#user-settings {
@@ -226,7 +231,7 @@ nav ul {
   flex-basis: 1 1 0px;
   justify-content: space-around;
   list-style-type: none;
-  border-top: 1px solid rgba(84,84,84,0.15);
+  border-top: 1px solid rgba(84,84,84,0.10);
 }
 
 nav li.active a {
@@ -350,7 +355,7 @@ main:not(.home) {
 }
 
 #add-update-recipe .ingredient-container:not(:first-child) {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 #add-update-recipe .ingredient-container label,
@@ -363,7 +368,7 @@ main:not(.home) {
   height: 36px;
   padding: 5px;
   border: none;
-  background-color: rgba(221, 99, 99, 0.15);
+  background-color: rgba(221, 99, 99, 0.10);
   background-image: url('/images/dropdown-icon.png');
   background-repeat: no-repeat;
   background-position-x: 97%;
