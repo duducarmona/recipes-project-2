@@ -1,6 +1,7 @@
 const express = require('express');
 const createError = require('http-errors');
 const unirest = require('unirest');
+const mongoose = require('mongoose');
 
 const router = express.Router();
 
@@ -82,23 +83,56 @@ router.get('/discover', (req, res, next) => {
 
 // POST /recipes/discover
 router.post('/discover', (req, res, next) => {
-  const requestString = 'https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=apples,+flour,+sugar&number=2';
+  // const requestString = 'https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=apples,+flour,+sugar&number=3';
+  let requestString = '';
+  const ingredientsId = req.body.ingredient;
 
-  console.log('req.body = ', req.body);
+  Ingredient.find({
+    _id: {
+      $in: ingredientsId,
+    },
+  })
+    .then((ingredients) => {
+      console.log(ingredients);
+      let ingredientNames = '';
 
-  unirest.get(requestString)
-    // .header()
-    .then((result) => {
-      if (result.status === 200) {
-        console.log(result.body);
-        const recipes = result.body;
-        res.render('discover', {
-          recipes,
-          title: recipes.title,
-        });
-      }
+      ingredients.forEach((ingredient) => {
+        ingredientNames += `${ingredient.name},`;
+      });
+
+      console.log(ingredientNames);
+
+      requestString = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=${ingredientNames}&number=3`;
+
+      // return requestString;
+
+      unirest.get(requestString)
+        .then((result) => {
+          if (result.status === 200) {
+            console.log(result.body);
+            const recipes = result.body;
+            res.render('discover', {
+              recipes,
+              title: recipes.title,
+            });
+          }
+        })
+        .catch(next);
     })
     .catch(next);
+
+  // unirest.get(requestString)
+  //   .then((result) => {
+  //     if (result.status === 200) {
+  //       console.log(result.body);
+  //       const recipes = result.body;
+  //       res.render('discover', {
+  //         recipes,
+  //         title: recipes.title,
+  //       });
+  //     }
+  //   })
+  //   .catch(next);
 });
 
 // GET /recipes/users/:username
