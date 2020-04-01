@@ -190,6 +190,54 @@ router.post('/discover', (req, res, next) => {
     .catch(next);
 });
 
+// GET /recipes/random
+router.get('/random', (req, res, next) => {
+  const requestString = `https://api.spoonacular.com/recipes/random?apiKey=${process.env.API_KEY}&number=1`;
+
+  unirest.get(requestString)
+    .then((result) => {
+      if (result.status === 200) {
+        const recipe = result.body.recipes[0];
+        const spoonacularId = recipe.id;
+
+        const {
+          title,
+          image,
+          extendedIngredients,
+          analyzedInstructions,
+        } = recipe;
+
+        let { instructions } = recipe;
+
+        if (analyzedInstructions.length > 0) {
+          instructions = fetchInstructions(analyzedInstructions[0].steps);
+        } else {
+          instructions = [{
+            number: 1,
+            step: instructions,
+          }];
+        }
+
+        fetchIngredients(extendedIngredients)
+          .then((ingredients) => {
+            return Recipe.create({
+              spoonacularId,
+              title,
+              image,
+              ingredients,
+              instructions,
+            });
+          })
+          .then((recipe) => {
+            console.log('ID de la receta recien creada: ', recipe._id);
+            res.redirect(`/recipes/${recipe._id}`);
+          })
+          .catch(next);
+      }
+    })
+    .catch(next);
+});
+
 // GET /recipes/users/:username
 router.get('/users/:username', middleware.userNameIsNotMine, (req, res, next) => {
   const { username } = req.params;
