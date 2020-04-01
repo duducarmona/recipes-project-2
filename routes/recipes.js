@@ -1,5 +1,6 @@
 const express = require('express');
 const createError = require('http-errors');
+const unirest = require('unirest');
 
 const router = express.Router();
 
@@ -67,12 +68,146 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
-// GET /recipes/find
-router.get('/search', (req, res) => {
-  res.render('search', {
-    title: 'Search recipes',
-    active: { search: true },
+// GET /recipes/search
+router.get('/search', (req, res, next) => {
+  Ingredient.find()
+    .then((ingredients) => {
+      res.render('search', {
+        ingredients,
+        title: 'Search recipes',
+      });
+    })
+    .catch(next);
+});
+
+function fetchInstructions(steps) {
+  const results = steps.map((step) => {
+    const newRecord = {
+      number: step.number,
+      step: step.step,
+    };
+    return newRecord;
   });
+  return results;
+}
+
+async function fetchIngredients(extendedIngredients) {
+  const promises = extendedIngredients.map(async (ingredient) => {
+    const newRecord = {
+      amount: ingredient.amount,
+      unit: ingredient.unit,
+    };
+    const ingredientResult = await Ingredient.findOne({ spoonacularId: ingredient.id }).exec();
+    if (ingredientResult) {
+      newRecord.ingredient = ingredientResult._id;
+    } else {
+      console.log('need to add ingredient to our database', ingredient);
+    }
+    return newRecord;
+  });
+  const results = await Promise.all(promises);
+  return results;
+}
+
+// POST /recipes/search
+router.post('/search', async (req, res, next) => {
+  const ingredientsId = req.body.ingredient;
+  const searchIngredientIds = await Ingredient.find({
+    _id: {
+      $in: ingredientsId,
+    },
+  });
+  let searchIngredientNames = '';
+  searchIngredientIds.forEach((searchIngredientId) => {
+    searchIngredientNames += `${searchIngredientId.name},`;
+  });
+  const findByIngredientsRequest = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${searchIngredientNames}&number=1&ranking=1&ignorePantry=true`;
+
+  const findByIngredientsResult = await unirest.get(findByIngredientsRequest);
+  if (findByIngredientsResult.status === 200) {
+    const recipes = findByIngredientsResult.body;
+    recipes.forEach(async (recipe) => {
+      const spoonacularId = recipe.id;
+      const findFullRecipeRequest = `https://api.spoonacular.com/recipes/${spoonacularId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`;
+      const findFullRecipeResult = await unirest.get(findFullRecipeRequest);
+      if (findFullRecipeResult.status === 200) {
+        const {
+          title,
+          image,
+          extendedIngredients,
+          analyzedInstructions,
+        } = findFullRecipeResult.body;
+        let { instructions } = findFullRecipeResult.body;
+        if (analyzedInstructions.length > 0) {
+          instructions = fetchInstructions(analyzedInstructions[0].steps);
+        } else {
+          instructions = [{
+            number: 1,
+            step: instructions,
+          }];
+        }
+        const ingredients = await fetchIngredients(extendedIngredients);
+        Recipe.create({
+          spoonacularId,
+          title,
+          image,
+          ingredients,
+          instructions,
+        })
+          .then((createdRecipe) => {
+            res.redirect(`/recipes/${createdRecipe._id}`);
+          });
+      }
+    });
+  }
+});
+
+// GET /recipes/random
+router.get('/random', (req, res, next) => {
+  const requestString = `https://api.spoonacular.com/recipes/random?apiKey=${process.env.API_KEY}&number=1`;
+
+  unirest.get(requestString)
+    .then((result) => {
+      if (result.status === 200) {
+        const recipe = result.body.recipes[0];
+        const spoonacularId = recipe.id;
+
+        const {
+          title,
+          image,
+          extendedIngredients,
+          analyzedInstructions,
+        } = recipe;
+
+        let { instructions } = recipe;
+
+        if (analyzedInstructions.length > 0) {
+          instructions = fetchInstructions(analyzedInstructions[0].steps);
+        } else {
+          instructions = [{
+            number: 1,
+            step: instructions,
+          }];
+        }
+
+        fetchIngredients(extendedIngredients)
+          .then((ingredients) => {
+            return Recipe.create({
+              spoonacularId,
+              title,
+              image,
+              ingredients,
+              instructions,
+            });
+          })
+          .then((recipe) => {
+            console.log('ID de la receta recien creada: ', recipe._id);
+            res.redirect(`/recipes/${recipe._id}`);
+          })
+          .catch(next);
+      }
+    })
+    .catch(next);
 });
 
 // GET /recipes/users/:username
