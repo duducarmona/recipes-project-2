@@ -121,20 +121,16 @@ router.post('/search', async (req, res, next) => {
   searchIngredientIds.forEach((searchIngredientId) => {
     searchIngredientNames += `${searchIngredientId.name},`;
   });
-  const findByIngredientsRequest = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${searchIngredientNames}&number=2&ranking=1&ignorePantry=true`;
+  const findByIngredientsRequest = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${searchIngredientNames}&number=1&ranking=1&ignorePantry=true`;
 
   const findByIngredientsResult = await unirest.get(findByIngredientsRequest);
   if (findByIngredientsResult.status === 200) {
     const recipes = findByIngredientsResult.body;
-
     recipes.forEach(async (recipe) => {
       const spoonacularId = recipe.id;
       const findFullRecipeRequest = `https://api.spoonacular.com/recipes/${spoonacularId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`;
-
       const findFullRecipeResult = await unirest.get(findFullRecipeRequest);
-
       if (findFullRecipeResult.status === 200) {
-        console.log(findFullRecipeResult.body);
         const {
           title,
           image,
@@ -157,13 +153,12 @@ router.post('/search', async (req, res, next) => {
           image,
           ingredients,
           instructions,
-        });
-        // .then((createdRecipe) => {
-        //   res.redirect(`/recipes/${createdRecipe._id}`);
-        // });
+        })
+          .then((createdRecipe) => {
+            res.redirect(`/recipes/${createdRecipe._id}`);
+          });
       }
     });
-    // queremos tener las recetas aqui
   }
 });
 
