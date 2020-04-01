@@ -40,9 +40,14 @@
             <i class="material-icons">note_add</i><br>Add recipe
           </a>
         </li>
+        <li class="{{#if active.random}}active{{/if}}">
+          <a href="/recipes/random">
+            <i class="material-icons">casino</i><br>Random
+          </a>
+        </li>
         <li class="{{#if active.search}}active{{/if}}">
-          <a href="/recipes/search">
-            <i class="material-icons">search</i><br>Search
+          <a href="/recipes/discover">
+            <i class="material-icons">search</i><br>Discover
           </a>
         </li>
       </ul>

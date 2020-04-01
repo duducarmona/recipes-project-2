@@ -8,6 +8,7 @@ const recipeSchema = new Schema({
     required: true,
     trim: true,
   },
+  spoonacularId: Number,
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
