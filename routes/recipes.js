@@ -197,10 +197,7 @@ router.get('/random', (req, res, next) => {
   unirest.get(requestString)
     .then((result) => {
       if (result.status === 200) {
-        const recipe = result.body;
-        console.log(recipe);
-        console.log('LONGITUD DE INSTRUCCIONES: ', recipe.analyzedInstructions[0]);
-        console.log('LONGITUD DE INSTRUCCIONES: ', recipe.analyzedInstructions.length);
+        const recipe = result.body.recipes[0];
         const spoonacularId = recipe.id;
 
         const {
@@ -208,9 +205,9 @@ router.get('/random', (req, res, next) => {
           image,
           extendedIngredients,
           analyzedInstructions,
-        } = result.body;
+        } = recipe;
 
-        let { instructions } = result.body;
+        let { instructions } = recipe;
 
         if (analyzedInstructions.length > 0) {
           instructions = fetchInstructions(analyzedInstructions[0].steps);
@@ -223,21 +220,20 @@ router.get('/random', (req, res, next) => {
 
         fetchIngredients(extendedIngredients)
           .then((ingredients) => {
-            Recipe.create({
+            return Recipe.create({
               spoonacularId,
               title,
               image,
               ingredients,
               instructions,
-            })
-              .then((recipe) => {
-                console.log('ID de la receta recien creada: ', recipe._id);
-              })
-              .catch(next);
-          });
+            });
+          })
+          .then((recipe) => {
+            console.log('ID de la receta recien creada: ', recipe._id);
+            res.redirect(`/recipes/${recipe._id}`);
+          })
+          .catch(next);
       }
-
-      // return
     })
     .catch(next);
 });
