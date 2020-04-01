@@ -142,7 +142,8 @@ router.post('/discover', (req, res, next) => {
         const recipes = result.body;
 
         recipes.forEach((recipe) => {
-          const { spoonacularId } = recipe.id;
+          console.log('recipes are', recipe.id);
+          const spoonacularId = recipe.id;
           requestString = `https://api.spoonacular.com/recipes/${spoonacularId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`;
           unirest.get(requestString)
             .then((result) => {
@@ -171,31 +172,16 @@ router.post('/discover', (req, res, next) => {
               }
             })
             .catch(next);
-        })
-          .then((recipesToRender) => {
-            res.render('discover', {
-              recipesToRender,
-              title: recipes.title,
-            });
-          });
+        });
+        //   .then((recipesToRender) => {
+        //     res.render('discover', {
+        //       recipesToRender,
+        //       title: recipes.title,
+        //     });
+        //   });
       }
     })
     .catch(next);
-  // })
-  // .catch(next);
-
-  // unirest.get(requestString)
-  //   .then((result) => {
-  //     if (result.status === 200) {
-  //       console.log(result.body);
-  //       const recipes = result.body;
-  //       res.render('discover', {
-  //         recipes,
-  //         title: recipes.title,
-  //       });
-  //     }
-  //   })
-  //   .catch(next);
 });
 
 // GET /recipes/users/:username
