@@ -190,6 +190,58 @@ router.post('/discover', (req, res, next) => {
     .catch(next);
 });
 
+// GET /recipes/random
+router.get('/random', (req, res, next) => {
+  const requestString = `https://api.spoonacular.com/recipes/random?apiKey=${process.env.API_KEY}&number=1`;
+
+  unirest.get(requestString)
+    .then((result) => {
+      if (result.status === 200) {
+        const recipe = result.body;
+        console.log(recipe);
+        console.log('LONGITUD DE INSTRUCCIONES: ', recipe.analyzedInstructions[0]);
+        console.log('LONGITUD DE INSTRUCCIONES: ', recipe.analyzedInstructions.length);
+        const spoonacularId = recipe.id;
+
+        const {
+          title,
+          image,
+          extendedIngredients,
+          analyzedInstructions,
+        } = result.body;
+
+        let { instructions } = result.body;
+
+        if (analyzedInstructions.length > 0) {
+          instructions = fetchInstructions(analyzedInstructions[0].steps);
+        } else {
+          instructions = [{
+            number: 1,
+            step: instructions,
+          }];
+        }
+
+        fetchIngredients(extendedIngredients)
+          .then((ingredients) => {
+            Recipe.create({
+              spoonacularId,
+              title,
+              image,
+              ingredients,
+              instructions,
+            })
+              .then((recipe) => {
+                console.log('ID de la receta recien creada: ', recipe._id);
+              })
+              .catch(next);
+          });
+      }
+
+      // return
+    })
+    .catch(next);
+});
+
 // GET /recipes/users/:username
 router.get('/users/:username', middleware.userNameIsNotMine, (req, res, next) => {
   const { username } = req.params;
@@ -220,16 +272,6 @@ router.get('/users/:username', middleware.userNameIsNotMine, (req, res, next) =>
           .catch(next);
       }
     });
-});
-
-// GET /recipes/random
-router.get('/random', (req, res, next) => {
-  // 1. Trae una receta aleatoria de Spoonacular.
-  console.log('hola');
-
-  // const 
-  // 2. Guárdala en bbdd.
-  // 3. Muéstrala como receta detalle.
 });
 
 // POST /recipes/:id/delete
