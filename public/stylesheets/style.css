@@ -410,6 +410,12 @@ main:not(.home) {
   right: -22px;
 }
 
+/* search */
+
+#search form select {
+  height: 350px;
+}
+
 /* my account user profile */
 
 .user form {

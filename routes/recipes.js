@@ -111,7 +111,6 @@ async function fetchIngredients(extendedIngredients) {
 
 // POST /recipes/search
 router.post('/search', (req, res, next) => {
-  // const requestString = 'https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=apples,+flour,+sugar&number=3';
   let requestString = '';
   const ingredientsId = req.body.ingredient;
 
@@ -122,25 +121,18 @@ router.post('/search', (req, res, next) => {
     },
   })
     .then((ingredients) => {
-      console.log(ingredients);
       let ingredientNames = '';
-
       ingredients.forEach((ingredient) => {
         ingredientNames += `${ingredient.name},`;
       });
-
-      console.log(ingredientNames);
-
-      requestString = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=${ingredientNames}&number=3`;
+      requestString = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=${ingredientNames}&number=1`;
 
       // 2. Con los nombres de los ingredientes busco las recetas por ingredientes.
       return unirest.get(requestString);
     })
     .then((result) => {
       if (result.status === 200) {
-        console.log(result.body);
         const recipes = result.body;
-
         recipes.forEach((recipe) => {
           console.log('recipes are', recipe.id);
           const spoonacularId = recipe.id;
@@ -173,20 +165,16 @@ router.post('/search', (req, res, next) => {
                       image,
                       ingredients,
                       instructions,
-                    });
+                    })
+                      .then((createdRecipe) => {
+                        res.redirect(`/recipes/${createdRecipe._id}`);
+                      });
                   });
               }
-            })
-            .catch(next);
+            });
         });
       }
     })
-    // .then((recipesToRender) => {
-    //   res.render('search', {
-    //     recipesToRender,
-    //     title: recipes.title,
-    //   });
-    // });
     .catch(next);
 });
 
