@@ -110,93 +110,63 @@ async function fetchIngredients(extendedIngredients) {
 }
 
 // POST /recipes/search
-router.post('/search', (req, res, next) => {
-  let requestString = '';
+router.post('/search', async (req, res, next) => {
   const ingredientsId = req.body.ingredient;
-
-  // 1. Busco los ingredientes para saber sus nombres y meterlos en la consulta.
-  Ingredient.find({
+  const searchIngredientIds = await Ingredient.find({
     _id: {
       $in: ingredientsId,
     },
-  })
-    .then((ingredients) => {
-      let ingredientNames = '';
-      ingredients.forEach((ingredient) => {
-        ingredientNames += `${ingredient.name},`;
-      });
-      requestString = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${ingredientNames}&number=2`;
+  });
+  let searchIngredientNames = '';
+  searchIngredientIds.forEach((searchIngredientId) => {
+    searchIngredientNames += `${searchIngredientId.name},`;
+  });
+  const findByIngredientsRequest = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${searchIngredientNames}&number=2`;
 
-      // 2. Con los nombres de los ingredientes busco las recetas por ingredientes.
-      return unirest.get(requestString);
-    })
-    .then((result) => {
-      if (result.status === 200) {
-        const recipes = result.body;
-        recipes.forEach((recipe) => {
-          console.log('recipes are', recipe.id);
-          const spoonacularId = recipe.id;
-          requestString = `https://api.spoonacular.com/recipes/${spoonacularId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`;
-          unirest.get(requestString)
-            .then((result) => {
-              if (result.status === 200) {
-                console.log(result.body);
-                const {
-                  title,
-                  image,
-                  extendedIngredients,
-                  analyzedInstructions,
-                } = result.body;
-                let { instructions } = result.body;
+  const findByIngredientsResult = await unirest.get(findByIngredientsRequest);
+  if (findByIngredientsResult.status === 200) {
+    const recipes = findByIngredientsResult.body;
 
-                if (analyzedInstructions.length > 0) {
-                  instructions = fetchInstructions(analyzedInstructions[0].steps);
-                } else {
-                  instructions = [{
-                    number: 1,
-                    step: instructions,
-                  }];
-                }
-                fetchIngredients(extendedIngredients)
-                  .then((ingredients) => {
-                    Recipe.create({
-                      spoonacularId,
-                      title,
-                      image,
-                      ingredients,
-                      instructions,
-                    });
-                  // .then((createdRecipe) => {
-                  //   res.redirect(`/recipes/${createdRecipe._id}`);
-                  // });
-                  });
-              }
+    recipes.forEach(async (recipe) => {
+      const spoonacularId = recipe.id;
+      const findFullRecipeRequest = `https://api.spoonacular.com/recipes/${spoonacularId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`;
+
+      const findFullRecipeResult = await unirest.get(findFullRecipeRequest);
+
+      if (findFullRecipeResult.status === 200) {
+        console.log(findFullRecipeResult.body);
+        const {
+          title,
+          image,
+          extendedIngredients,
+          analyzedInstructions,
+        } = findFullRecipeResult.body;
+        let { instructions } = findFullRecipeResult.body;
+
+        if (analyzedInstructions.length > 0) {
+          instructions = fetchInstructions(analyzedInstructions[0].steps);
+        } else {
+          instructions = [{
+            number: 1,
+            step: instructions,
+          }];
+        }
+        fetchIngredients(extendedIngredients)
+          .then((ingredients) => {
+            Recipe.create({
+              spoonacularId,
+              title,
+              image,
+              ingredients,
+              instructions,
             });
-        });
-      }
-      return result;
-    })
-    .then((result) => {
-      const spoonacularIds = result.body.map((recipe) => recipe.id);
-      console.log('spoonacularIds', spoonacularIds);
-      const search = {
-        spoonacularId: {
-          $in: spoonacularIds,
-        },
-      };
-      console.log('search is ', search);
-      Recipe.find(search).sort('title')
-        .populate('ingredients.ingredient')
-        .populate('user')
-        .then((recipes) => {
-          res.render('recipes', {
-            recipes,
-            title: 'Results',
-            active: { recipes: true },
+          // .then((createdRecipe) => {
+          //   res.redirect(`/recipes/${createdRecipe._id}`);
+          // });
           });
-        });
-    })
-    .catch(next);
+      }
+    });
+  }
 });
 
 // GET /recipes/users/:username
