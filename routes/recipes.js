@@ -125,7 +125,7 @@ router.post('/search', (req, res, next) => {
       ingredients.forEach((ingredient) => {
         ingredientNames += `${ingredient.name},`;
       });
-      requestString = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=${ingredientNames}&number=1`;
+      requestString = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${ingredientNames}&number=2`;
 
       // 2. Con los nombres de los ingredientes busco las recetas por ingredientes.
       return unirest.get(requestString);
@@ -166,14 +166,31 @@ router.post('/search', (req, res, next) => {
                       ingredients,
                       instructions,
                     })
-                      .then((createdRecipe) => {
-                        res.redirect(`/recipes/${createdRecipe._id}`);
-                      });
+                  // .then((createdRecipe) => {
+                  //   res.redirect(`/recipes/${createdRecipe._id}`);
+                  // });
                   });
               }
             });
         });
       }
+      return result;
+    })
+    .then((result) => {
+      Recipe.find({
+        spoonacularId: {
+          $in: result.body,
+        },
+      }).sort('title')
+        .populate('ingredients.ingredient')
+        .populate('user')
+        .then((recipes) => {
+          res.render('recipes', {
+            recipes,
+            title: 'Results',
+            active: { recipes: true },
+          });
+        });
     })
     .catch(next);
 });
