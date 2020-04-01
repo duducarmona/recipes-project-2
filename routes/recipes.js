@@ -1,5 +1,6 @@
 const express = require('express');
 const createError = require('http-errors');
+const unirest = require('unirest');
 
 const router = express.Router();
 
@@ -67,12 +68,126 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
-// GET /recipes/find
-router.get('/search', (req, res) => {
-  res.render('search', {
-    title: 'Search recipes',
-    active: { search: true },
+// GET /recipes/discover
+router.get('/discover', (req, res, next) => {
+  Ingredient.find()
+    .then((ingredients) => {
+      res.render('discover', {
+        ingredients,
+        title: 'Discover recipes',
+      });
+    })
+    .catch(next);
+});
+
+function fetchInstructions(steps) {
+  const results = steps.map((step) => {
+    const newRecord = {
+      number: step.number,
+      step: step.step,
+    };
+    return newRecord;
   });
+  return results;
+}
+
+async function fetchIngredients(extendedIngredients) {
+  const promises = extendedIngredients.map(async (ingredient) => {
+    const newRecord = {
+      amount: ingredient.amount,
+      unit: ingredient.unit,
+    };
+    const ingredientResult = await Ingredient.findOne({ spoonacularId: ingredient.id }).exec();
+    if (ingredientResult) {
+      newRecord.ingredient = ingredientResult._id;
+    } else {
+      console.log('need to add ingredient to our database', ingredient);
+    }
+    return newRecord;
+  });
+  const results = await Promise.all(promises);
+  return results;
+}
+
+// POST /recipes/discover
+router.post('/discover', (req, res, next) => {
+  // const requestString = 'https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=apples,+flour,+sugar&number=3';
+  let requestString = '';
+  const ingredientsId = req.body.ingredient;
+
+  // 1. Busco los ingredientes para saber sus nombres y meterlos en la consulta.
+  Ingredient.find({
+    _id: {
+      $in: ingredientsId,
+    },
+  })
+    .then((ingredients) => {
+      console.log(ingredients);
+      let ingredientNames = '';
+
+      ingredients.forEach((ingredient) => {
+        ingredientNames += `${ingredient.name},`;
+      });
+
+      console.log(ingredientNames);
+
+      requestString = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=${ingredientNames}&number=3`;
+
+      // 2. Con los nombres de los ingredientes busco las recetas por ingredientes.
+      return unirest.get(requestString);
+    })
+    .then((result) => {
+      if (result.status === 200) {
+        console.log(result.body);
+        const recipes = result.body;
+
+        recipes.forEach((recipe) => {
+          console.log('recipes are', recipe.id);
+          const spoonacularId = recipe.id;
+          requestString = `https://api.spoonacular.com/recipes/${spoonacularId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`;
+          unirest.get(requestString)
+            .then((result) => {
+              if (result.status === 200) {
+                console.log(result.body);
+                const {
+                  title,
+                  image,
+                  extendedIngredients,
+                  analyzedInstructions,
+                } = result.body;
+                let { instructions } = result.body;
+
+                if (analyzedInstructions.length > 0) {
+                  instructions = fetchInstructions(analyzedInstructions[0].steps);
+                } else {
+                  instructions = [{
+                    number: 1,
+                    step: instructions,
+                  }];
+                }
+                fetchIngredients(extendedIngredients)
+                  .then((ingredients) => {
+                    Recipe.create({
+                      spoonacularId,
+                      title,
+                      image,
+                      ingredients,
+                      instructions,
+                    });
+                  });
+              }
+            })
+            .catch(next);
+        });
+      }
+    })
+    // .then((recipesToRender) => {
+    //   res.render('discover', {
+    //     recipesToRender,
+    //     title: recipes.title,
+    //   });
+    // });
+    .catch(next);
 });
 
 // GET /recipes/users/:username
