@@ -1,9 +1,8 @@
-<main id="discover">
+<main id="search">
 
   <h1>{{title}}</h1>
 
-  {{!-- <div id="discover-recipes"> --}}
-  <form action="/recipes/discover" method="post">
+  <form action="/recipes/search" method="post">
     <h2>Ingredients:</h2>
 
     <select name="ingredient" multiple>
@@ -18,8 +17,8 @@
     {{/each}}
 
     <div class="center-button">
-      <button id="discover-recipes" class="button" type="submit">Discover Recipe</button>
+      <button id="search-recipes" class="button" type="submit">Search Recipes</button>
     </div>
-  {{!-- </div> --}}
+
   </form>
 </main>
