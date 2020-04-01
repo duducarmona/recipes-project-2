@@ -68,13 +68,13 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
-// GET /recipes/discover
-router.get('/discover', (req, res, next) => {
+// GET /recipes/search
+router.get('/search', (req, res, next) => {
   Ingredient.find()
     .then((ingredients) => {
-      res.render('discover', {
+      res.render('search', {
         ingredients,
-        title: 'Discover recipes',
+        title: 'Search recipes',
       });
     })
     .catch(next);
@@ -109,8 +109,8 @@ async function fetchIngredients(extendedIngredients) {
   return results;
 }
 
-// POST /recipes/discover
-router.post('/discover', (req, res, next) => {
+// POST /recipes/search
+router.post('/search', (req, res, next) => {
   // const requestString = 'https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=apples,+flour,+sugar&number=3';
   let requestString = '';
   const ingredientsId = req.body.ingredient;
@@ -182,7 +182,7 @@ router.post('/discover', (req, res, next) => {
       }
     })
     // .then((recipesToRender) => {
-    //   res.render('discover', {
+    //   res.render('search', {
     //     recipesToRender,
     //     title: recipes.title,
     //   });
