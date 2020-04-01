@@ -160,6 +160,7 @@ router.post('/discover', (req, res, next) => {
                 fetchIngredients(extendedIngredients)
                   .then((ingredients) => {
                     Recipe.create({
+                      spoonacularId,
                       title,
                       image,
                       ingredients,
