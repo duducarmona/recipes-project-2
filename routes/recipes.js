@@ -80,6 +80,35 @@ router.get('/discover', (req, res, next) => {
     .catch(next);
 });
 
+function fetchInstructions(steps) {
+  const results = steps.map((step) => {
+    const newRecord = {
+      number: step.number,
+      step: step.step,
+    };
+    return newRecord;
+  });
+  return results;
+}
+
+async function fetchIngredients(extendedIngredients) {
+  const promises = extendedIngredients.map(async (ingredient) => {
+    const newRecord = {
+      amount: ingredient.amount,
+      unit: ingredient.unit,
+    };
+    const ingredientResult = await Ingredient.findOne({ spoonacularId: ingredient.id }).exec();
+    if (ingredientResult) {
+      newRecord.ingredient = ingredientResult._id;
+    } else {
+      console.log('need to add ingredient to our database', ingredient);
+    }
+    return newRecord;
+  });
+  const results = await Promise.all(promises);
+  return results;
+}
+
 // POST /recipes/discover
 router.post('/discover', (req, res, next) => {
   // const requestString = 'https://api.spoonacular.com/recipes/findByIngredients?apiKey=90fec4fc6b734ec8bab999ebf3f5749d&ingredients=apples,+flour,+sugar&number=3';
@@ -113,7 +142,35 @@ router.post('/discover', (req, res, next) => {
         const recipes = result.body;
 
         recipes.forEach((recipe) => {
-          console.log(recipe.id);
+          const { spoonacularId } = recipe.id;
+          requestString = `https://api.spoonacular.com/recipes/${spoonacularId}/information?apiKey=${process.env.API_KEY}&includeNutrition=false`;
+          unirest.get(requestString)
+            .then((result) => {
+              if (result.status === 200) {
+                console.log(result.body);
+                const {
+                  title,
+                  image,
+                  extendedIngredients,
+                  analyzedInstructions,
+                } = result.body;
+
+                const instructions = fetchInstructions(analyzedInstructions[0].steps);
+                fetchIngredients(extendedIngredients)
+                  .then((ingredients) => {
+                    Recipe.create({
+                      title,
+                      image,
+                      ingredients,
+                      instructions,
+                    });
+                    // .then((recipe) => {
+                    //   res.redirect(`/recipes/${recipe._id}`);
+                    // });
+                  });
+              }
+            })
+            .catch(next);
         })
           .then((recipesToRender) => {
             res.render('discover', {
