@@ -155,8 +155,16 @@ router.post('/discover', (req, res, next) => {
                   extendedIngredients,
                   analyzedInstructions,
                 } = result.body;
+                let { instructions } = result.body;
 
-                const instructions = fetchInstructions(analyzedInstructions[0].steps);
+                if (analyzedInstructions.length > 0) {
+                  instructions = fetchInstructions(analyzedInstructions[0].steps);
+                } else {
+                  instructions = [{
+                    number: 1,
+                    step: instructions,
+                  }];
+                }
                 fetchIngredients(extendedIngredients)
                   .then((ingredients) => {
                     Recipe.create({
@@ -166,22 +174,19 @@ router.post('/discover', (req, res, next) => {
                       ingredients,
                       instructions,
                     });
-                    // .then((recipe) => {
-                    //   res.redirect(`/recipes/${recipe._id}`);
-                    // });
                   });
               }
             })
             .catch(next);
         });
-        //   .then((recipesToRender) => {
-        //     res.render('discover', {
-        //       recipesToRender,
-        //       title: recipes.title,
-        //     });
-        //   });
       }
     })
+    // .then((recipesToRender) => {
+    //   res.render('discover', {
+    //     recipesToRender,
+    //     title: recipes.title,
+    //   });
+    // });
     .catch(next);
 });
 
