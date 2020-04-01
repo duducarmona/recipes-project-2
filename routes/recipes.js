@@ -165,7 +165,7 @@ router.post('/search', (req, res, next) => {
                       image,
                       ingredients,
                       instructions,
-                    })
+                    });
                   // .then((createdRecipe) => {
                   //   res.redirect(`/recipes/${createdRecipe._id}`);
                   // });
@@ -177,11 +177,15 @@ router.post('/search', (req, res, next) => {
       return result;
     })
     .then((result) => {
-      Recipe.find({
+      const spoonacularIds = result.body.map((recipe) => recipe.id);
+      console.log('spoonacularIds', spoonacularIds);
+      const search = {
         spoonacularId: {
-          $in: result.body,
+          $in: spoonacularIds,
         },
-      }).sort('title')
+      };
+      console.log('search is ', search);
+      Recipe.find(search).sort('title')
         .populate('ingredients.ingredient')
         .populate('user')
         .then((recipes) => {
