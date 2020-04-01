@@ -121,7 +121,7 @@ router.post('/search', async (req, res, next) => {
   searchIngredientIds.forEach((searchIngredientId) => {
     searchIngredientNames += `${searchIngredientId.name},`;
   });
-  const findByIngredientsRequest = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${searchIngredientNames}&number=2`;
+  const findByIngredientsRequest = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.API_KEY}&ingredients=${searchIngredientNames}&number=2&ranking=1&ignorePantry=true`;
 
   const findByIngredientsResult = await unirest.get(findByIngredientsRequest);
   if (findByIngredientsResult.status === 200) {
