@@ -142,7 +142,6 @@ router.post('/search', async (req, res, next) => {
           analyzedInstructions,
         } = findFullRecipeResult.body;
         let { instructions } = findFullRecipeResult.body;
-
         if (analyzedInstructions.length > 0) {
           instructions = fetchInstructions(analyzedInstructions[0].steps);
         } else {
@@ -151,21 +150,20 @@ router.post('/search', async (req, res, next) => {
             step: instructions,
           }];
         }
-        fetchIngredients(extendedIngredients)
-          .then((ingredients) => {
-            Recipe.create({
-              spoonacularId,
-              title,
-              image,
-              ingredients,
-              instructions,
-            });
-          // .then((createdRecipe) => {
-          //   res.redirect(`/recipes/${createdRecipe._id}`);
-          // });
-          });
+        const ingredients = await fetchIngredients(extendedIngredients);
+        Recipe.create({
+          spoonacularId,
+          title,
+          image,
+          ingredients,
+          instructions,
+        });
+        // .then((createdRecipe) => {
+        //   res.redirect(`/recipes/${createdRecipe._id}`);
+        // });
       }
     });
+    // queremos tener las recetas aqui
   }
 });
 
