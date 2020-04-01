@@ -107,6 +107,16 @@ router.get('/users/:username', middleware.userNameIsNotMine, (req, res, next) =>
     });
 });
 
+// GET /recipes/random
+router.get('/random', (req, res, next) => {
+  // 1. Trae una receta aleatoria de Spoonacular.
+  console.log('hola');
+
+  // const 
+  // 2. Guárdala en bbdd.
+  // 3. Muéstrala como receta detalle.
+});
+
 // POST /recipes/:id/delete
 router.post('/:id/delete', middleware.recipeIsNotMine, (req, res, next) => {
   const { id } = req.params;
