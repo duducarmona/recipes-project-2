@@ -191,15 +191,13 @@ router.get('/random', (req, res, next) => {
         }
 
         fetchIngredients(extendedIngredients)
-          .then((ingredients) => {
-            Recipe.create({
-              spoonacularId,
-              title,
-              image,
-              ingredients,
-              instructions,
-            });
-          })
+          .then((ingredients) => Recipe.create({
+            spoonacularId,
+            title,
+            image,
+            ingredients,
+            instructions,
+          }))
           .then((recipe) => {
             console.log('ID de la receta recien creada: ', recipe._id);
             res.redirect(`/recipes/${recipe._id}`);
