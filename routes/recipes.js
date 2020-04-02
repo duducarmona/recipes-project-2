@@ -74,7 +74,7 @@ router.get('/search', (req, res, next) => {
     .then((ingredients) => {
       res.render('search', {
         ingredients,
-        title: 'Search recipes',
+        title: 'Find a recipe',
         active: { search: true },
       });
     })

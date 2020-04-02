@@ -3,10 +3,9 @@
   <h1>{{title}}</h1>
 
   <form action="/recipes/search" method="post">
-    <h2>Ingredients:</h2>
+    <h2>Choose ingredients:</h2>
 
-    <select name="ingredient" multiple>
-        <option value="">--Please choose an ingredient--</option>
+    <select id="multi-select" name="ingredient" multiple>
         {{#each ingredients}}
           <option value={{this._id}}>{{this.name}}</option>
         {{/each}}
