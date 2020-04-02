@@ -192,7 +192,7 @@ router.get('/random', (req, res, next) => {
 
         fetchIngredients(extendedIngredients)
           .then((ingredients) => {
-            return Recipe.create({
+            Recipe.create({
               spoonacularId,
               title,
               image,

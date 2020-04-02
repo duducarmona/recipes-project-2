@@ -3,7 +3,7 @@ const createError = require('http-errors');
 
 const router = express.Router();
 
-const bcryptSalt = process.env.SALT;
+const bcryptSalt = parseInt(process.env.SALT, 10);
 const bcrypt = require('bcrypt');
 
 const middleware = require('../helpers/redirectMiddleware');
