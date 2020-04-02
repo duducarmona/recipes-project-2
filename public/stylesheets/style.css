@@ -72,21 +72,21 @@ a:active {
 
  /* general form and button styles */
 
-form input, textarea, select, button {
+input, textarea, select, button {
   font-family: inherit;
 }
 
-form input {
+input {
   background-color: rgba(221, 99, 99, 0.10);
   border: 0;  
 }
 
-form input.no-highlight {
+input.no-highlight {
   background-color: white;
   border: 1px solid rgba(221, 99, 99, 0.10);
 }
 
-form input:focus, select:focus {
+input:focus, select:focus {
   outline: none;
   border: 0;
   box-shadow: 0 0 5px #DD6363;
