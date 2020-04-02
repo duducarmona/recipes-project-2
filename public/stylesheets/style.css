@@ -48,6 +48,14 @@ a {
   font-weight: 600;
 }
 
+a:hover {
+  color: rgba(255, 76, 76, 0.5);
+}
+
+a:active {
+  color: rgba(255, 76, 76, 0.5);
+}
+
 #message {
   text-align: center;
   margin-top: 7px;
@@ -100,12 +108,12 @@ button {
   font-size: 24px;
   text-transform: uppercase;
   font-weight: 400;
-  background-color: rgb(255, 76, 76, 0.5);
+  background-color: rgba(255, 76, 76, 0.5);
   color: white;
 }
 
 .button:active {
-  background-color: rgb(255, 76, 76, 0.8);
+  background-color: rgba(255, 76, 76, 0.8);
   color: white;
 }
 
@@ -116,7 +124,7 @@ button {
   font-size: 11px;
   text-transform: uppercase;
   font-weight: 400;
-  background-color: rgb(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   color: #545454;
 }
 
@@ -194,7 +202,6 @@ header #logo {
 }
 
 header #logo a {
-  color: #545454;
   padding: 0 5px;
 }
 
@@ -202,7 +209,6 @@ header #logo a {
   position: fixed;
   top: 12px;
   left: 20px;
-  color: #545454;
 }
 
 #user-settings {
@@ -211,12 +217,8 @@ header #logo a {
   right: 20px;
 }
 
- a.active i#user-settings {
+header span.active a {
   color: #FF4C4C;
-}
-
-a i#user-settings {
-  color: #545454;
 }
 
 nav ul {
@@ -238,7 +240,8 @@ nav li.active a {
   color: #FF4C4C;
 }
 
-nav a {
+nav a,
+header a {
   font-size: 11px;
   font-weight: 700;
   color: #545454;

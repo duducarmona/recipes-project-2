@@ -9,8 +9,8 @@
   <body>
 
     <header>
-      <a id="back-button" class="{{#if active.back}}active{{/if}}" href="javascript:history.back()">
-        <i class="material-icons" >arrow_back_ios</i>
+      <a href="javascript:history.back()">
+        <i class="material-icons" id="back-button">arrow_back_ios</i>
       </a>
 
       <div id="logo">
@@ -18,9 +18,11 @@
         <a href="/"><h3>Better Chef</h3></a>
       </div>
 
-      <a class="{{#if active.user}}active{{/if}}" href="/users/{{currentUser._id}}">
-        <i class="material-icons" id="user-settings">settings</i>
-      </a>
+      <span class="{{#if active.user}}active{{/if}}">
+        <a href="/users/{{currentUser._id}}">
+          <i class="material-icons" id="user-settings">settings</i>
+        </a>
+      </span> 
     </header>
 
     <nav>

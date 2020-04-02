@@ -75,6 +75,7 @@ router.get('/search', (req, res, next) => {
       res.render('search', {
         ingredients,
         title: 'Search recipes',
+        active: { search: true },
       });
     })
     .catch(next);
@@ -199,7 +200,6 @@ router.get('/random', (req, res, next) => {
             instructions,
           }))
           .then((recipe) => {
-            console.log('ID de la receta recien creada: ', recipe._id);
             res.redirect(`/recipes/${recipe._id}`);
           })
           .catch(next);
